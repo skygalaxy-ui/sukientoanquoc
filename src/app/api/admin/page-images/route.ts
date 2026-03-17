@@ -27,7 +27,7 @@ export async function POST(request: Request) {
         const { error } = await adminDb.upsert('site_settings', {
             key: 'page_images',
             value: images,
-        }, 'key');
+        }, { onConflict: 'key' });
 
         if (error) {
             return NextResponse.json({ error: 'Failed to save images' }, { status: 500 });
