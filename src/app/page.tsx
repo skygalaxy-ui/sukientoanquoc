@@ -10,7 +10,7 @@ import Marquee from "@/components/Marquee/Marquee";
 import Portfolio from "@/components/Portfolio/Portfolio";
 import ContactForm from "@/components/ContactForm/ContactForm";
 import Footer from "@/components/Footer/Footer";
-import FloatingContact from "@/components/FloatingContact/FloatingContact";
+
 import { getPageImages } from "@/lib/page-images";
 
 export const revalidate = 60; // ISR: refresh images every 60s
@@ -43,7 +43,7 @@ export default async function Home() {
         <ContactForm />
       </main>
       <Footer />
-      <FloatingContact />
+
     </>
   );
 }
