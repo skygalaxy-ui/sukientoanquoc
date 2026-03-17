@@ -1,0 +1,217 @@
+.header {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: calc(100% - 32px);
+    max-width: 1200px;
+    transition: all 0.4s var(--ease);
+}
+
+@media (min-width: 768px) {
+    .header {
+        top: 20px;
+        width: calc(100% - 56px);
+    }
+}
+
+.scrolled {
+    top: 10px;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px 8px 16px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(24px) saturate(1.8);
+    -webkit-backdrop-filter: blur(24px) saturate(1.8);
+    border: 1.5px solid rgba(231, 229, 228, 0.6);
+    border-radius: 100px;
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(249, 115, 22, 0.04);
+}
+
+@media (min-width: 768px) {
+    .nav {
+        padding: 10px 12px 10px 28px;
+    }
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: 0.5px;
+}
+
+.logoImg {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.links {
+    display: none;
+    gap: 2px;
+}
+
+@media (min-width: 1024px) {
+    .links {
+        display: flex;
+    }
+}
+
+.links a {
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-radius: 100px;
+    transition: all 0.25s var(--ease);
+}
+
+.links a:hover {
+    color: var(--orange);
+    background: rgba(249, 115, 22, 0.06);
+}
+
+.ctaDesktop {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    background: var(--gradient-orange);
+    color: white;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 700;
+    transition: all 0.3s var(--ease);
+    font-family: var(--font-body);
+    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.3);
+}
+
+@media (min-width: 1024px) {
+    .ctaDesktop {
+        display: inline-flex;
+    }
+}
+
+.ctaDesktop:hover {
+    transform: scale(1.04);
+    box-shadow: 0 6px 24px rgba(249, 115, 22, 0.4);
+}
+
+/* Hamburger */
+.burger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 12px;
+    transition: background 0.2s;
+}
+
+.burger:hover {
+    background: rgba(249, 115, 22, 0.06);
+}
+
+@media (min-width: 1024px) {
+    .burger {
+        display: none;
+    }
+}
+
+.burger span {
+    width: 22px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: all 0.3s var(--ease);
+    transform-origin: center;
+}
+
+.burgerActive span:nth-child(1) {
+    transform: rotate(45deg) translateY(5px) translateX(5px);
+}
+
+.burgerActive span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.burgerActive span:nth-child(3) {
+    transform: rotate(-45deg) translateY(-5px) translateX(5px);
+}
+
+/* Mobile menu */
+.mobileMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 250, 245, 0.98);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    animation: fadeInUp 0.3s var(--ease);
+    z-index: 99;
+}
+
+@media (min-width: 1024px) {
+    .mobileMenu {
+        display: none;
+    }
+}
+
+.mobileLinks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.mobileLinks a {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    padding: 14px 40px;
+    border-radius: 16px;
+    transition: all 0.2s;
+}
+
+.mobileLinks a:hover {
+    background: rgba(249, 115, 22, 0.06);
+    color: var(--orange);
+}
+
+.ctaMobile {
+    padding: 16px 48px;
+    background: var(--gradient-orange);
+    color: white;
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: var(--font-body);
+    box-shadow: var(--shadow-orange-lg);
+    transition: all 0.3s;
+}
+
+.ctaMobile:hover {
+    transform: scale(1.05);
+}

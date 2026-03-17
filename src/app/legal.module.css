@@ -1,0 +1,60 @@
+.policyPage {
+  padding: 140px 20px 80px;
+  background: #0f0a1a;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.8;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 36px;
+  color: white;
+  margin-bottom: 10px;
+  font-family: var(--font-display);
+}
+
+.lastUpdated {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  margin-bottom: 40px;
+}
+
+.sectionTitle {
+  font-size: 22px;
+  color: var(--orange);
+  margin: 40px 0 20px;
+  font-family: var(--font-display);
+}
+
+.list {
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.listItem {
+  margin-bottom: 10px;
+}
+
+.contactInfo {
+  margin-top: 60px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 767px) {
+  .policyPage {
+    padding: 124px 20px 64px;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+
+  .sectionTitle {
+    font-size: 20px;
+  }
+}

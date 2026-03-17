@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { adminDb } from "@/lib/admin-db";
 import {
     Activity, Database, HardDrive, Clock, CheckCircle2,
     XCircle, AlertTriangle, RefreshCw, Server,
@@ -52,7 +53,7 @@ export default function SystemStatusPage() {
 
             const backup = {
                 _meta: {
-                    cms: '10x Solution CMS',
+                    cms: 'Sự Kiện Toàn Quốc CMS',
                     version: '1.0',
                     exported_at: new Date().toISOString(),
                     supabase_url: process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -70,7 +71,7 @@ export default function SystemStatusPage() {
             const a = document.createElement('a');
             const dateStr = new Date().toISOString().split('T')[0];
             a.href = url;
-            a.download = `10x-cms-backup-${dateStr}.json`;
+            a.download = `setq-cms-backup-${dateStr}.json`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -96,24 +97,24 @@ export default function SystemStatusPage() {
             const results: string[] = [];
 
             if (backup.categories?.length > 0) {
-                const { error } = await supabase.from('categories').upsert(backup.categories, { onConflict: 'slug' });
-                results.push(error ? `❌ Categories: ${error.message}` : `✅ Categories: ${backup.categories.length} bản ghi`);
+                const { error } = await adminDb.upsert('categories', backup.categories, { onConflict: 'slug' });
+                results.push(error ? `❌ Categories: ${error}` : `✅ Categories: ${backup.categories.length} bản ghi`);
             }
             if (backup.tags?.length > 0) {
-                const { error } = await supabase.from('tags').upsert(backup.tags, { onConflict: 'slug' });
-                results.push(error ? `❌ Tags: ${error.message}` : `✅ Tags: ${backup.tags.length} bản ghi`);
+                const { error } = await adminDb.upsert('tags', backup.tags, { onConflict: 'slug' });
+                results.push(error ? `❌ Tags: ${error}` : `✅ Tags: ${backup.tags.length} bản ghi`);
             }
             if (backup.posts?.length > 0) {
-                const { error } = await supabase.from('posts').upsert(backup.posts, { onConflict: 'slug' });
-                results.push(error ? `❌ Posts: ${error.message}` : `✅ Posts: ${backup.posts.length} bản ghi`);
+                const { error } = await adminDb.upsert('posts', backup.posts, { onConflict: 'slug' });
+                results.push(error ? `❌ Posts: ${error}` : `✅ Posts: ${backup.posts.length} bản ghi`);
             }
             if (backup.scheduled_content?.length > 0) {
-                const { error } = await supabase.from('scheduled_content').upsert(backup.scheduled_content, { onConflict: 'id' });
-                results.push(error ? `❌ Scheduled: ${error.message}` : `✅ Scheduled: ${backup.scheduled_content.length} bản ghi`);
+                const { error } = await adminDb.upsert('scheduled_content', backup.scheduled_content, { onConflict: 'id' });
+                results.push(error ? `❌ Scheduled: ${error}` : `✅ Scheduled: ${backup.scheduled_content.length} bản ghi`);
             }
             if (backup.site_settings?.length > 0) {
-                const { error } = await supabase.from('site_settings').upsert(backup.site_settings, { onConflict: 'key' });
-                results.push(error ? `❌ Settings: ${error.message}` : `✅ Settings: ${backup.site_settings.length} bản ghi`);
+                const { error } = await adminDb.upsert('site_settings', backup.site_settings, { onConflict: 'key' });
+                results.push(error ? `❌ Settings: ${error}` : `✅ Settings: ${backup.site_settings.length} bản ghi`);
             }
             setImportResult(results.join('\n'));
             runChecks();
@@ -339,7 +340,7 @@ export default function SystemStatusPage() {
                 <div className="px-5 py-4 border-b border-gray-100"><h2 className="font-semibold text-gray-900">Thông tin hệ thống</h2></div>
                 <div className="divide-y divide-gray-100">
                     {[
-                        { label: 'CMS', value: '10x Solution CMS v1.0' },
+                        { label: 'CMS', value: 'Sự Kiện Toàn Quốc CMS v1.0' },
                         { label: 'Framework', value: 'Next.js 14 (App Router)' },
                         { label: 'Database', value: 'Supabase (PostgreSQL)' },
                         { label: 'Storage', value: 'Supabase Storage' },
@@ -358,7 +359,7 @@ export default function SystemStatusPage() {
 
             {/* Footer */}
             <div className="text-center py-4">
-                <p className="text-xs text-gray-300">Powered by <span className="font-semibold text-gray-400">10x Solution</span> &copy; {new Date().getFullYear()}</p>
+                <p className="text-xs text-gray-300">Powered by <span className="font-semibold text-gray-400">Sự Kiện Toàn Quốc</span> &copy; {new Date().getFullYear()}</p>
             </div>
         </div>
     );

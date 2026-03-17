@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
 import { tenantQuery, withTenantId } from "@/lib/tenant-filter";
+import { adminDb } from "@/lib/admin-db";
+import { useAuth } from "@/lib/auth-context";
 import { Tag } from "@/lib/types";
 import { Plus, Trash2, Tags as TagsIcon, Loader2, Check, Edit3, Hash } from "lucide-react";
 
 export default function TagsPage() {
+    const { user, tenantId } = useAuth();
     const [tags, setTags] = useState<Tag[]>([]);
     const [loading, setLoading] = useState(true);
     const [editingId, setEditingId] = useState<string | null>(null);
@@ -18,7 +20,7 @@ export default function TagsPage() {
 
     async function fetchTags() {
         setLoading(true);
-        const { data } = await tenantQuery('tags').order('name');
+        const { data } = await tenantQuery('tags', tenantId, user?.role || null).order('name');
         setTags(data || []);
         setLoading(false);
     }
@@ -30,9 +32,9 @@ export default function TagsPage() {
         setSaving(true);
         const slug = form.slug || genSlug(form.name);
         if (editingId) {
-            await supabase.from('tags').update({ name: form.name, slug, description: form.description || null }).eq('id', editingId);
+            await adminDb.update('tags', { name: form.name, slug, description: form.description || null }, { column: 'id', value: editingId });
         } else {
-            await supabase.from('tags').insert([withTenantId({ name: form.name, slug, description: form.description || null })]);
+            await adminDb.insert('tags', withTenantId({ name: form.name, slug, description: form.description || null }, tenantId));
         }
         setForm({ name: "", slug: "", description: "" });
         setEditingId(null); setShowForm(false); setSaving(false);
@@ -41,7 +43,7 @@ export default function TagsPage() {
 
     async function handleDelete(id: string) {
         if (!confirm('Xóa tag này?')) return;
-        await supabase.from('tags').delete().eq('id', id);
+        await adminDb.delete('tags', { column: 'id', value: id });
         fetchTags();
     }
 

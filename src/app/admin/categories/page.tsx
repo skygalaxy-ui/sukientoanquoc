@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
 import { tenantQuery, withTenantId } from "@/lib/tenant-filter";
+import { adminDb } from "@/lib/admin-db";
+import { useAuth } from "@/lib/auth-context";
 import { Category } from "@/lib/types";
 import { Plus, Edit3, Trash2, FolderOpen, Loader2, X, Check } from "lucide-react";
 
 export default function CategoriesPage() {
+    const { user, tenantId } = useAuth();
     const [categories, setCategories] = useState<Category[]>([]);
     const [loading, setLoading] = useState(true);
     const [editingId, setEditingId] = useState<string | null>(null);
@@ -18,7 +20,7 @@ export default function CategoriesPage() {
 
     async function fetchCategories() {
         setLoading(true);
-        const { data } = await tenantQuery('categories').order('name');
+        const { data } = await tenantQuery('categories', tenantId, user?.role || null).order('name');
         setCategories(data || []);
         setLoading(false);
     }
@@ -30,9 +32,9 @@ export default function CategoriesPage() {
         setSaving(true);
         const slug = form.slug || generateSlug(form.name);
         if (editingId) {
-            await supabase.from('categories').update({ name: form.name, slug, description: form.description || null }).eq('id', editingId);
+            await adminDb.update('categories', { name: form.name, slug, description: form.description || null }, { column: 'id', value: editingId });
         } else {
-            await supabase.from('categories').insert([withTenantId({ name: form.name, slug, description: form.description || null })]);
+            await adminDb.insert('categories', withTenantId({ name: form.name, slug, description: form.description || null }, tenantId));
         }
         setForm({ name: "", slug: "", description: "" });
         setEditingId(null);
@@ -43,7 +45,7 @@ export default function CategoriesPage() {
 
     async function handleDelete(id: string) {
         if (!confirm('Xóa chuyên mục này?')) return;
-        await supabase.from('categories').delete().eq('id', id);
+        await adminDb.delete('categories', { column: 'id', value: id });
         fetchCategories();
     }
 

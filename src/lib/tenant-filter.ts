@@ -1,41 +1,13 @@
 import { supabase } from './supabase';
 
 /**
- * Get tenant_id from auth cookie (client-side)
+ * Create a tenant-scoped query builder.
+ * Super admin sees all, others see only their tenant.
+ *
+ * NOTE: tenantId and role should come from AuthContext (server-verified),
+ * NOT from client-side cookie decoding.
  */
-export function getTenantIdFromCookie(): string | null {
-    if (typeof document === 'undefined') return null;
-    const cookie = document.cookie.split(';').find(c => c.trim().startsWith('cms_auth='));
-    if (!cookie) return null;
-    try {
-        const token = cookie.split('=')[1];
-        const data = JSON.parse(atob(token));
-        return data.tenantId || null;
-    } catch { return null; }
-}
-
-/**
- * Get user role from auth cookie
- */
-export function getUserRoleFromCookie(): string | null {
-    if (typeof document === 'undefined') return null;
-    const cookie = document.cookie.split(';').find(c => c.trim().startsWith('cms_auth='));
-    if (!cookie) return null;
-    try {
-        const token = cookie.split('=')[1];
-        const data = JSON.parse(atob(token));
-        return data.role || null;
-    } catch { return null; }
-}
-
-/**
- * Create a tenant-scoped query builder
- * Super admin sees all, others see only their tenant
- */
-export function tenantQuery(table: string) {
-    const tenantId = getTenantIdFromCookie();
-    const role = getUserRoleFromCookie();
-
+export function tenantQuery(table: string, tenantId: string | null, role: string | null) {
     let query = supabase.from(table).select('*');
 
     // Super admin sees everything, others filtered by tenant
@@ -47,12 +19,13 @@ export function tenantQuery(table: string) {
 }
 
 /**
- * Add tenant_id to data before insert
+ * Add tenant_id to data before insert.
+ * tenantId should come from AuthContext (server-verified).
  */
-export function withTenantId<T extends Record<string, any>>(data: T): T & { tenant_id?: string } {
-    const tenantId = getTenantIdFromCookie();
+export function withTenantId<T extends Record<string, any>>(data: T, tenantId?: string | null): T & { tenant_id?: string } {
     if (tenantId) {
         return { ...data, tenant_id: tenantId };
     }
     return data;
 }
+

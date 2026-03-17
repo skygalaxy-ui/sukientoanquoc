@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { Post, Category, Tag, MediaFile, ScheduledContent, PageContent } from './types';
 import { withTenantId } from './tenant-filter';
+import { adminDb } from './admin-db';
 
 // ==================== CLIENT ====================
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -36,6 +37,17 @@ export async function getPostById(id: string) {
     return data as Post;
 }
 
+export async function getPublishedPosts() {
+    const { data, error } = await supabase
+        .from('posts')
+        .select('*')
+        .eq('is_published', true)
+        .order('published_at', { ascending: false });
+
+    if (error) { console.error('Error fetching published posts:', error); return []; }
+    return data as Post[];
+}
+
 export async function getPostBySlug(slug: string) {
     const { data, error } = await supabase
         .from('posts')
@@ -48,50 +60,50 @@ export async function getPostBySlug(slug: string) {
     return data as Post;
 }
 
-export async function createPost(post: Partial<Post>) {
-    const { data, error } = await supabase
+export async function getRelatedPosts(currentSlug: string, categoryId: string | null, limit: number = 3) {
+    let query = supabase
         .from('posts')
-        .insert([withTenantId(post)])
-        .select()
-        .single();
+        .select('*')
+        .eq('is_published', true)
+        .neq('slug', currentSlug)
+        .order('published_at', { ascending: false })
+        .limit(limit);
 
+    if (categoryId) {
+        query = query.eq('category_id', categoryId);
+    }
+
+    const { data, error } = await query;
+    if (error) { console.error('Error fetching related posts:', error); return []; }
+    return data as Post[];
+}
+
+export async function createPost(post: Partial<Post>, tenantId?: string | null) {
+    const { data, error } = await adminDb.insert('posts', withTenantId(post, tenantId));
     if (error) { console.error('Error creating post:', error); return null; }
-    return data as Post;
+    return (data as Post[])?.[0] || null;
 }
 
 export async function updatePost(id: string, updates: Partial<Post>) {
-    const { data, error } = await supabase
-        .from('posts')
-        .update({ ...updates, updated_at: new Date().toISOString() })
-        .eq('id', id)
-        .select()
-        .single();
-
+    const { data, error } = await adminDb.update('posts', { ...updates, updated_at: new Date().toISOString() }, { column: 'id', value: id });
     if (error) { console.error('Error updating post:', error); return null; }
-    return data as Post;
+    return (data as Post[])?.[0] || null;
 }
 
 export async function deletePost(id: string) {
-    // Soft delete — move to trash
-    const { error } = await supabase
-        .from('posts')
-        .update({ deleted_at: new Date().toISOString(), is_published: false })
-        .eq('id', id);
+    const { error } = await adminDb.update('posts', { deleted_at: new Date().toISOString(), is_published: false }, { column: 'id', value: id });
     if (error) { console.error('Error soft-deleting post:', error); return false; }
     return true;
 }
 
 export async function restorePost(id: string) {
-    const { error } = await supabase
-        .from('posts')
-        .update({ deleted_at: null })
-        .eq('id', id);
+    const { error } = await adminDb.update('posts', { deleted_at: null }, { column: 'id', value: id });
     if (error) { console.error('Error restoring post:', error); return false; }
     return true;
 }
 
 export async function permanentDeletePost(id: string) {
-    const { error } = await supabase.from('posts').delete().eq('id', id);
+    const { error } = await adminDb.delete('posts', { column: 'id', value: id });
     if (error) { console.error('Error permanently deleting post:', error); return false; }
     return true;
 }
@@ -100,26 +112,22 @@ export async function duplicatePost(id: string) {
     const original = await getPostById(id);
     if (!original) return null;
 
-    const { data, error } = await supabase
-        .from('posts')
-        .insert({
-            title: original.title + ' (bản sao)',
-            slug: original.slug + '-copy-' + Date.now(),
-            excerpt: original.excerpt,
-            content: original.content,
-            featured_image: original.featured_image,
-            featured_image_alt: original.featured_image_alt,
-            category_id: original.category_id,
-            tags: original.tags,
-            meta_title: original.meta_title,
-            meta_description: original.meta_description,
-            is_published: false,
-        })
-        .select()
-        .single();
+    const { data, error } = await adminDb.insert('posts', {
+        title: original.title + ' (bản sao)',
+        slug: original.slug + '-copy-' + Date.now(),
+        excerpt: original.excerpt,
+        content: original.content,
+        featured_image: original.featured_image,
+        featured_image_alt: original.featured_image_alt,
+        category_id: original.category_id,
+        tags: original.tags,
+        meta_title: original.meta_title,
+        meta_description: original.meta_description,
+        is_published: false,
+    });
 
     if (error) { console.error('Error duplicating post:', error); return null; }
-    return data as Post;
+    return (data as Post[])?.[0] || null;
 }
 
 // ==================== CATEGORIES CRUD ====================
@@ -135,30 +143,19 @@ export async function getCategories() {
 }
 
 export async function createCategory(category: Partial<Category>) {
-    const { data, error } = await supabase
-        .from('categories')
-        .insert([category])
-        .select()
-        .single();
-
+    const { data, error } = await adminDb.insert('categories', category);
     if (error) { console.error('Error creating category:', error); return null; }
-    return data as Category;
+    return (data as Category[])?.[0] || null;
 }
 
 export async function updateCategory(id: string, updates: Partial<Category>) {
-    const { data, error } = await supabase
-        .from('categories')
-        .update(updates)
-        .eq('id', id)
-        .select()
-        .single();
-
+    const { data, error } = await adminDb.update('categories', updates, { column: 'id', value: id });
     if (error) { console.error('Error updating category:', error); return null; }
-    return data as Category;
+    return (data as Category[])?.[0] || null;
 }
 
 export async function deleteCategory(id: string) {
-    const { error } = await supabase.from('categories').delete().eq('id', id);
+    const { error } = await adminDb.delete('categories', { column: 'id', value: id });
     if (error) { console.error('Error deleting category:', error); return false; }
     return true;
 }
@@ -176,30 +173,19 @@ export async function getTags() {
 }
 
 export async function createTag(tag: Partial<Tag>) {
-    const { data, error } = await supabase
-        .from('tags')
-        .insert([tag])
-        .select()
-        .single();
-
+    const { data, error } = await adminDb.insert('tags', tag);
     if (error) { console.error('Error creating tag:', error); return null; }
-    return data as Tag;
+    return (data as Tag[])?.[0] || null;
 }
 
 export async function updateTag(id: string, updates: Partial<Tag>) {
-    const { data, error } = await supabase
-        .from('tags')
-        .update(updates)
-        .eq('id', id)
-        .select()
-        .single();
-
+    const { data, error } = await adminDb.update('tags', updates, { column: 'id', value: id });
     if (error) { console.error('Error updating tag:', error); return null; }
-    return data as Tag;
+    return (data as Tag[])?.[0] || null;
 }
 
 export async function deleteTag(id: string) {
-    const { error } = await supabase.from('tags').delete().eq('id', id);
+    const { error } = await adminDb.delete('tags', { column: 'id', value: id });
     if (error) { console.error('Error deleting tag:', error); return false; }
     return true;
 }
@@ -281,30 +267,19 @@ export async function getScheduledContent() {
 }
 
 export async function createScheduledContent(content: Partial<ScheduledContent>) {
-    const { data, error } = await supabase
-        .from('scheduled_content')
-        .insert([content])
-        .select()
-        .single();
-
+    const { data, error } = await adminDb.insert('scheduled_content', content);
     if (error) { console.error('Error creating scheduled content:', error); return null; }
-    return data as ScheduledContent;
+    return (data as ScheduledContent[])?.[0] || null;
 }
 
 export async function updateScheduledContent(id: string, updates: Partial<ScheduledContent>) {
-    const { data, error } = await supabase
-        .from('scheduled_content')
-        .update({ ...updates, updated_at: new Date().toISOString() })
-        .eq('id', id)
-        .select()
-        .single();
-
+    const { data, error } = await adminDb.update('scheduled_content', { ...updates, updated_at: new Date().toISOString() }, { column: 'id', value: id });
     if (error) { console.error('Error updating scheduled content:', error); return null; }
-    return data as ScheduledContent;
+    return (data as ScheduledContent[])?.[0] || null;
 }
 
 export async function deleteScheduledContent(id: string) {
-    const { error } = await supabase.from('scheduled_content').delete().eq('id', id);
+    const { error } = await adminDb.delete('scheduled_content', { column: 'id', value: id });
     if (error) { console.error('Error deleting scheduled content:', error); return false; }
     return true;
 }
@@ -322,15 +297,12 @@ export async function getAllPageContent(): Promise<PageContent[]> {
 }
 
 export async function savePageContent(sectionId: string, pagePath: string, data: Record<string, string>): Promise<boolean> {
-    const { error } = await supabase
-        .from('page_content')
-        .upsert({
-            section_id: sectionId,
-            page_path: pagePath,
-            data,
-            updated_at: new Date().toISOString(),
-        }, { onConflict: 'section_id' });
-
+    const { error } = await adminDb.upsert('page_content', {
+        section_id: sectionId,
+        page_path: pagePath,
+        data,
+        updated_at: new Date().toISOString(),
+    }, { onConflict: 'section_id' });
     if (error) { console.error('Error saving page content:', error); return false; }
     return true;
 }
@@ -347,10 +319,7 @@ export async function getSiteSettings(): Promise<Record<string, any>> {
 }
 
 export async function saveSiteSetting(key: string, value: any): Promise<boolean> {
-    const { error } = await supabase
-        .from('site_settings')
-        .upsert({ key, value }, { onConflict: 'key' });
-
+    const { error } = await adminDb.upsert('site_settings', { key, value }, { onConflict: 'key' });
     if (error) { console.error('Error saving setting:', error); return false; }
     return true;
 }
@@ -372,15 +341,12 @@ export async function checkAndPublishScheduledPosts(): Promise<{ published: numb
         }
 
         for (const post of scheduledPosts) {
-            await supabase
-                .from('posts')
-                .update({
-                    is_published: true,
-                    published_at: currentTime,
-                    scheduled_at: null,
-                    updated_at: currentTime
-                })
-                .eq('id', post.id);
+            await adminDb.update('posts', {
+                is_published: true,
+                published_at: currentTime,
+                scheduled_at: null,
+                updated_at: currentTime
+            }, { column: 'id', value: post.id });
         }
 
         return { published: scheduledPosts.length, posts: scheduledPosts };

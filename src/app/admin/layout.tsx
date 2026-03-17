@@ -21,7 +21,7 @@ export default function AdminLayout({
 
                 {/* Support Button */}
                 <a
-                    href="https://t.me/cmssupport10xsolution"
+                    href="https://t.me/sukientoanquoc"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="fixed bottom-5 right-5 z-50 group"

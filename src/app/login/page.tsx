@@ -208,17 +208,17 @@ export default function LoginPage() {
                         <div className="space-y-2">
                             <div className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
                                 <span className="text-xs text-gray-500">Email</span>
-                                <code className="text-xs font-mono text-gray-900 select-all">admin@10xsolution.com</code>
+                                <code className="text-xs font-mono text-gray-900 select-all">admin@sukientoanquoc.com</code>
                             </div>
                             <div className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
                                 <span className="text-xs text-gray-500">Password</span>
-                                <code className="text-xs font-mono text-gray-900 select-all">10xAdmin@2026</code>
+                                <code className="text-xs font-mono text-gray-900 select-all">SETQ@Admin2026</code>
                             </div>
                         </div>
                         <button
                             onClick={() => {
-                                setEmail("admin@10xsolution.com");
-                                setPassword("10xAdmin@2026");
+                                setEmail("admin@sukientoanquoc.com");
+                                setPassword("SETQ@Admin2026");
                                 setShowHint(false);
                             }}
                             className="w-full mt-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-medium rounded-lg transition-colors"

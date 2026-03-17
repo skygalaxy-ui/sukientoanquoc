@@ -1,9 +1,27 @@
 -- =============================================
--- 10x Solution CMS — Database Schema
--- Run this in Supabase SQL Editor
+-- Sự Kiện Toàn Quốc CMS — Database Setup
+-- BƯỚC 1: Chạy file này TRƯỚC trong Supabase SQL Editor
+-- URL: https://supabase.com/dashboard/project/njchsjhdkcfaouqwyutc/sql/new
 -- =============================================
 
--- 1. POSTS
+-- XÓA DỮ LIỆU CŨ (17 bài test cachdautu legacy)
+TRUNCATE TABLE posts CASCADE;
+TRUNCATE TABLE categories CASCADE;
+
+-- Xóa policies cũ nếu có (tránh lỗi duplicate)
+DROP POLICY IF EXISTS "Allow all on posts" ON posts;
+DROP POLICY IF EXISTS "Allow all on categories" ON categories;
+DROP POLICY IF EXISTS "Allow all on tags" ON tags;
+DROP POLICY IF EXISTS "Allow all on scheduled_content" ON scheduled_content;
+DROP POLICY IF EXISTS "Allow all on page_content" ON page_content;
+DROP POLICY IF EXISTS "Allow all on site_settings" ON site_settings;
+DROP POLICY IF EXISTS "Allow public upload" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public read" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public delete" ON storage.objects;
+
+-- =============================================
+-- 1. POSTS (giữ nguyên cấu trúc CMS)
+-- =============================================
 CREATE TABLE IF NOT EXISTS posts (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     title TEXT NOT NULL,
@@ -86,7 +104,7 @@ CREATE INDEX IF NOT EXISTS idx_scheduled_content_date ON scheduled_content(sched
 CREATE INDEX IF NOT EXISTS idx_site_settings_key ON site_settings(key);
 
 -- =============================================
--- ROW LEVEL SECURITY (allow all for now, lock down later)
+-- ROW LEVEL SECURITY
 -- =============================================
 ALTER TABLE posts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
@@ -95,7 +113,7 @@ ALTER TABLE scheduled_content ENABLE ROW LEVEL SECURITY;
 ALTER TABLE page_content ENABLE ROW LEVEL SECURITY;
 ALTER TABLE site_settings ENABLE ROW LEVEL SECURITY;
 
--- Public read/write policies (adjust for production)
+-- Public read/write policies
 CREATE POLICY "Allow all on posts" ON posts FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Allow all on categories" ON categories FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Allow all on tags" ON tags FOR ALL USING (true) WITH CHECK (true);
@@ -110,7 +128,7 @@ INSERT INTO storage.buckets (id, name, public)
 VALUES ('post-images', 'post-images', true) 
 ON CONFLICT (id) DO NOTHING;
 
--- Storage policy: allow public uploads/reads
+-- Storage policies
 CREATE POLICY "Allow public upload" ON storage.objects 
 FOR INSERT WITH CHECK (bucket_id = 'post-images');
 
@@ -121,21 +139,30 @@ CREATE POLICY "Allow public delete" ON storage.objects
 FOR DELETE USING (bucket_id = 'post-images');
 
 -- =============================================
--- SEED DATA (optional sample categories)
+-- SEED DATA — Chuyên mục cho Sự Kiện Toàn Quốc
 -- =============================================
 INSERT INTO categories (name, slug, description) VALUES
-    ('Tin tức', 'tin-tuc', 'Tin tức mới nhất'),
-    ('Hướng dẫn', 'huong-dan', 'Bài viết hướng dẫn chi tiết'),
-    ('Review', 'review', 'Đánh giá và nhận xét'),
-    ('Kiến thức', 'kien-thuc', 'Kiến thức chuyên ngành')
+    ('Teambuilding', 'teambuilding', 'Các hoạt động teambuilding, gắn kết đội nhóm'),
+    ('Sự kiện doanh nghiệp', 'su-kien-doanh-nghiep', 'Tổ chức sự kiện cho doanh nghiệp, hội nghị, hội thảo'),
+    ('Tiệc & Gala', 'tiec-gala', 'Tổ chức tiệc cuối năm, gala dinner, lễ kỷ niệm'),
+    ('Lễ hội & Activation', 'le-hoi-activation', 'Tổ chức lễ hội, brand activation, event marketing'),
+    ('Tin tức', 'tin-tuc', 'Tin tức mới nhất về ngành sự kiện'),
+    ('Kinh nghiệm', 'kinh-nghiem', 'Chia sẻ kinh nghiệm tổ chức sự kiện')
 ON CONFLICT (slug) DO NOTHING;
 
 INSERT INTO tags (name, slug) VALUES
-    ('SEO', 'seo'),
-    ('Marketing', 'marketing'),
-    ('Digital', 'digital'),
-    ('Hướng dẫn', 'huong-dan'),
+    ('Teambuilding', 'teambuilding'),
+    ('Sự kiện', 'su-kien'),
+    ('Doanh nghiệp', 'doanh-nghiep'),
+    ('Gala Dinner', 'gala-dinner'),
+    ('Hội nghị', 'hoi-nghi'),
+    ('Activation', 'activation'),
+    ('Year End Party', 'year-end-party'),
+    ('Team Outing', 'team-outing'),
+    ('Tổ chức sự kiện', 'to-chuc-su-kien'),
     ('Tips', 'tips')
 ON CONFLICT (slug) DO NOTHING;
 
--- Done! Refresh Supabase Dashboard to see tables.
+-- =============================================
+-- Done! ✅ Database sẵn sàng cho Sự Kiện Toàn Quốc CMS
+-- =============================================

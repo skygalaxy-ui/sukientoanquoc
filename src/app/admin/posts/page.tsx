@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { supabase } from "@/lib/supabase";
 import { duplicatePost, restorePost, permanentDeletePost } from "@/lib/supabase";
 import { tenantQuery } from "@/lib/tenant-filter";
+import { adminDb } from "@/lib/admin-db";
+import { useAuth } from "@/lib/auth-context";
 import { Post, Category } from "@/lib/types";
 import {
     Plus, Search, Trash2, Edit3, FileText,
@@ -13,6 +14,7 @@ import {
 } from "lucide-react";
 
 export default function PostsPage() {
+    const { user, tenantId } = useAuth();
     const [posts, setPosts] = useState<Post[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [loading, setLoading] = useState(true);
@@ -28,8 +30,8 @@ export default function PostsPage() {
     async function fetchData() {
         setLoading(true);
         const [postsRes, catsRes] = await Promise.all([
-            tenantQuery('posts').order('created_at', { ascending: false }),
-            tenantQuery('categories')
+            tenantQuery('posts', tenantId, user?.role || null).order('created_at', { ascending: false }),
+            tenantQuery('categories', tenantId, user?.role || null)
         ]);
         setPosts(postsRes.data || []);
         setCategories(catsRes.data || []);
@@ -38,17 +40,17 @@ export default function PostsPage() {
 
     async function togglePublish(post: Post) {
         const now = new Date().toISOString();
-        await supabase.from('posts').update({
+        await adminDb.update('posts', {
             is_published: !post.is_published,
             published_at: !post.is_published ? now : null,
             updated_at: now
-        }).eq('id', post.id);
+        }, { column: 'id', value: post.id });
         fetchData();
     }
 
     async function handleDelete(id: string) {
         if (!confirm('Chuyển bài viết vào thùng rác?')) return;
-        await supabase.from('posts').update({ deleted_at: new Date().toISOString(), is_published: false }).eq('id', id);
+        await adminDb.update('posts', { deleted_at: new Date().toISOString(), is_published: false }, { column: 'id', value: id });
         fetchData();
     }
 
@@ -73,7 +75,7 @@ export default function PostsPage() {
         setBulkLoading(true);
         const now = new Date().toISOString();
         for (const id of selectedPosts) {
-            await supabase.from('posts').update({ is_published: true, published_at: now, updated_at: now }).eq('id', id);
+            await adminDb.update('posts', { is_published: true, published_at: now, updated_at: now }, { column: 'id', value: id });
         }
         setSelectedPosts([]);
         setBulkLoading(false);
@@ -84,7 +86,7 @@ export default function PostsPage() {
         if (!confirm(`Chuyển ${selectedPosts.length} bài về nháp?`)) return;
         setBulkLoading(true);
         for (const id of selectedPosts) {
-            await supabase.from('posts').update({ is_published: false, scheduled_at: null, updated_at: new Date().toISOString() }).eq('id', id);
+            await adminDb.update('posts', { is_published: false, scheduled_at: null, updated_at: new Date().toISOString() }, { column: 'id', value: id });
         }
         setSelectedPosts([]);
         setBulkLoading(false);
@@ -95,7 +97,7 @@ export default function PostsPage() {
         if (!confirm(`⚠️ Xóa vĩnh viễn ${selectedPosts.length} bài viết?`)) return;
         setBulkLoading(true);
         for (const id of selectedPosts) {
-            await supabase.from('posts').delete().eq('id', id);
+            await adminDb.delete('posts', { column: 'id', value: id });
         }
         setSelectedPosts([]);
         setBulkLoading(false);

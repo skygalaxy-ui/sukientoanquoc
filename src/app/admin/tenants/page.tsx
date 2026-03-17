@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { adminDb } from "@/lib/admin-db";
 import { useAuth } from "@/lib/auth-context";
 import {
     Plus, Trash2, Edit3, Users, Globe, Shield,
@@ -46,12 +46,12 @@ export default function TenantsPage() {
 
     async function fetchData() {
         setLoading(true);
-        const [{ data: t }, { data: u }] = await Promise.all([
-            supabase.from('tenants').select('*').order('created_at'),
-            supabase.from('users').select('*').order('created_at'),
-        ]);
-        setTenants(t || []);
-        setUsers(u || []);
+        try {
+            const res = await fetch('/api/admin/tenants');
+            const data = await res.json();
+            setTenants(data.tenants || []);
+            setUsers(data.users || []);
+        } catch { }
         setLoading(false);
         // Check license
         try {
@@ -65,11 +65,11 @@ export default function TenantsPage() {
     async function saveTenant() {
         setSaving(true);
         if (form.id) {
-            await supabase.from('tenants').update({
+            await adminDb.update('tenants', {
                 name: form.name, slug: form.slug, domain: form.domain, plan: form.plan, is_active: form.is_active,
-            }).eq('id', form.id);
+            }, { column: 'id', value: form.id });
         } else {
-            await supabase.from('tenants').insert({
+            await adminDb.insert('tenants', {
                 name: form.name, slug: form.slug, domain: form.domain || null, plan: form.plan || 'free',
             });
         }
@@ -82,28 +82,16 @@ export default function TenantsPage() {
     async function saveUser() {
         setSaving(true);
         if (form.id) {
-            await supabase.from('users').update({
+            await adminDb.update('users', {
                 name: form.name, email: form.email, role: form.role,
                 tenant_id: form.tenant_id || null, is_active: form.is_active,
-            }).eq('id', form.id);
+            }, { column: 'id', value: form.id });
         } else {
-            // Hash password via SQL
-            const { data } = await supabase.rpc('create_user', {
-                p_email: form.email,
-                p_password: form.password || 'ChangeMeNow!',
-                p_name: form.name,
-                p_role: form.role || 'editor',
-                p_tenant_id: form.tenant_id || null,
+            await adminDb.insert('users', {
+                email: form.email, name: form.name, role: form.role || 'editor',
+                tenant_id: form.tenant_id || null,
+                password_hash: 'NEEDS_RESET',
             });
-
-            if (!data) {
-                // Fallback: insert without hashing (will need manual password set)
-                await supabase.from('users').insert({
-                    email: form.email, name: form.name, role: form.role || 'editor',
-                    tenant_id: form.tenant_id || null,
-                    password_hash: 'NEEDS_RESET',
-                });
-            }
         }
         setShowForm(null);
         setForm({});
@@ -113,13 +101,13 @@ export default function TenantsPage() {
 
     async function deleteTenant(id: string) {
         if (!confirm('Xóa tenant này? Tất cả data sẽ mất!')) return;
-        await supabase.from('tenants').delete().eq('id', id);
+        await adminDb.delete('tenants', { column: 'id', value: id });
         fetchData();
     }
 
     async function deleteUser(id: string) {
         if (!confirm('Xóa user này?')) return;
-        await supabase.from('users').delete().eq('id', id);
+        await adminDb.delete('users', { column: 'id', value: id });
         fetchData();
     }
 

@@ -1,0 +1,141 @@
+import { supabase } from './supabase';
+
+// Default images (fallback khi chưa set trong CMS)
+const DEFAULT_IMAGES: Record<string, string> = {
+  // Hero
+  'hero_bg': 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1920&q=90',
+  
+  // Feature
+  'feature_main': 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=800&q=85',
+  
+  // Services
+  'service_teambuilding': 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=85',
+  'service_company_trip': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=85',
+  'service_year_end_party': 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=85',
+  'service_workshop': 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=85',
+  'service_sports_day': 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&q=85',
+  'service_family_day': 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=800&q=85',
+  
+  // Portfolio
+  'portfolio_1': 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80&fm=webp',
+  'portfolio_2': 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&q=80&fm=webp',
+  'portfolio_3': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&fm=webp',
+  'portfolio_4': 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&q=80&fm=webp',
+  'portfolio_5': 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80&fm=webp',
+  'portfolio_6': 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=600&q=80&fm=webp',
+  
+  // Speakers
+  'speaker_1': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80&fm=webp',
+  'speaker_2': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80&fm=webp',
+  'speaker_3': 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&q=80&fm=webp',
+  
+  // Sponsor
+  'sponsor_bg': 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1920&q=85',
+  
+  // Events
+  'event_teambuilding_1': 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&q=80',
+  'event_teambuilding_2': 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=400&q=80',
+  'event_gala_1': 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&q=80',
+  'event_gala_2': 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=400&q=80',
+  'event_workshop_1': 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=400&q=80',
+  'event_workshop_2': 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=400&q=80',
+  
+  // VideoGrid
+  'video_1': 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&q=80',
+  'video_2': 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=600&q=80',
+  'video_3': 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&q=80',
+  'video_4': 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=600&q=80',
+
+  // Topics
+  'topic_main': 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=200&q=80',
+
+  // Service pages hero
+  'servicepage_teambuilding': 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1920&q=90&fm=webp',
+  'servicepage_company_trip': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=90&fm=webp',
+  'servicepage_year_end_party': 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1920&q=90&fm=webp',
+  'servicepage_workshop': 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1920&q=90&fm=webp',
+  'servicepage_sports_day': 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1920&q=90&fm=webp',
+  'servicepage_family_day': 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=1920&q=90&fm=webp',
+  'servicepage_khai_truong': 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1920&q=90&fm=webp',
+  'servicepage_hoi_nghi': 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=1920&q=90&fm=webp',
+};
+
+let cachedImages: Record<string, string> | null = null;
+let cacheTime = 0;
+const CACHE_TTL = 60 * 1000; // 60 seconds
+
+export async function getPageImages(): Promise<Record<string, string>> {
+  const now = Date.now();
+  if (cachedImages && (now - cacheTime) < CACHE_TTL) {
+    return cachedImages;
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('site_settings')
+      .select('*')
+      .eq('key', 'page_images')
+      .single();
+
+    if (error || !data) {
+      cachedImages = { ...DEFAULT_IMAGES };
+    } else {
+      cachedImages = { ...DEFAULT_IMAGES, ...(data.value || {}) };
+    }
+  } catch {
+    cachedImages = { ...DEFAULT_IMAGES };
+  }
+
+  cacheTime = now;
+  return cachedImages;
+}
+
+export function getDefaultImages(): Record<string, string> {
+  return { ...DEFAULT_IMAGES };
+}
+
+export async function getImage(key: string): Promise<string> {
+  const images = await getPageImages();
+  return images[key] || DEFAULT_IMAGES[key] || '';
+}
+
+// List of all image keys with labels for admin UI
+export const IMAGE_KEYS = [
+  { key: 'hero_bg', label: 'Ảnh nền Hero (Banner chính)', section: 'Trang chủ' },
+  { key: 'feature_main', label: 'Ảnh mục Tại sao chọn chúng tôi', section: 'Trang chủ' },
+  { key: 'service_teambuilding', label: 'Teambuilding', section: 'Dịch vụ' },
+  { key: 'service_company_trip', label: 'Company Trip', section: 'Dịch vụ' },
+  { key: 'service_year_end_party', label: 'Year End Party', section: 'Dịch vụ' },
+  { key: 'service_workshop', label: 'Workshop & Đào tạo', section: 'Dịch vụ' },
+  { key: 'service_sports_day', label: 'Sports Day', section: 'Dịch vụ' },
+  { key: 'service_family_day', label: 'Family Day', section: 'Dịch vụ' },
+  { key: 'portfolio_1', label: 'Dự án 1', section: 'Portfolio' },
+  { key: 'portfolio_2', label: 'Dự án 2', section: 'Portfolio' },
+  { key: 'portfolio_3', label: 'Dự án 3', section: 'Portfolio' },
+  { key: 'portfolio_4', label: 'Dự án 4', section: 'Portfolio' },
+  { key: 'portfolio_5', label: 'Dự án 5', section: 'Portfolio' },
+  { key: 'portfolio_6', label: 'Dự án 6', section: 'Portfolio' },
+  { key: 'speaker_1', label: 'Diễn giả 1', section: 'Đội ngũ' },
+  { key: 'speaker_2', label: 'Diễn giả 2', section: 'Đội ngũ' },
+  { key: 'speaker_3', label: 'Diễn giả 3', section: 'Đội ngũ' },
+  { key: 'sponsor_bg', label: 'Ảnh nền Đối tác', section: 'Trang chủ' },
+  { key: 'event_teambuilding_1', label: 'Teambuilding 1', section: 'Sự kiện' },
+  { key: 'event_teambuilding_2', label: 'Teambuilding 2', section: 'Sự kiện' },
+  { key: 'event_gala_1', label: 'Gala Dinner 1', section: 'Sự kiện' },
+  { key: 'event_gala_2', label: 'Gala Dinner 2', section: 'Sự kiện' },
+  { key: 'event_workshop_1', label: 'Workshop 1', section: 'Sự kiện' },
+  { key: 'event_workshop_2', label: 'Workshop 2', section: 'Sự kiện' },
+  { key: 'video_1', label: 'Video/Ảnh 1', section: 'Video' },
+  { key: 'video_2', label: 'Video/Ảnh 2', section: 'Video' },
+  { key: 'video_3', label: 'Video/Ảnh 3', section: 'Video' },
+  { key: 'video_4', label: 'Video/Ảnh 4', section: 'Video' },
+  { key: 'topic_main', label: 'Ảnh chủ đề', section: 'Trang chủ' },
+  { key: 'servicepage_teambuilding', label: 'Hero Teambuilding', section: 'Trang dịch vụ' },
+  { key: 'servicepage_company_trip', label: 'Hero Company Trip', section: 'Trang dịch vụ' },
+  { key: 'servicepage_year_end_party', label: 'Hero Year End Party', section: 'Trang dịch vụ' },
+  { key: 'servicepage_workshop', label: 'Hero Workshop', section: 'Trang dịch vụ' },
+  { key: 'servicepage_sports_day', label: 'Hero Sports Day', section: 'Trang dịch vụ' },
+  { key: 'servicepage_family_day', label: 'Hero Family Day', section: 'Trang dịch vụ' },
+  { key: 'servicepage_khai_truong', label: 'Hero Khai trương', section: 'Trang dịch vụ' },
+  { key: 'servicepage_hoi_nghi', label: 'Hero Hội nghị', section: 'Trang dịch vụ' },
+];

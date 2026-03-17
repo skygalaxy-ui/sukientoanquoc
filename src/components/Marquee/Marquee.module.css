@@ -1,0 +1,95 @@
+.marquee {
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 18px 0;
+    position: relative;
+}
+
+.track {
+    display: inline-flex;
+    animation: marquee linear infinite;
+}
+
+.item {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 0 28px;
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.dot {
+    font-size: 8px;
+    opacity: 0.5;
+}
+
+/* Orange variant */
+.purple {
+    background: linear-gradient(135deg, #F97316 0%, #FB923C 50%, #F59E0B 100%);
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
+    padding: 20px 0;
+}
+
+.purple .item {
+    color: white;
+    font-size: 15px;
+}
+
+.purple .dot {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Cities variant */
+.cities {
+    background: var(--bg-alt);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.cities .item {
+    color: var(--text-secondary);
+    font-size: 13px;
+    letter-spacing: 3px;
+}
+
+.cities .dot {
+    color: var(--orange);
+}
+
+/* Default variant */
+.default {
+    background: var(--bg);
+}
+
+.default .item {
+    color: var(--text-muted);
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}

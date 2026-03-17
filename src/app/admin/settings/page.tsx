@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Globe, Database, Save, Loader2, Check, Info } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Globe, Database, Save, Loader2, Check, Info, Image as ImageIcon, Upload, X, Eye } from "lucide-react";
 
 export default function SettingsPage() {
     const [saving, setSaving] = useState(false);
@@ -15,19 +15,250 @@ export default function SettingsPage() {
         autoPublish: true,
     });
 
+    // Branding state
+    const [branding, setBranding] = useState<{
+        logoUrl?: string;
+        faviconUrl?: string;
+    }>({});
+    const [brandingSaving, setBrandingSaving] = useState(false);
+    const [brandingSaved, setBrandingSaved] = useState(false);
+    const [uploading, setUploading] = useState<string | null>(null);
+    const logoInputRef = useRef<HTMLInputElement>(null);
+    const faviconInputRef = useRef<HTMLInputElement>(null);
+
+    // Load branding
+    useEffect(() => {
+        fetch('/api/admin/branding')
+            .then(r => r.json())
+            .then(d => setBranding(d.branding || {}))
+            .catch(() => {});
+    }, []);
+
     const handleSave = async () => {
         setSaving(true);
-        // In a real app this would save to Supabase site_settings table
         await new Promise(r => setTimeout(r, 800));
         setSaving(false);
         setSaved(true);
         setTimeout(() => setSaved(false), 2000);
     };
 
+    // Upload file to Supabase storage
+    const handleUpload = async (file: File, type: 'logo' | 'favicon') => {
+        setUploading(type);
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('type', type);
+
+            const res = await fetch('/api/admin/branding/upload', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                const url = data.url || data.publicUrl;
+                setBranding(prev => ({
+                    ...prev,
+                    [type === 'logo' ? 'logoUrl' : 'faviconUrl']: url,
+                }));
+            } else {
+                const errData = await res.json().catch(() => ({}));
+                alert('Upload thất bại: ' + (errData.error || 'Vui lòng thử lại.'));
+            }
+        } catch {
+            alert('Lỗi kết nối khi upload.');
+        }
+        setUploading(null);
+    };
+
+    const handleBrandingSave = async () => {
+        setBrandingSaving(true);
+        try {
+            const res = await fetch('/api/admin/branding', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ branding }),
+            });
+            if (res.ok) {
+                setBrandingSaved(true);
+                setTimeout(() => setBrandingSaved(false), 2000);
+            }
+        } catch {
+            alert('Lỗi khi lưu branding.');
+        }
+        setBrandingSaving(false);
+    };
+
+    const handleRemove = (type: 'logo' | 'favicon') => {
+        setBranding(prev => {
+            const next = { ...prev };
+            if (type === 'logo') delete next.logoUrl;
+            else delete next.faviconUrl;
+            return next;
+        });
+    };
+
     return (
         <div className="space-y-6">
             <div><h1 className="text-2xl font-bold text-gray-900">Cài đặt</h1><p className="text-gray-500 text-sm mt-0.5">Cấu hình chung của CMS</p></div>
 
+            {/* ═══ Logo & Favicon ═══ */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
+                    <ImageIcon className="w-5 h-5 text-orange-500" />
+                    <h2 className="font-semibold text-gray-900">Logo & Favicon</h2>
+                </div>
+                <div className="p-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {/* Logo */}
+                        <div>
+                            <label className="text-sm font-medium text-gray-700 mb-3 block">Logo website</label>
+                            <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center min-h-[180px] bg-gray-50/50 relative group transition-all hover:border-orange-300">
+                                {branding.logoUrl ? (
+                                    <>
+                                        <img
+                                            src={branding.logoUrl}
+                                            alt="Logo"
+                                            className="max-h-[100px] max-w-full object-contain"
+                                        />
+                                        <div className="flex gap-2 mt-4">
+                                            <button
+                                                onClick={() => logoInputRef.current?.click()}
+                                                className="px-3 py-1.5 text-xs font-medium bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-all"
+                                            >
+                                                Đổi ảnh
+                                            </button>
+                                            <button
+                                                onClick={() => handleRemove('logo')}
+                                                className="px-3 py-1.5 text-xs font-medium bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-all"
+                                            >
+                                                <X className="w-3 h-3 inline mr-1" />Xóa
+                                            </button>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        {uploading === 'logo' ? (
+                                            <Loader2 className="w-8 h-8 text-orange-500 animate-spin" />
+                                        ) : (
+                                            <>
+                                                <Upload className="w-8 h-8 text-gray-400 mb-2" />
+                                                <p className="text-sm text-gray-500 mb-1">Kéo thả hoặc nhấn để chọn</p>
+                                                <p className="text-xs text-gray-400">PNG, JPG, SVG, WebP (tối đa 2MB)</p>
+                                            </>
+                                        )}
+                                    </>
+                                )}
+                                <input
+                                    ref={logoInputRef}
+                                    type="file"
+                                    accept="image/*"
+                                    className="absolute inset-0 opacity-0 cursor-pointer"
+                                    onChange={(e) => {
+                                        const f = e.target.files?.[0];
+                                        if (f) handleUpload(f, 'logo');
+                                    }}
+                                />
+                            </div>
+                            <div className="mt-3">
+                                <label className="text-xs font-medium text-gray-500 mb-1 block">Hoặc dán URL ảnh</label>
+                                <input
+                                    type="url"
+                                    value={branding.logoUrl || ''}
+                                    onChange={(e) => setBranding(prev => ({ ...prev, logoUrl: e.target.value }))}
+                                    placeholder="https://..."
+                                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400"
+                                />
+                            </div>
+                            <p className="text-xs text-gray-400 mt-2">Khuyên dùng: 200×60px, PNG trong suốt</p>
+                        </div>
+
+                        {/* Favicon */}
+                        <div>
+                            <label className="text-sm font-medium text-gray-700 mb-3 block">Favicon (icon tab trình duyệt)</label>
+                            <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center min-h-[180px] bg-gray-50/50 relative group transition-all hover:border-orange-300">
+                                {branding.faviconUrl ? (
+                                    <>
+                                        <div className="w-16 h-16 rounded-xl border border-gray-200 flex items-center justify-center bg-white shadow-sm">
+                                            <img
+                                                src={branding.faviconUrl}
+                                                alt="Favicon"
+                                                className="w-10 h-10 object-contain"
+                                            />
+                                        </div>
+                                        <div className="flex items-center gap-2 mt-3 text-xs text-gray-500">
+                                            <Eye className="w-3 h-3" />
+                                            Preview tab trình duyệt
+                                        </div>
+                                        <div className="flex gap-2 mt-3">
+                                            <button
+                                                onClick={() => faviconInputRef.current?.click()}
+                                                className="px-3 py-1.5 text-xs font-medium bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-all"
+                                            >
+                                                Đổi ảnh
+                                            </button>
+                                            <button
+                                                onClick={() => handleRemove('favicon')}
+                                                className="px-3 py-1.5 text-xs font-medium bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-all"
+                                            >
+                                                <X className="w-3 h-3 inline mr-1" />Xóa
+                                            </button>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        {uploading === 'favicon' ? (
+                                            <Loader2 className="w-8 h-8 text-orange-500 animate-spin" />
+                                        ) : (
+                                            <>
+                                                <Upload className="w-8 h-8 text-gray-400 mb-2" />
+                                                <p className="text-sm text-gray-500 mb-1">Kéo thả hoặc nhấn để chọn</p>
+                                                <p className="text-xs text-gray-400">ICO, PNG, SVG (32×32 hoặc 64×64)</p>
+                                            </>
+                                        )}
+                                    </>
+                                )}
+                                <input
+                                    ref={faviconInputRef}
+                                    type="file"
+                                    accept=".ico,.png,.svg,image/x-icon,image/png,image/svg+xml"
+                                    className="absolute inset-0 opacity-0 cursor-pointer"
+                                    onChange={(e) => {
+                                        const f = e.target.files?.[0];
+                                        if (f) handleUpload(f, 'favicon');
+                                    }}
+                                />
+                            </div>
+                            <div className="mt-3">
+                                <label className="text-xs font-medium text-gray-500 mb-1 block">Hoặc dán URL ảnh</label>
+                                <input
+                                    type="url"
+                                    value={branding.faviconUrl || ''}
+                                    onChange={(e) => setBranding(prev => ({ ...prev, faviconUrl: e.target.value }))}
+                                    placeholder="https://..."
+                                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400"
+                                />
+                            </div>
+                            <p className="text-xs text-gray-400 mt-2">Khuyên dùng: 32×32px hoặc 64×64px, ICO/PNG</p>
+                        </div>
+                    </div>
+
+                    {/* Save branding */}
+                    <div className="flex justify-end mt-6 pt-4 border-t border-gray-100">
+                        <button
+                            onClick={handleBrandingSave}
+                            disabled={brandingSaving}
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-orange-500 text-white font-medium text-sm hover:bg-orange-600 disabled:opacity-50 transition-all shadow-sm"
+                        >
+                            {brandingSaving ? <Loader2 size={14} className="animate-spin" /> : brandingSaved ? <Check size={14} /> : <Save size={14} />}
+                            {brandingSaving ? 'Đang lưu...' : brandingSaved ? 'Đã lưu!' : 'Lưu Logo & Favicon'}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* ═══ Website Info ═══ */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                 <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
                     <Globe className="w-5 h-5 text-gray-400" />
@@ -62,6 +293,7 @@ export default function SettingsPage() {
                 </div>
             </div>
 
+            {/* ═══ Supabase ═══ */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                 <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
                     <Database className="w-5 h-5 text-gray-400" />

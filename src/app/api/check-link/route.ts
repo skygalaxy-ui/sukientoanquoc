@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
             redirect: 'follow',
             signal: controller.signal,
             headers: {
-                'User-Agent': 'Mozilla/5.0 (compatible; 10xSolutionCMS/1.0; LinkChecker)',
+                'User-Agent': 'Mozilla/5.0 (compatible; SETQCMS/1.0; LinkChecker)',
             },
         });
 
@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
                 redirect: 'follow',
                 signal: controller.signal,
                 headers: {
-                    'User-Agent': 'Mozilla/5.0 (compatible; 10xSolutionCMS/1.0; LinkChecker)',
+                    'User-Agent': 'Mozilla/5.0 (compatible; SETQCMS/1.0; LinkChecker)',
                 },
             });
 

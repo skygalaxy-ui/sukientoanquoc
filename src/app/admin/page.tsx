@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
-import { getTenantIdFromCookie, getUserRoleFromCookie } from "@/lib/tenant-filter";
+import { useAuth } from "@/lib/auth-context";
 import { Post, DashboardStats } from "@/lib/types";
 import {
     FileText,
@@ -56,6 +56,7 @@ function WeeklyChart({ posts, allPosts }: { posts: Post[]; allPosts: number }) {
 }
 
 export default function AdminDashboard() {
+    const { user, tenantId } = useAuth();
     const [stats, setStats] = useState<DashboardStats>({
         posts: 0, categories: 0, published: 0, drafts: 0,
         scheduled: 0, imagesCount: 0, thisMonthPosts: 0, lastMonthPosts: 0
@@ -91,9 +92,7 @@ export default function AdminDashboard() {
                 const lastMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1).toISOString();
                 const lastMonthEnd = new Date(now.getFullYear(), now.getMonth(), 0).toISOString();
 
-                const tenantId = getTenantIdFromCookie();
-                const role = getUserRoleFromCookie();
-                const tf = (q: any) => (role !== 'super_admin' && tenantId) ? q.eq('tenant_id', tenantId) : q;
+                const tf = (q: any) => (user?.role !== 'super_admin' && tenantId) ? q.eq('tenant_id', tenantId) : q;
 
                 const [
                     { count: postsCount },
@@ -502,19 +501,19 @@ export default function AdminDashboard() {
                         </div>
                     </div>
 
-                    {/* 10x Solution Card */}
-                    <div className="bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-2xl p-5 text-white">
+                    {/* Sự Kiện Toàn Quốc Card */}
+                    <div className="bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl p-5 text-white">
                         <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center mb-4">
-                            <span className="font-black text-sm">10x</span>
+                            <span className="font-black text-[10px]">SETQ</span>
                         </div>
-                        <h3 className="font-semibold mb-2">10x Solution CMS</h3>
-                        <p className="text-sm text-emerald-100 mb-4">Viết tiêu đề hấp dẫn, mô tả meta độc đáo, và thêm ảnh đại diện cho mỗi bài để tăng CTR từ Google.</p>
-                        <div className="flex items-center justify-between text-xs text-emerald-200">
+                        <h3 className="font-semibold mb-2">Sự Kiện Toàn Quốc CMS</h3>
+                        <p className="text-sm text-orange-100 mb-4">Viết tiêu đề hấp dẫn, mô tả meta độc đáo, và thêm ảnh đại diện cho mỗi bài để tăng CTR từ Google.</p>
+                        <div className="flex items-center justify-between text-xs text-orange-200">
                             <div className="flex items-center gap-2">
                                 <BarChart3 className="w-3.5 h-3.5" />
                                 <span>{stats.posts > 0 ? Math.round((stats.published / stats.posts) * 100) : 0}% đã xuất bản</span>
                             </div>
-                            <span className="text-emerald-300/50 text-[10px]">© 10x Solution</span>
+                            <span className="text-orange-300/50 text-[10px]">© Sự Kiện Toàn Quốc</span>
                         </div>
                     </div>
                 </div>

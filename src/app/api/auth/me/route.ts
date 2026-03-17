@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { verifyToken } from "@/lib/jwt";
 
 export async function GET(request: NextRequest) {
     const authCookie = request.cookies.get('cms_auth');
@@ -7,19 +8,23 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ user: null }, { status: 401 });
     }
 
-    try {
-        const userData = JSON.parse(Buffer.from(authCookie.value, 'base64').toString());
-        return NextResponse.json({
-            user: {
-                userId: userData.userId || null,
-                email: userData.email,
-                name: userData.name,
-                role: userData.role,
-                tenantId: userData.tenantId,
-                tenantName: userData.tenantName || '',
-            }
-        });
-    } catch {
-        return NextResponse.json({ user: null }, { status: 401 });
+    const userData = await verifyToken(authCookie.value);
+
+    if (!userData) {
+        // Token invalid or expired — clear cookie
+        const response = NextResponse.json({ user: null }, { status: 401 });
+        response.cookies.set('cms_auth', '', { maxAge: 0, path: '/' });
+        return response;
     }
+
+    return NextResponse.json({
+        user: {
+            userId: userData.userId || null,
+            email: userData.email,
+            name: userData.name,
+            role: userData.role,
+            tenantId: userData.tenantId,
+            tenantName: userData.tenantName || '',
+        }
+    });
 }

@@ -30,6 +30,7 @@ const menuItems = [
     { label: "Chuyên mục", href: "/admin/categories", icon: FolderOpen },
     { label: "Tags", href: "/admin/tags", icon: Tags },
     { label: "Thư viện ảnh", href: "/admin/media", icon: ImageIcon },
+    { label: "Ảnh giao diện", href: "/admin/page-images", icon: Shield },
     { label: "SEO Audit", href: "/admin/seo-audit", icon: Search },
     { label: "Broken Links", href: "/admin/broken-links", icon: Link2 },
     { label: "Sitemap", href: "/admin/sitemap", icon: MapPin },
@@ -63,18 +64,18 @@ export default function Sidebar() {
             <div className="flex items-center justify-between px-4 h-16 border-b border-gray-100 flex-shrink-0">
                 {!collapsed && (
                     <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center shadow-sm">
-                            <span className="text-white font-black text-xs">10x</span>
+                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center shadow-sm">
+                            <span className="text-white font-black text-[8px]">SETQ</span>
                         </div>
                         <div>
-                            <h1 className="text-sm font-bold text-gray-900 leading-tight">10x Solution</h1>
+                            <h1 className="text-sm font-bold text-gray-900 leading-tight">Sự Kiện Toàn Quốc</h1>
                             <p className="text-[10px] text-gray-400 leading-tight">Content Management</p>
                         </div>
                     </div>
                 )}
                 {collapsed && (
-                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center mx-auto shadow-sm">
-                        <span className="text-white font-black text-[9px]">10x</span>
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center mx-auto shadow-sm">
+                        <span className="text-white font-black text-[7px]">SETQ</span>
                     </div>
                 )}
             </div>
@@ -156,7 +157,7 @@ export default function Sidebar() {
                 </button>
                 {!collapsed && (
                     <div className="px-3 pt-2 pb-1">
-                        <p className="text-[10px] text-gray-300 text-center">© {new Date().getFullYear()} 10x Solution</p>
+                        <p className="text-[10px] text-gray-300 text-center">© {new Date().getFullYear()} Sự Kiện Toàn Quốc</p>
                     </div>
                 )}
             </div>
