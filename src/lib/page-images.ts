@@ -87,7 +87,7 @@ export async function getPageImages(): Promise<Record<string, string>> {
   }
 
   cacheTime = now;
-  return cachedImages;
+  return cachedImages!;
 }
 
 export function getDefaultImages(): Record<string, string> {
