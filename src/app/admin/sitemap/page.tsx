@@ -115,9 +115,9 @@ ${urls}
     const pageCount = entries.filter(e => e.type === 'page').length;
 
     const getTypeIcon = (type: string) => {
-        if (type === 'post') return <FileText size={14} className="text-blue-500" />;
-        if (type === 'category') return <FolderOpen size={14} className="text-purple-500" />;
-        return <Globe size={14} className="text-emerald-500" />;
+        if (type === 'post') return <FileText size={14} className="text-gray-600" />;
+        if (type === 'category') return <FolderOpen size={14} className="text-gray-600" />;
+        return <Globe size={14} className="text-gray-600" />;
     };
 
     const getTypeLabel = (type: string) => {
@@ -127,9 +127,7 @@ ${urls}
     };
 
     const getTypeBadge = (type: string) => {
-        if (type === 'post') return 'bg-blue-50 text-blue-700 border-blue-200';
-        if (type === 'category') return 'bg-purple-50 text-purple-700 border-purple-200';
-        return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+        return 'bg-gray-50 text-gray-700 border-gray-200';
     };
 
     return (
@@ -150,7 +148,7 @@ ${urls}
                     </button>
                     <button onClick={handleCopy}
                         className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-gray-700 font-medium text-sm hover:bg-gray-50 transition-all">
-                        {copied ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
+                        {copied ? <Check size={14} className="text-orange-500" /> : <Copy size={14} />}
                         {copied ? 'Đã copy!' : 'Copy XML'}
                     </button>
                     <button onClick={handleDownload}
@@ -174,8 +172,8 @@ ${urls}
                 </div>
                 <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
                     <div className="flex items-center gap-3 mb-3">
-                        <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
-                            <FileText className="w-5 h-5 text-blue-500" />
+                        <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center">
+                            <FileText className="w-5 h-5 text-gray-500" />
                         </div>
                     </div>
                     <p className="text-3xl font-bold text-gray-900">{postCount}</p>
@@ -183,8 +181,8 @@ ${urls}
                 </div>
                 <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
                     <div className="flex items-center gap-3 mb-3">
-                        <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center">
-                            <FolderOpen className="w-5 h-5 text-purple-500" />
+                        <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center">
+                            <FolderOpen className="w-5 h-5 text-gray-500" />
                         </div>
                     </div>
                     <p className="text-3xl font-bold text-gray-900">{categoryCount}</p>
@@ -192,8 +190,8 @@ ${urls}
                 </div>
                 <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
                     <div className="flex items-center gap-3 mb-3">
-                        <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center">
-                            <Globe className="w-5 h-5 text-emerald-500" />
+                        <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center">
+                            <Globe className="w-5 h-5 text-gray-500" />
                         </div>
                     </div>
                     <p className="text-3xl font-bold text-gray-900">{pageCount}</p>
@@ -219,7 +217,7 @@ ${urls}
                     <h2 className="font-semibold text-gray-900">Danh sách URLs</h2>
                     {lastGenerated && (
                         <span className="text-xs text-gray-400 flex items-center gap-1.5">
-                            <CheckCircle2 size={12} className="text-emerald-500" />
+                            <CheckCircle2 size={12} className="text-orange-500" />
                             Cập nhật: {lastGenerated}
                         </span>
                     )}
@@ -262,7 +260,7 @@ ${urls}
                     <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
                         <h2 className="font-semibold text-gray-900">Xem trước XML</h2>
                         <button onClick={handleCopy} className="text-xs text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1.5 transition-colors">
-                            {copied ? <Check size={12} className="text-emerald-500" /> : <Copy size={12} />}
+                            {copied ? <Check size={12} className="text-orange-500" /> : <Copy size={12} />}
                             {copied ? 'Đã copy!' : 'Copy'}
                         </button>
                     </div>
@@ -275,14 +273,14 @@ ${urls}
             )}
 
             {/* Tips */}
-            <div className="bg-blue-50 border border-blue-200 rounded-2xl p-5 flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-5 flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-gray-500 shrink-0 mt-0.5" />
                 <div>
-                    <h3 className="text-sm font-semibold text-blue-900 mb-1">Hướng dẫn sử dụng Sitemap</h3>
-                    <ul className="text-xs text-blue-700 space-y-1">
+                    <h3 className="text-sm font-semibold text-gray-900 mb-1">Hướng dẫn sử dụng Sitemap</h3>
+                    <ul className="text-xs text-gray-600 space-y-1">
                         <li>• Tải file <strong>sitemap.xml</strong> và đặt vào thư mục gốc (root) của website</li>
                         <li>• Submit sitemap tại <a href="https://search.google.com/search-console" target="_blank" rel="noopener" className="underline font-medium">Google Search Console</a> → Sitemaps → Nhập URL sitemap</li>
-                        <li>• Thêm dòng <code className="bg-blue-100 px-1 py-0.5 rounded">Sitemap: {siteUrl}/sitemap.xml</code> vào file <strong>robots.txt</strong></li>
+                        <li>• Thêm dòng <code className="bg-gray-200 px-1 py-0.5 rounded">Sitemap: {siteUrl}/sitemap.xml</code> vào file <strong>robots.txt</strong></li>
                         <li>• Nên tạo lại sitemap sau mỗi lần xuất bản/xóa bài viết</li>
                     </ul>
                 </div>

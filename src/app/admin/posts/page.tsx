@@ -249,7 +249,7 @@ export default function PostsPage() {
                             {paginatedPosts.map((post) => (
                                 <div
                                     key={post.id}
-                                    className={`grid grid-cols-12 gap-4 px-5 py-4 items-center hover:bg-gray-50 transition-colors ${selectedPosts.includes(post.id) ? 'bg-blue-50/50' : ''}`}
+                                    className={`grid grid-cols-12 gap-4 px-5 py-4 items-center hover:bg-gray-50 transition-colors ${selectedPosts.includes(post.id) ? 'bg-orange-50/50' : ''}`}
                                 >
                                     <div className="col-span-1">
                                         <button
@@ -271,7 +271,7 @@ export default function PostsPage() {
                                             )}
                                         </div>
                                         <div className="min-w-0">
-                                            <Link href={`/admin/posts/${post.id}`} className="text-gray-900 font-medium text-sm truncate block hover:text-emerald-600 transition-colors">
+                                            <Link href={`/admin/posts/${post.id}`} className="text-gray-900 font-medium text-sm truncate block hover:text-orange-600 transition-colors">
                                                 {post.title}
                                             </Link>
                                             <p className="text-gray-400 text-xs truncate mt-0.5">/{post.slug}</p>
@@ -286,9 +286,9 @@ export default function PostsPage() {
                                         {(() => {
                                             const status = getPostStatus(post);
                                             const config = status === 'published'
-                                                ? { bg: 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100', dot: 'bg-emerald-500', label: 'Xuất bản' }
-                                                : status === 'scheduled'
-                                                    ? { bg: 'bg-blue-50 text-blue-700 hover:bg-blue-100', dot: 'bg-blue-500', label: 'Lên lịch' }
+                                                ? { bg: 'bg-orange-50 text-orange-700 hover:bg-orange-100', dot: 'bg-orange-500', label: 'Xuất bản' }
+                                                : post.scheduled_at && new Date(post.scheduled_at) > new Date()
+                                                    ? { bg: 'bg-gray-50 text-gray-700 hover:bg-gray-100', dot: 'bg-gray-500', label: 'Lên lịch' }
                                                     : { bg: 'bg-amber-50 text-amber-700 hover:bg-amber-100', dot: 'bg-amber-500', label: 'Nháp' };
                                             return (
                                                 <button
@@ -309,7 +309,7 @@ export default function PostsPage() {
                                                 const d = new Date(post.scheduled_at);
                                                 return (
                                                     <>
-                                                        <span className="text-blue-600 font-medium flex items-center gap-1">
+                                                        <span className="text-orange-600 font-medium flex items-center gap-1">
                                                             <Calendar className="w-3.5 h-3.5" />
                                                             {d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' })}
                                                         </span>
@@ -331,7 +331,7 @@ export default function PostsPage() {
                                     <div className="col-span-1 flex items-center justify-end gap-0.5">
                                         {filterStatus === 'trash' ? (
                                             <>
-                                                <button onClick={() => handleRestore(post.id)} className="p-2 rounded-lg hover:bg-emerald-50 text-gray-400 hover:text-emerald-600 transition-colors" title="Khôi phục">
+                                                <button onClick={() => handleRestore(post.id)} className="p-2 rounded-lg hover:bg-orange-50 text-gray-400 hover:text-orange-600 transition-colors" title="Khôi phục">
                                                     <RotateCcw className="w-4 h-4" />
                                                 </button>
                                                 <button onClick={() => handlePermanentDelete(post.id)} className="p-2 rounded-lg hover:bg-red-50 text-gray-400 hover:text-red-500 transition-colors" title="Xóa vĩnh viễn">
@@ -404,7 +404,7 @@ export default function PostsPage() {
                     {bulkLoading && <Loader2 className="w-4 h-4 animate-spin text-gray-400" />}
                     <span className="text-sm font-medium">{selectedPosts.length} bài đã chọn</span>
                     <div className="w-px h-5 bg-gray-700" />
-                    <button onClick={bulkPublish} disabled={bulkLoading} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors disabled:opacity-50">
+                    <button onClick={bulkPublish} disabled={bulkLoading} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm bg-orange-500/20 text-orange-400 hover:bg-orange-500/30 transition-colors disabled:opacity-50">
                         <Send className="w-3.5 h-3.5" /> Xuất bản
                     </button>
                     <button onClick={bulkDraft} disabled={bulkLoading} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 transition-colors disabled:opacity-50">

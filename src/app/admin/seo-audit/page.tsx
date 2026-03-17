@@ -91,9 +91,9 @@ export default function SeoAuditPage() {
         return matchSearch && matchFilter;
     });
 
-    const getScoreColor = (score: number) => score >= 80 ? "text-emerald-600" : score >= 50 ? "text-amber-500" : "text-red-500";
-    const getScoreBg = (score: number) => score >= 80 ? "bg-emerald-50 border-emerald-200" : score >= 50 ? "bg-amber-50 border-amber-200" : "bg-red-50 border-red-200";
-    const getScoreRing = (score: number) => score >= 80 ? "ring-emerald-500" : score >= 50 ? "ring-amber-500" : "ring-red-500";
+    const getScoreColor = (score: number) => score >= 80 ? "text-orange-600" : score >= 50 ? "text-amber-500" : "text-red-500";
+    const getScoreBg = (score: number) => score >= 80 ? "bg-orange-50 border-orange-200" : score >= 50 ? "bg-amber-50 border-amber-200" : "bg-red-50 border-red-200";
+    const getScoreRing = (score: number) => score >= 80 ? "ring-orange-500" : score >= 50 ? "ring-amber-500" : "ring-red-500";
 
     return (
         <div className="space-y-6">
@@ -108,9 +108,9 @@ export default function SeoAuditPage() {
                         <p className={`text-4xl font-bold ${getScoreColor(avgScore)}`}>{avgScore}</p>
                         <p className="text-sm text-gray-500 mt-1">Điểm trung bình</p>
                     </div>
-                    <div className="bg-emerald-50 rounded-2xl p-5 border border-emerald-200 text-center">
-                        <p className="text-4xl font-bold text-emerald-600">{scores.filter(s => s.score >= 80).length}</p>
-                        <p className="text-sm text-emerald-700 mt-1">Tốt (≥80)</p>
+                    <div className="bg-orange-50 rounded-2xl p-5 border border-orange-200 text-center">
+                        <p className="text-4xl font-bold text-orange-600">{scores.filter(s => s.score >= 80).length}</p>
+                        <p className="text-sm text-orange-700 mt-1">Tốt (≥80)</p>
                     </div>
                     <div className="bg-amber-50 rounded-2xl p-5 border border-amber-200 text-center">
                         <p className="text-4xl font-bold text-amber-500">{scores.filter(s => s.score >= 50 && s.score < 80).length}</p>
@@ -164,7 +164,7 @@ export default function SeoAuditPage() {
                                     {s.passes.length > 0 && (
                                         <div className="mt-2 space-y-1">
                                             {s.passes.slice(0, 3).map((pass, i) => (
-                                                <p key={i} className="text-xs text-emerald-600 flex items-start gap-1.5">
+                                                <p key={i} className="text-xs text-orange-600 flex items-start gap-1.5">
                                                     <CheckCircle2 size={12} className="mt-0.5 shrink-0" /> {pass}
                                                 </p>
                                             ))}

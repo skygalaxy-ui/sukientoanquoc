@@ -11,9 +11,9 @@ import {
 const MONTHS = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
 const DAYS = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
 const TYPES = [
-    { value: 'article', label: 'Bài viết', color: 'bg-blue-100 text-blue-700' },
-    { value: 'update', label: 'Cập nhật', color: 'bg-emerald-100 text-emerald-700' },
-    { value: 'review', label: 'Review', color: 'bg-purple-100 text-purple-700' },
+    { value: 'article', label: 'Bài viết', color: 'bg-gray-100 text-gray-700' },
+    { value: 'update', label: 'Cập nhật', color: 'bg-orange-100 text-orange-700' },
+    { value: 'review', label: 'Review', color: 'bg-gray-200 text-gray-600' },
 ];
 
 export default function ContentCalendarPage() {

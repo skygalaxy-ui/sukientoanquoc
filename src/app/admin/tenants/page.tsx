@@ -157,16 +157,16 @@ export default function TenantsPage() {
 
             {/* License Info */}
             {license && (
-                <div className={`rounded-xl p-4 flex items-center gap-4 ${license.plan === 'basic' ? 'bg-gray-50 border border-gray-200' : license.plan === 'pro' ? 'bg-emerald-50 border border-emerald-200' : 'bg-purple-50 border border-purple-200'}`}>
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${license.plan === 'basic' ? 'bg-gray-200' : license.plan === 'pro' ? 'bg-emerald-200' : 'bg-purple-200'}`}>
-                        <Key className={`w-5 h-5 ${license.plan === 'basic' ? 'text-gray-600' : license.plan === 'pro' ? 'text-emerald-600' : 'text-purple-600'}`} />
+                <div className={`rounded-xl p-4 flex items-center gap-4 ${license.plan === 'basic' ? 'bg-gray-50 border border-gray-200' : license.plan === 'pro' ? 'bg-orange-50 border border-orange-200' : 'bg-gray-50 border border-gray-200'}`}>
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${license.plan === 'basic' ? 'bg-gray-200' : license.plan === 'pro' ? 'bg-orange-200' : 'bg-gray-200'}`}>
+                        <Key className={`w-5 h-5 ${license.plan === 'basic' ? 'text-gray-600' : license.plan === 'pro' ? 'text-orange-600' : 'text-gray-600'}`} />
                     </div>
                     <div className="flex-1">
                         <p className="text-sm font-medium text-gray-900">License: <span className="uppercase">{license.plan}</span></p>
                         <p className="text-xs text-gray-500">{tenants.length} / {license.maxSites >= 999 ? '∞' : license.maxSites} sites</p>
                     </div>
                     <div className="w-32 bg-gray-200 rounded-full h-2">
-                        <div className={`h-2 rounded-full transition-all ${tenants.length >= license.maxSites && license.maxSites < 999 ? 'bg-red-500' : 'bg-emerald-500'}`} style={{ width: `${Math.min(100, (tenants.length / Math.max(license.maxSites, 1)) * 100)}%` }} />
+                        <div className={`h-2 rounded-full transition-all ${tenants.length >= license.maxSites && license.maxSites < 999 ? 'bg-red-500' : 'bg-orange-500'}`} style={{ width: `${Math.min(100, (tenants.length / Math.max(license.maxSites, 1)) * 100)}%` }} />
                     </div>
                     {!canCreate && tab === 'tenants' && (
                         <div className="flex items-center gap-1.5 text-amber-600 text-xs font-medium">
@@ -245,8 +245,8 @@ export default function TenantsPage() {
                     <div className="divide-y divide-gray-100">
                         {tenants.map(t => (
                             <div key={t.id} className="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 transition-colors">
-                                <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center">
-                                    <Building2 className="w-5 h-5 text-emerald-600" />
+                                <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
+                                    <Building2 className="w-5 h-5 text-gray-600" />
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <p className="text-sm font-medium text-gray-900">{t.name}</p>
@@ -256,10 +256,10 @@ export default function TenantsPage() {
                                         <span>{users.filter(u => u.tenant_id === t.id).length} users</span>
                                     </div>
                                 </div>
-                                <span className={`text-xs font-medium px-2 py-1 rounded-full ${t.plan === 'pro' ? 'bg-emerald-50 text-emerald-600' : t.plan === 'business' ? 'bg-purple-50 text-purple-600' : 'bg-gray-100 text-gray-500'}`}>
+                                <span className={`text-xs font-medium px-2 py-1 rounded-full ${t.plan === 'pro' ? 'bg-orange-50 text-orange-600' : t.plan === 'business' ? 'bg-gray-100 text-gray-600' : 'bg-gray-100 text-gray-500'}`}>
                                     {t.plan}
                                 </span>
-                                <span className={`w-2 h-2 rounded-full ${t.is_active ? 'bg-emerald-500' : 'bg-gray-300'}`} />
+                                <span className={`w-2 h-2 rounded-full ${t.is_active ? 'bg-orange-500' : 'bg-gray-300'}`} />
                                 <div className="flex gap-1">
                                     <button onClick={() => { setForm(t); setShowForm('tenant'); }} className="p-2 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600">
                                         <Edit3 className="w-4 h-4" />
@@ -275,14 +275,14 @@ export default function TenantsPage() {
                     <div className="divide-y divide-gray-100">
                         {users.map(u => (
                             <div key={u.id} className="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 transition-colors">
-                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-sm font-bold">
+                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-500 to-gray-700 flex items-center justify-center text-white text-sm font-bold">
                                     {u.name.charAt(0).toUpperCase()}
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <p className="text-sm font-medium text-gray-900">{u.name}</p>
                                     <p className="text-xs text-gray-400 mt-0.5">{u.email}</p>
                                 </div>
-                                <span className={`text-xs font-medium px-2 py-1 rounded-full ${u.role === 'super_admin' ? 'bg-amber-50 text-amber-600' : u.role === 'admin' ? 'bg-blue-50 text-blue-600' : 'bg-gray-100 text-gray-500'}`}>
+                                <span className={`text-xs font-medium px-2 py-1 rounded-full ${u.role === 'super_admin' ? 'bg-orange-50 text-orange-600' : u.role === 'admin' ? 'bg-gray-100 text-gray-600' : 'bg-gray-100 text-gray-500'}`}>
                                     {u.role === 'super_admin' ? 'Super Admin' : u.role === 'admin' ? 'Admin' : 'Editor'}
                                 </span>
                                 <span className="text-xs text-gray-400">

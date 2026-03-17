@@ -83,7 +83,7 @@ export default function MediaPage() {
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-16 text-center">
                     <ImageIcon className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                     <p className="text-gray-500 mb-4">{searchTerm ? "Không tìm thấy ảnh" : "Chưa có ảnh nào"}</p>
-                    <button onClick={() => fileInputRef.current?.click()} className="text-sm text-gray-900 font-medium hover:text-emerald-600">Upload ảnh đầu tiên</button>
+                    <button onClick={() => fileInputRef.current?.click()} className="text-sm text-gray-900 font-medium hover:text-orange-600">Upload ảnh đầu tiên</button>
                 </div>
             ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
@@ -93,7 +93,7 @@ export default function MediaPage() {
                                 <img src={img.url} alt={img.name} className="w-full h-full object-cover" />
                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
                                     <button onClick={() => copyUrl(img.url)} className="p-2 bg-white rounded-lg text-gray-700 hover:bg-gray-100">
-                                        {copiedUrl === img.url ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
+                                        {copiedUrl === img.url ? <Check size={14} className="text-orange-500" /> : <Copy size={14} />}
                                     </button>
                                     <a href={img.url} target="_blank" rel="noopener" className="p-2 bg-white rounded-lg text-gray-700 hover:bg-gray-100"><ExternalLink size={14} /></a>
                                     <button onClick={() => handleDelete(img.name)} className="p-2 bg-white rounded-lg text-red-500 hover:bg-red-50"><Trash2 size={14} /></button>

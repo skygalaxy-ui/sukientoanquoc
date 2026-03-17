@@ -10,7 +10,7 @@ export default function PageImagesAdmin() {
     const [activeSection, setActiveSection] = useState('Trang chủ');
 
     const defaults = getDefaultImages();
-    const sections = [...new Set(IMAGE_KEYS.map(k => k.section))];
+    const sections = Array.from(new Set(IMAGE_KEYS.map(k => k.section)));
 
     useEffect(() => {
         fetch('/api/admin/page-images')

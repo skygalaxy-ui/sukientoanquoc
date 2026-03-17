@@ -300,9 +300,9 @@ export default function SettingsPage() {
                     <h2 className="font-semibold text-gray-900">Kết nối Supabase</h2>
                 </div>
                 <div className="p-6 space-y-4">
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start gap-3">
-                        <Info className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
-                        <p className="text-xs text-blue-700">Thông tin kết nối Supabase được cấu hình qua file <code className="bg-blue-100 px-1 py-0.5 rounded font-mono">.env.local</code>. Thay đổi biến môi trường và restart để áp dụng.</p>
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 flex items-start gap-3">
+                        <Info className="w-4 h-4 text-gray-500 shrink-0 mt-0.5" />
+                        <p className="text-xs text-gray-600">Thông tin kết nối Supabase được cấu hình qua file <code className="bg-gray-200 px-1 py-0.5 rounded font-mono">.env.local</code>. Thay đổi biến môi trường và restart để áp dụng.</p>
                     </div>
                     <div>
                         <label className="text-sm font-medium text-gray-700 mb-1 block">Supabase URL</label>
@@ -318,7 +318,7 @@ export default function SettingsPage() {
 
             <div className="flex justify-end">
                 <button onClick={handleSave} disabled={saving} className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gray-900 text-white font-medium text-sm hover:bg-gray-800 disabled:opacity-50 transition-all">
-                    {saving ? <Loader2 size={14} className="animate-spin" /> : saved ? <Check size={14} className="text-emerald-400" /> : <Save size={14} />}
+                    {saving ? <Loader2 size={14} className="animate-spin" /> : saved ? <Check size={14} className="text-orange-400" /> : <Save size={14} />}
                     {saving ? 'Đang lưu...' : saved ? 'Đã lưu!' : 'Lưu cài đặt'}
                 </button>
             </div>

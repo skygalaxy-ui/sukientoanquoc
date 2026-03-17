@@ -87,9 +87,9 @@ function TagPicker({ selectedTags, allTags, onChange, onCreateTag }: {
             {selectedTags.length > 0 && (
                 <div className="flex flex-wrap gap-1.5">
                     {selectedTags.map(tag => (
-                        <span key={tag} className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-lg border border-blue-200">
+                        <span key={tag} className="inline-flex items-center gap-1 px-2.5 py-1 bg-orange-50 text-orange-700 text-xs font-medium rounded-lg border border-orange-200">
                             {tag}
-                            <button onClick={() => onChange(selectedTags.filter(t => t !== tag))} className="text-blue-400 hover:text-blue-600 ml-0.5"><X size={12} /></button>
+                            <button onClick={() => onChange(selectedTags.filter(t => t !== tag))} className="text-orange-400 hover:text-orange-600 ml-0.5"><X size={12} /></button>
                         </span>
                     ))}
                 </div>
@@ -116,7 +116,7 @@ function TagPicker({ selectedTags, allTags, onChange, onCreateTag }: {
                         {!exactMatch && !alreadySelected && (
                             <button type="button" onMouseDown={(e) => e.preventDefault()}
                                 onClick={async () => { setCreating(true); await onCreateTag(inputValue.trim()); addTag(inputValue.trim()); setCreating(false); }}
-                                className="w-full px-3 py-2 text-left text-sm text-blue-600 hover:bg-blue-50 flex items-center gap-2 border-t border-gray-100 font-medium">
+                                className="w-full px-3 py-2 text-left text-sm text-orange-600 hover:bg-orange-50 flex items-center gap-2 border-t border-gray-100 font-medium">
                                 <Plus size={12} /> Tạo tag mới &quot;{inputValue.trim()}&quot;
                             </button>
                         )}
@@ -367,7 +367,7 @@ export default function NewPostPage() {
                                 <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
                                     <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3">Xem trước trên Google</p>
                                     <div className="space-y-1">
-                                        <p className="text-[13px] text-green-700 truncate">yoursite.com › blog › {currentSlug}</p>
+                                        <p className="text-[13px] text-orange-700 truncate">yoursite.com › blog › {currentSlug}</p>
                                         <p className="text-lg text-[#1a0dab] hover:underline cursor-pointer leading-tight line-clamp-1">
                                             {form.metaTitle || form.title || "Tiêu đề trang"}
                                         </p>
@@ -419,19 +419,19 @@ export default function NewPostPage() {
                                 <span className="text-sm font-semibold text-gray-900">Trạng thái</span>
                             </div>
                             <div className="p-5 space-y-3">
-                                <label className="flex items-center gap-3 p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-gray-300 transition-colors has-[:checked]:border-green-300 has-[:checked]:bg-green-50/50">
-                                    <input type="radio" name="status" checked={getCurrentStatus() === 'published'} onChange={() => setStatus('published')} className="w-4 h-4 accent-green-600" />
+                                <label className="flex items-center gap-3 p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-gray-300 transition-colors has-[:checked]:border-orange-300 has-[:checked]:bg-orange-50/50">
+                                    <input type="radio" name="status" checked={getCurrentStatus() === 'published'} onChange={() => setStatus('published')} className="w-4 h-4 accent-orange-600" />
                                     <div><span className="text-sm font-medium text-gray-900 block">Công khai</span><span className="text-xs text-gray-500">Hiển thị trên website</span></div>
                                 </label>
-                                <label className="flex items-start gap-3 p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-gray-300 transition-colors has-[:checked]:border-blue-300 has-[:checked]:bg-blue-50/50">
-                                    <input type="radio" name="status" checked={getCurrentStatus() === 'scheduled'} onChange={() => setStatus('scheduled')} className="w-4 h-4 mt-0.5 accent-blue-600" />
+                                <label className="flex items-start gap-3 p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-gray-300 transition-colors has-[:checked]:border-gray-400 has-[:checked]:bg-gray-50/50">
+                                    <input type="radio" name="status" checked={getCurrentStatus() === 'scheduled'} onChange={() => setStatus('scheduled')} className="w-4 h-4 mt-0.5 accent-gray-600" />
                                     <div className="flex-1">
                                         <span className="text-sm font-medium text-gray-900 block">Lên lịch</span>
                                         <span className="text-xs text-gray-500">Tự động đăng vào ngày chọn</span>
                                         {getCurrentStatus() === 'scheduled' && (
                                             <input type="datetime-local" value={form.scheduledAt} onChange={(e) => updateForm({ scheduledAt: e.target.value })}
                                                 min={new Date().toISOString().slice(0, 16)}
-                                                className="w-full mt-2 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400"
+                                                className="w-full mt-2 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-400"
                                             />
                                         )}
                                     </div>

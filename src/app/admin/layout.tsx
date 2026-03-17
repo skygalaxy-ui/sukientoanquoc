@@ -28,7 +28,7 @@ export default function AdminLayout({
                     title="Hỗ trợ kỹ thuật"
                 >
                     <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-full pl-3 pr-3 py-2 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-200 opacity-60 hover:opacity-100">
-                        <MessageCircle size={14} className="text-gray-400 group-hover:text-blue-500 transition-colors shrink-0" />
+                        <MessageCircle size={14} className="text-gray-400 group-hover:text-orange-500 transition-colors shrink-0" />
                         <span className="text-[11px] text-gray-400 group-hover:text-gray-600 font-medium transition-colors hidden sm:inline">
                             Hỗ trợ
                         </span>

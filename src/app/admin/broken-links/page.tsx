@@ -179,14 +179,14 @@ export default function BrokenLinksPage() {
     const internalCount = links.filter(l => !l.isExternal).length;
 
     const statusIcon = (status: string) => {
-        if (status === 'ok') return <CheckCircle2 size={14} className="text-emerald-500" />;
+        if (status === 'ok') return <CheckCircle2 size={14} className="text-orange-500" />;
         if (status === 'broken') return <XCircle size={14} className="text-red-500" />;
         if (status === 'redirect') return <AlertTriangle size={14} className="text-amber-500" />;
         return <div className="w-3.5 h-3.5 rounded-full border-2 border-gray-300" />;
     };
 
     const statusBadge = (status: string) => {
-        if (status === 'ok') return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+        if (status === 'ok') return 'bg-orange-50 text-orange-700 border-orange-200';
         if (status === 'broken') return 'bg-red-50 text-red-700 border-red-200';
         if (status === 'redirect') return 'bg-amber-50 text-amber-700 border-amber-200';
         return 'bg-gray-50 text-gray-500 border-gray-200';
@@ -224,18 +224,18 @@ export default function BrokenLinksPage() {
 
             {/* Scanning Progress */}
             {scanning && (
-                <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4 animate-fade-in-up">
+                <div className="bg-gray-50 border border-gray-200 rounded-2xl p-4 animate-fade-in-up">
                     <div className="flex items-center gap-3 mb-3">
-                        <Loader2 size={16} className="animate-spin text-blue-500" />
-                        <span className="text-sm font-medium text-blue-800">
+                        <Loader2 size={16} className="animate-spin text-gray-500" />
+                        <span className="text-sm font-medium text-gray-800">
                             Đang kiểm tra link {scanProgress.current}/{scanProgress.total}
                         </span>
                     </div>
-                    <div className="bg-blue-200 rounded-full h-2 overflow-hidden">
-                        <div className="bg-blue-600 h-full rounded-full transition-all duration-300"
+                    <div className="bg-gray-200 rounded-full h-2 overflow-hidden">
+                        <div className="bg-orange-500 h-full rounded-full transition-all duration-300"
                             style={{ width: `${scanProgress.total > 0 ? (scanProgress.current / scanProgress.total) * 100 : 0}%` }} />
                     </div>
-                    <p className="text-xs text-blue-600 mt-2 truncate">{scanProgress.checking}</p>
+                    <p className="text-xs text-gray-500 mt-2 truncate">{scanProgress.checking}</p>
                 </div>
             )}
 
@@ -243,11 +243,11 @@ export default function BrokenLinksPage() {
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
                 {[
                     { label: 'Tổng links', value: links.length, icon: <Link2 size={14} className="text-gray-500" />, bg: 'bg-gray-50' },
-                    { label: 'Trỏ đi', value: outboundCount, icon: <ArrowUpRight size={14} className="text-blue-500" />, bg: 'bg-blue-50' },
-                    { label: 'Trỏ về', value: inboundCount, icon: <ArrowDownLeft size={14} className="text-indigo-500" />, bg: 'bg-indigo-50' },
-                    { label: 'Bên ngoài', value: externalCount, icon: <Globe size={14} className="text-purple-500" />, bg: 'bg-purple-50' },
-                    { label: 'Nội bộ', value: internalCount, icon: <FileText size={14} className="text-sky-500" />, bg: 'bg-sky-50' },
-                    { label: 'Hoạt động', value: okCount, icon: <CheckCircle2 size={14} className="text-emerald-500" />, bg: 'bg-emerald-50' },
+                    { label: 'Trỏ đi', value: outboundCount, icon: <ArrowUpRight size={14} className="text-gray-500" />, bg: 'bg-gray-50' },
+                    { label: 'Trỏ về', value: inboundCount, icon: <ArrowDownLeft size={14} className="text-gray-500" />, bg: 'bg-gray-50' },
+                    { label: 'Bên ngoài', value: externalCount, icon: <Globe size={14} className="text-gray-500" />, bg: 'bg-gray-50' },
+                    { label: 'Nội bộ', value: internalCount, icon: <FileText size={14} className="text-gray-500" />, bg: 'bg-gray-50' },
+                    { label: 'Hoạt động', value: okCount, icon: <CheckCircle2 size={14} className="text-orange-500" />, bg: 'bg-orange-50' },
                     { label: 'Hỏng', value: brokenCount, icon: <XCircle size={14} className="text-red-500" />, bg: 'bg-red-50' },
                 ].map((stat, idx) => (
                     <div key={idx} className="bg-white rounded-xl border border-gray-100 p-3.5 shadow-sm text-center">
@@ -321,11 +321,10 @@ export default function BrokenLinksPage() {
                         {filtered.slice(0, 100).map((link, idx) => (
                             <div key={idx} className="flex items-start gap-3 px-5 py-3.5 hover:bg-gray-50/50 transition-colors">
                                 {/* Direction Icon */}
-                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${link.type === 'outbound' ? 'bg-blue-50' : 'bg-indigo-50'
-                                    }`}>
+                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5 bg-gray-50`}>
                                     {link.type === 'outbound'
-                                        ? <ArrowUpRight size={14} className="text-blue-500" />
-                                        : <ArrowDownLeft size={14} className="text-indigo-500" />
+                                        ? <ArrowUpRight size={14} className="text-gray-500" />
+                                        : <ArrowDownLeft size={14} className="text-gray-500" />
                                     }
                                 </div>
 
@@ -333,7 +332,7 @@ export default function BrokenLinksPage() {
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-2 mb-0.5">
                                         <a href={link.url} target="_blank" rel="noopener noreferrer"
-                                            className="text-sm font-medium text-gray-900 hover:text-blue-600 truncate flex items-center gap-1">
+                                            className="text-sm font-medium text-gray-900 hover:text-orange-600 truncate flex items-center gap-1">
                                             {link.url.length > 60 ? link.url.substring(0, 60) + '...' : link.url}
                                             <ExternalLink size={10} className="shrink-0 text-gray-400" />
                                         </a>
@@ -356,12 +355,12 @@ export default function BrokenLinksPage() {
                                 {/* Tags */}
                                 <div className="flex items-center gap-1.5 shrink-0">
                                     {link.isExternal && (
-                                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-50 text-purple-600 border border-purple-200 font-medium">
+                                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 border border-gray-200 font-medium">
                                             External
                                         </span>
                                     )}
                                     {!link.isExternal && (
-                                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-sky-50 text-sky-600 border border-sky-200 font-medium">
+                                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-gray-50 text-gray-500 border border-gray-200 font-medium">
                                             Internal
                                         </span>
                                     )}
@@ -393,22 +392,22 @@ export default function BrokenLinksPage() {
 
             {/* Tips */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-blue-50 border border-blue-200 rounded-2xl p-5">
-                    <h3 className="text-sm font-semibold text-blue-900 flex items-center gap-2 mb-2">
+                <div className="bg-gray-50 border border-gray-200 rounded-2xl p-5">
+                    <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2 mb-2">
                         <ArrowUpRight size={16} /> Link trỏ đi (Outbound)
                     </h3>
-                    <ul className="text-xs text-blue-700 space-y-1.5">
+                    <ul className="text-xs text-gray-600 space-y-1.5">
                         <li>• Là link từ bài viết của bạn trỏ ra trang khác</li>
                         <li>• Kiểm tra định kỳ để phát hiện link hỏng</li>
                         <li>• Link hỏng ảnh hưởng xấu đến SEO và UX</li>
                         <li>• Nên dùng <strong>nofollow</strong> cho link affiliate/quảng cáo</li>
                     </ul>
                 </div>
-                <div className="bg-indigo-50 border border-indigo-200 rounded-2xl p-5">
-                    <h3 className="text-sm font-semibold text-indigo-900 flex items-center gap-2 mb-2">
+                <div className="bg-gray-50 border border-gray-200 rounded-2xl p-5">
+                    <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2 mb-2">
                         <ArrowDownLeft size={16} /> Link trỏ về (Inbound / Internal)
                     </h3>
-                    <ul className="text-xs text-indigo-700 space-y-1.5">
+                    <ul className="text-xs text-gray-600 space-y-1.5">
                         <li>• Là link nội bộ từ bài này trỏ về bài khác</li>
                         <li>• Giúp Google hiểu cấu trúc website</li>
                         <li>• Tăng thời gian trên trang và giảm bounce rate</li>

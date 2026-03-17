@@ -209,9 +209,9 @@ export default function SystemStatusPage() {
     const errCount = checks.filter(c => c.status === 'error').length;
     const overallStatus = errCount > 0 ? 'error' : warnCount > 0 ? 'warning' : 'ok';
 
-    const statusIcon = (s: string) => s === 'ok' ? <CheckCircle2 size={16} className="text-emerald-500" /> : s === 'warning' ? <AlertTriangle size={16} className="text-amber-500" /> : s === 'error' ? <XCircle size={16} className="text-red-500" /> : <Loader2 size={16} className="animate-spin text-gray-400" />;
-    const statusBg = (s: string) => s === 'ok' ? 'border-emerald-200 bg-emerald-50/50' : s === 'warning' ? 'border-amber-200 bg-amber-50/50' : s === 'error' ? 'border-red-200 bg-red-50/50' : 'border-gray-200 bg-gray-50/50';
-    const statusDot = (s: string) => s === 'ok' ? 'bg-emerald-500' : s === 'warning' ? 'bg-amber-500' : s === 'error' ? 'bg-red-500' : 'bg-gray-400';
+    const statusIcon = (s: string) => s === 'ok' ? <CheckCircle2 size={16} className="text-orange-500" /> : s === 'warning' ? <AlertTriangle size={16} className="text-amber-500" /> : s === 'error' ? <XCircle size={16} className="text-red-500" /> : <Loader2 size={16} className="animate-spin text-gray-400" />;
+    const statusBg = (s: string) => s === 'ok' ? 'border-gray-200 bg-gray-50/50' : s === 'warning' ? 'border-amber-200 bg-amber-50/50' : s === 'error' ? 'border-red-200 bg-red-50/50' : 'border-gray-200 bg-gray-50/50';
+    const statusDot = (s: string) => s === 'ok' ? 'bg-orange-500' : s === 'warning' ? 'bg-amber-500' : s === 'error' ? 'bg-red-500' : 'bg-gray-400';
 
     return (
         <div className="space-y-6">
@@ -230,15 +230,15 @@ export default function SystemStatusPage() {
 
             {/* Overall Banner */}
             {!loading && (
-                <div className={`rounded-2xl border p-5 flex items-center gap-4 animate-fade-in-up ${overallStatus === 'ok' ? 'bg-emerald-50 border-emerald-200' : overallStatus === 'warning' ? 'bg-amber-50 border-amber-200' : 'bg-red-50 border-red-200'}`}>
-                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${overallStatus === 'ok' ? 'bg-emerald-100' : overallStatus === 'warning' ? 'bg-amber-100' : 'bg-red-100'}`}>
-                        {overallStatus === 'ok' ? <CheckCircle2 size={28} className="text-emerald-600" /> : overallStatus === 'warning' ? <AlertTriangle size={28} className="text-amber-600" /> : <XCircle size={28} className="text-red-600" />}
+                <div className={`rounded-2xl border p-5 flex items-center gap-4 animate-fade-in-up ${overallStatus === 'ok' ? 'bg-orange-50 border-orange-200' : overallStatus === 'warning' ? 'bg-amber-50 border-amber-200' : 'bg-red-50 border-red-200'}`}>
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${overallStatus === 'ok' ? 'bg-orange-100' : overallStatus === 'warning' ? 'bg-amber-100' : 'bg-red-100'}`}>
+                        {overallStatus === 'ok' ? <CheckCircle2 size={28} className="text-orange-600" /> : overallStatus === 'warning' ? <AlertTriangle size={28} className="text-amber-600" /> : <XCircle size={28} className="text-red-600" />}
                     </div>
                     <div>
-                        <h2 className={`text-lg font-bold ${overallStatus === 'ok' ? 'text-emerald-800' : overallStatus === 'warning' ? 'text-amber-800' : 'text-red-800'}`}>
+                        <h2 className={`text-lg font-bold ${overallStatus === 'ok' ? 'text-orange-800' : overallStatus === 'warning' ? 'text-amber-800' : 'text-red-800'}`}>
                             {overallStatus === 'ok' ? 'Hệ thống hoạt động bình thường' : overallStatus === 'warning' ? 'Có cảnh báo cần chú ý' : 'Phát hiện lỗi hệ thống'}
                         </h2>
-                        <p className={`text-sm mt-0.5 ${overallStatus === 'ok' ? 'text-emerald-600' : overallStatus === 'warning' ? 'text-amber-600' : 'text-red-600'}`}>
+                        <p className={`text-sm mt-0.5 ${overallStatus === 'ok' ? 'text-orange-600' : overallStatus === 'warning' ? 'text-amber-600' : 'text-red-600'}`}>
                             {okCount} OK • {warnCount} cảnh báo • {errCount} lỗi{lastCheck && ` — ${lastCheck}`}
                         </p>
                     </div>
@@ -248,14 +248,14 @@ export default function SystemStatusPage() {
             {/* Stats Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
                 {[
-                    { label: 'Bài viết', value: dbStats.posts, icon: <FileText size={14} className="text-blue-500" />, bg: 'bg-blue-50' },
-                    { label: 'Đã xuất bản', value: dbStats.published, icon: <CheckCircle2 size={14} className="text-emerald-500" />, bg: 'bg-emerald-50' },
-                    { label: 'Bản nháp', value: dbStats.drafts, icon: <AlertTriangle size={14} className="text-amber-500" />, bg: 'bg-amber-50' },
-                    { label: 'Lên lịch', value: dbStats.scheduled, icon: <Clock size={14} className="text-purple-500" />, bg: 'bg-purple-50' },
-                    { label: 'Chuyên mục', value: dbStats.categories, icon: <FolderOpen size={14} className="text-indigo-500" />, bg: 'bg-indigo-50' },
-                    { label: 'Tags', value: dbStats.tags, icon: <Tags size={14} className="text-pink-500" />, bg: 'bg-pink-50' },
-                    { label: 'Ảnh', value: dbStats.images, icon: <ImageIcon size={14} className="text-sky-500" />, bg: 'bg-sky-50' },
-                    { label: 'Dung lượng', value: dbStats.storageUsed, icon: <HardDrive size={14} className="text-gray-500" />, bg: 'bg-gray-50' },
+                    { label: 'Bài viết', value: dbStats.posts, icon: <FileText size={14} className="text-gray-600" />, bg: 'bg-gray-100' },
+                    { label: 'Đã xuất bản', value: dbStats.published, icon: <CheckCircle2 size={14} className="text-gray-600" />, bg: 'bg-gray-100' },
+                    { label: 'Bản nháp', value: dbStats.drafts, icon: <AlertTriangle size={14} className="text-gray-600" />, bg: 'bg-gray-100' },
+                    { label: 'Lên lịch', value: dbStats.scheduled, icon: <Clock size={14} className="text-gray-600" />, bg: 'bg-gray-100' },
+                    { label: 'Chuyên mục', value: dbStats.categories, icon: <FolderOpen size={14} className="text-gray-600" />, bg: 'bg-gray-100' },
+                    { label: 'Tags', value: dbStats.tags, icon: <Tags size={14} className="text-gray-600" />, bg: 'bg-gray-100' },
+                    { label: 'Ảnh', value: dbStats.images, icon: <ImageIcon size={14} className="text-gray-600" />, bg: 'bg-gray-100' },
+                    { label: 'Dung lượng', value: dbStats.storageUsed, icon: <HardDrive size={14} className="text-gray-600" />, bg: 'bg-gray-100' },
                 ].map((stat, idx) => (
                     <div key={idx} className="bg-white rounded-xl border border-gray-100 p-3.5 shadow-sm text-center animate-fade-in-up"
                         style={{ animationDelay: `${idx * 50}ms`, animationFillMode: 'forwards', opacity: 0 }}>
@@ -278,10 +278,10 @@ export default function SystemStatusPage() {
                     <div className="p-3 space-y-2">
                         {checks.map((check, idx) => (
                             <div key={idx} className={`flex items-start gap-4 p-4 rounded-xl border transition-all hover:shadow-sm ${statusBg(check.status)}`}>
-                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${check.status === 'ok' ? 'bg-emerald-100 text-emerald-600' : check.status === 'warning' ? 'bg-amber-100 text-amber-600' : 'bg-red-100 text-red-600'}`}>{check.icon}</div>
+                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${check.status === 'ok' ? 'bg-gray-100 text-gray-600' : check.status === 'warning' ? 'bg-amber-100 text-amber-600' : 'bg-red-100 text-red-600'}`}>{check.icon}</div>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-2 mb-0.5"><h3 className="text-sm font-semibold text-gray-900">{check.name}</h3>{statusIcon(check.status)}</div>
-                                    <p className={`text-sm ${check.status === 'ok' ? 'text-emerald-700' : check.status === 'warning' ? 'text-amber-700' : 'text-red-700'}`}>{check.message}</p>
+                                    <p className={`text-sm ${check.status === 'ok' ? 'text-gray-600' : check.status === 'warning' ? 'text-amber-700' : 'text-red-700'}`}>{check.message}</p>
                                     {check.details && <p className="text-xs text-gray-400 mt-1.5 font-mono">{check.details}</p>}
                                 </div>
                             </div>
@@ -298,27 +298,27 @@ export default function SystemStatusPage() {
                 <div className="p-5 space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {/* Export */}
-                        <div className="border border-emerald-200 bg-emerald-50/50 rounded-xl p-5">
+                        <div className="border border-gray-200 bg-gray-50/50 rounded-xl p-5">
                             <div className="flex items-center gap-3 mb-3">
-                                <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center"><Download size={18} className="text-emerald-600" /></div>
+                                <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center"><Download size={18} className="text-gray-600" /></div>
                                 <div><h3 className="text-sm font-semibold text-gray-900">Export Backup</h3><p className="text-xs text-gray-500">Tải toàn bộ dữ liệu (JSON)</p></div>
                             </div>
                             <p className="text-xs text-gray-600 mb-3">Xuất tất cả bài viết, chuyên mục, tags, lịch nội dung &amp; cài đặt thành file JSON.</p>
                             <button onClick={handleExportBackup} disabled={exporting}
-                                className="w-full px-4 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 transition-all flex items-center justify-center gap-2">
+                                className="w-full px-4 py-2.5 bg-gray-900 text-white rounded-lg text-sm font-medium hover:bg-gray-800 disabled:opacity-50 transition-all flex items-center justify-center gap-2">
                                 {exporting ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />}
                                 {exporting ? 'Đang xuất...' : 'Tải Backup (.json)'}
                             </button>
                         </div>
 
                         {/* Import */}
-                        <div className="border border-blue-200 bg-blue-50/50 rounded-xl p-5">
+                        <div className="border border-gray-200 bg-gray-50/50 rounded-xl p-5">
                             <div className="flex items-center gap-3 mb-3">
-                                <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center"><Upload size={18} className="text-blue-600" /></div>
+                                <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center"><Upload size={18} className="text-gray-600" /></div>
                                 <div><h3 className="text-sm font-semibold text-gray-900">Import / Restore</h3><p className="text-xs text-gray-500">Nhập dữ liệu từ file backup</p></div>
                             </div>
                             <p className="text-xs text-gray-600 mb-3">Upload file JSON đã export trước đó. Dữ liệu trùng slug sẽ được cập nhật.</p>
-                            <label className="w-full px-4 py-2.5 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-all flex items-center justify-center gap-2 cursor-pointer">
+                            <label className="w-full px-4 py-2.5 bg-gray-900 text-white rounded-lg text-sm font-medium hover:bg-gray-800 transition-all flex items-center justify-center gap-2 cursor-pointer">
                                 {importing ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
                                 {importing ? 'Đang nhập...' : 'Chọn file Backup (.json)'}
                                 <input type="file" accept=".json" onChange={handleImportBackup} className="hidden" disabled={importing} />
