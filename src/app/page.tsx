@@ -26,7 +26,7 @@ export default async function Home() {
         <Marquee
           items={["Hà Nội", "TP. Hồ Chí Minh", "Đà Nẵng", "Cần Thơ", "Hải Phòng", "Quảng Ninh", "Bình Dương", "Nha Trang"]}
           variant="cities"
-          speed={30}
+          speed={60}
         />
         <Feature images={images} />
         <Stats />
@@ -36,7 +36,7 @@ export default async function Home() {
         <Marquee
           items={["Khai Trương", "Hội Nghị", "Festival", "Roadshow", "Teambuilding", "Gala Dinner", "Khánh Thành", "Động Thổ"]}
           variant="purple"
-          speed={40}
+          speed={70}
         />
         <Speakers images={images} />
         <Sponsor images={images} />
