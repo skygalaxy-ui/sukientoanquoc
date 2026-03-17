@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
         const response = NextResponse.json({ success: true, user: tokenData });
         response.cookies.set('cms_auth', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            secure: false,
             sameSite: 'lax',
             maxAge: 60 * 60 * 24 * 7,
             path: '/',
