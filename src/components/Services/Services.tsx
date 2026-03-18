@@ -15,8 +15,8 @@ const defaultImages: Record<string, string> = {
     company_trip: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&q=85',
     year_end_party: 'https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?w=800&q=85',
     workshop: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=85',
-    sports_day: 'https://images.unsplash.com/photo-1461896836934-bd45ea8ba7cd?w=800&q=85',
-    family_day: 'https://images.unsplash.com/photo-1609234656388-0ff363383899?w=800&q=85',
+    sports_day: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=85',
+    family_day: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&q=85',
     hoi_nghi: 'https://images.unsplash.com/photo-1587825140708-dfaf18c4e236?w=800&q=85',
     khai_truong: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=85',
 };
