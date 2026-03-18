@@ -45,6 +45,7 @@ export async function getPublishedPosts() {
         .from('posts')
         .select('*')
         .eq('is_published', true)
+        .is('deleted_at', null)
         .order('published_at', { ascending: false });
 
     if (error) { console.error('Error fetching published posts:', error); return []; }
@@ -57,6 +58,7 @@ export async function getPostBySlug(slug: string) {
         .select('*')
         .eq('slug', slug)
         .eq('is_published', true)
+        .is('deleted_at', null)
         .single();
 
     if (error) { console.error('Error fetching post:', error); return null; }
@@ -68,6 +70,7 @@ export async function getRelatedPosts(currentSlug: string, categoryId: string | 
         .from('posts')
         .select('*')
         .eq('is_published', true)
+        .is('deleted_at', null)
         .neq('slug', currentSlug)
         .order('published_at', { ascending: false })
         .limit(limit);
