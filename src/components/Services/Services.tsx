@@ -11,12 +11,12 @@ interface ServicesProps {
 
 const serviceKeys = ['teambuilding', 'company_trip', 'year_end_party', 'workshop', 'sports_day', 'family_day'];
 const defaultImages: Record<string, string> = {
-    teambuilding: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800&q=85',
-    company_trip: 'https://images.unsplash.com/photo-1583521214690-73421a1829a9?w=800&q=85',
-    year_end_party: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=800&q=85',
-    workshop: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=85',
-    sports_day: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800&q=85',
-    family_day: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&q=85',
+    teambuilding: 'https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=800&q=85',
+    company_trip: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=85',
+    year_end_party: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=85',
+    workshop: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=85',
+    sports_day: 'https://images.unsplash.com/photo-1461896836934-bd45ea8ba7cd?w=800&q=85',
+    family_day: 'https://images.unsplash.com/photo-1472162072942-cd5147eb3902?w=800&q=85',
 };
 
 function getServices(images?: Record<string, string>) {

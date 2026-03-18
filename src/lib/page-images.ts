@@ -9,12 +9,12 @@ const DEFAULT_IMAGES: Record<string, string> = {
   'feature_main': 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&q=85',
   
   // Services
-  'service_teambuilding': 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800&q=85',
-  'service_company_trip': 'https://images.unsplash.com/photo-1583521214690-73421a1829a9?w=800&q=85',
-  'service_year_end_party': 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=800&q=85',
-  'service_workshop': 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=85',
-  'service_sports_day': 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800&q=85',
-  'service_family_day': 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&q=85',
+  'service_teambuilding': 'https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=800&q=85',
+  'service_company_trip': 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=85',
+  'service_year_end_party': 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=85',
+  'service_workshop': 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=85',
+  'service_sports_day': 'https://images.unsplash.com/photo-1461896836934-bd45ea8ba7cd?w=800&q=85',
+  'service_family_day': 'https://images.unsplash.com/photo-1472162072942-cd5147eb3902?w=800&q=85',
   
   // Portfolio
   'portfolio_1': 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=600&q=80&fm=webp',
@@ -25,9 +25,9 @@ const DEFAULT_IMAGES: Record<string, string> = {
   'portfolio_6': 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=600&q=80&fm=webp',
   
   // Speakers (Asian avatars)
-  'speaker_1': 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=120&q=80&fm=webp',
-  'speaker_2': 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&q=80&fm=webp',
-  'speaker_3': 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=120&q=80&fm=webp',
+  'speaker_1': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80&fm=webp',
+  'speaker_2': 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&q=80&fm=webp',
+  'speaker_3': 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&q=80&fm=webp',
   
   // Sponsor
   'sponsor_bg': 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1920&q=85',

@@ -61,9 +61,9 @@ const QuoteIcon = () => (
 
 export default function Speakers({ images }: { images?: Record<string, string> }) {
     const defaultAvatars = [
-        'https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=120&q=80&fm=webp',
-        'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&q=80&fm=webp',
-        'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=120&q=80&fm=webp',
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80&fm=webp',
+        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&q=80&fm=webp',
+        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&q=80&fm=webp',
     ];
     const speakerImages = [
         images?.speaker_1 || defaultAvatars[0],
