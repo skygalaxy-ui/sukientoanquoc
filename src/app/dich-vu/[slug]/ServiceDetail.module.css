@@ -1,0 +1,149 @@
+.page {
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+/* ═══ Hero Section ═══ */
+.hero {
+    height: 70vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.heroContent {
+    position: relative;
+    z-index: 10;
+    max-width: 900px;
+    padding: 24px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 8px 16px;
+    background: rgba(249, 115, 22, 0.2);
+    border-radius: 100px;
+    color: #FED7AA;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+.title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -1.5px;
+    text-transform: uppercase;
+}
+
+.description {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* ═══ Content Section ═══ */
+.section {
+    padding: 100px 24px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 60px;
+}
+
+@media (min-width: 1024px) {
+    .grid {
+        grid-template-columns: 1.2fr 0.8fr;
+    }
+}
+
+.processGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-top: 48px;
+}
+
+.processCard {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 32px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s;
+}
+
+.processCard:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--orange);
+    transform: translateY(-5px);
+}
+
+.stepNum {
+    font-size: 48px;
+    font-weight: 800;
+    color: rgba(249, 115, 22, 0.25);
+    margin-bottom: 12px;
+    line-height: 1;
+}
+
+.stepName {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: white;
+}
+
+.stepDesc {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.6;
+}
+
+.ctaBox {
+    background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+    padding: 48px;
+    border-radius: 24px;
+    text-align: center;
+    margin-top: 80px;
+}
+
+.ctaTitle {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.ctaBtn {
+    display: inline-block;
+    padding: 16px 32px;
+    background: white;
+    color: var(--orange);
+    border-radius: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+}
+
+.ctaBtn:hover {
+    transform: scale(1.05);
+}

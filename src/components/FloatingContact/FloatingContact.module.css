@@ -1,0 +1,126 @@
+.wrapper {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+@media (min-width: 768px) {
+    .wrapper {
+        bottom: 32px;
+        right: 32px;
+        gap: 12px;
+    }
+}
+
+/* Options list */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    animation: slideUp 0.3s var(--ease) both;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 100px;
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--font-body);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s var(--ease);
+    white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+    .option {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+}
+
+.option:hover {
+    transform: scale(1.05) translateX(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.optionLabel {}
+
+/* Main toggle button */
+.mainBtn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #0068FF;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 104, 255, 0.35);
+    transition: all 0.3s var(--ease);
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    .mainBtn {
+        width: 56px;
+        height: 56px;
+    }
+}
+
+.mainBtn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 32px rgba(0, 104, 255, 0.45);
+}
+
+.mainBtnActive {
+    background: #374151;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Pulse animation */
+.pulse::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 50%;
+    border: 2px solid #0068FF;
+    animation: pulseRing 1.5s ease-out infinite;
+}
+
+@keyframes pulseRing {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.6);
+        opacity: 0;
+    }
+}
