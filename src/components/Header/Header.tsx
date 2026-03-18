@@ -86,7 +86,7 @@ export default function Header() {
                         <Link href="/#services">Dịch vụ</Link>
                         <Link href="/#portfolio">Dự án</Link>
                         <Link href="/#process">Quy trình</Link>
-                        <Link href="/blog">Blog</Link>
+                        <Link href="/tin-tuc">Tin tức</Link>
                         <Link href="/#contact">Liên hệ</Link>
                     </div>
 
@@ -149,8 +149,8 @@ export default function Header() {
                             <span>Quy trình</span>
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                         </Link>
-                        <Link href="/blog" onClick={() => setMenuOpen(false)}>
-                            <span>Blog</span>
+                        <Link href="/tin-tuc" onClick={() => setMenuOpen(false)}>
+                            <span>Tin tức</span>
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                         </Link>
                         <Link href="/#contact" onClick={() => setMenuOpen(false)}>

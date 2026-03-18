@@ -29,7 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority: 1,
         },
         {
-            url: `${baseUrl}/blog`,
+            url: `${baseUrl}/tin-tuc`,
             lastModified: new Date(),
             changeFrequency: 'daily',
             priority: 0.9,
@@ -73,7 +73,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
         if (posts) {
             blogPages = posts.map((post) => ({
-                url: `${baseUrl}/blog/${post.slug}`,
+                url: `${baseUrl}/${post.slug}`,
                 lastModified: new Date(post.updated_at || post.published_at),
                 changeFrequency: 'weekly' as const,
                 priority: 0.7,
