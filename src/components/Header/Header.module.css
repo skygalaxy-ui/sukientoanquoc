@@ -153,6 +153,11 @@
     transform: rotate(-45deg) translateY(-5px) translateX(5px);
 }
 
+.burgerActive {
+    position: relative;
+    z-index: 10000;
+}
+
 /* Mobile menu */
 .mobileMenu {
     position: fixed;
@@ -160,16 +165,50 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 250, 245, 0.98);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    background: linear-gradient(180deg, #FFFAF5 0%, #FFF5EB 50%, #FFF0E0 100%);
     display: flex;
     flex-direction: column;
+    animation: menuFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 9999;
+    overflow-y: auto;
+}
+
+.mobileMenuHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(249, 115, 22, 0.08);
+}
+
+.mobileMenuLogo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.closeBtn {
+    width: 44px;
+    height: 44px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    gap: 36px;
-    animation: fadeInUp 0.3s var(--ease);
-    z-index: 99;
+    background: rgba(249, 115, 22, 0.08);
+    border: 1.5px solid rgba(249, 115, 22, 0.15);
+    cursor: pointer;
+    color: var(--orange);
+    border-radius: 50%;
+    transition: all 0.25s var(--ease);
+}
+
+.closeBtn:hover {
+    background: var(--orange);
+    color: white;
+    transform: rotate(90deg);
 }
 
 @media (min-width: 1024px) {
@@ -181,37 +220,119 @@
 .mobileLinks {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 4px;
+    padding: 16px 24px;
+    flex: 1;
 }
 
 .mobileLinks a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     font-family: var(--font-display);
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     color: var(--text);
-    padding: 14px 40px;
-    border-radius: 16px;
-    transition: all 0.2s;
+    padding: 20px 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    transition: all 0.25s var(--ease);
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: menuItemSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.mobileLinks a:hover {
-    background: rgba(249, 115, 22, 0.06);
+.mobileLinks a:last-child {
+    border-bottom: none;
+}
+
+.mobileLinks a svg {
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: all 0.25s var(--ease);
     color: var(--orange);
 }
 
+.mobileLinks a:hover {
+    color: var(--orange);
+    padding-left: 16px;
+}
+
+.mobileLinks a:hover svg {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.mobileLinks a:nth-child(1) { animation-delay: 0.05s; }
+.mobileLinks a:nth-child(2) { animation-delay: 0.1s; }
+.mobileLinks a:nth-child(3) { animation-delay: 0.15s; }
+.mobileLinks a:nth-child(4) { animation-delay: 0.2s; }
+.mobileLinks a:nth-child(5) { animation-delay: 0.25s; }
+
+.mobileMenuFooter {
+    padding: 20px 24px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-top: 1px solid rgba(249, 115, 22, 0.08);
+    opacity: 0;
+    animation: menuItemSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+}
+
+.mobilePhone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 24px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--orange);
+    border: 2px solid var(--orange);
+    border-radius: 100px;
+    transition: all 0.25s var(--ease);
+    font-family: var(--font-body);
+}
+
+.mobilePhone:hover {
+    background: rgba(249, 115, 22, 0.06);
+}
+
 .ctaMobile {
-    padding: 16px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 32px;
     background: var(--gradient-orange);
     color: white;
     border-radius: 100px;
     font-size: 16px;
     font-weight: 700;
     font-family: var(--font-body);
-    box-shadow: var(--shadow-orange-lg);
-    transition: all 0.3s;
+    box-shadow: 0 8px 24px rgba(249, 115, 22, 0.3);
+    transition: all 0.3s var(--ease);
 }
 
 .ctaMobile:hover {
-    transform: scale(1.05);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(249, 115, 22, 0.4);
+}
+
+@keyframes menuFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes menuItemSlide {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }

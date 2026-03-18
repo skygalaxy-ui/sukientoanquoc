@@ -32,7 +32,7 @@ const steps = [
     {
         num: "03",
         title: "Tổ Chức & Vận Hành",
-        desc: "Đội ngũ MC, quản trò chuyên nghiệp triển khai sự kiện — bạn chỉ cần tận hưởng cùng team!",
+        desc: "Đội ngũ MC, quản trò chuyên nghiệp triển khai sự kiện, bạn chỉ cần tận hưởng cùng team!",
         color: "#F59E0B",
         icon: (
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -68,7 +68,7 @@ export default function Process() {
                         <span className={styles.highlight}>để có sự kiện tuyệt vời</span>
                     </h2>
                     <p className={styles.subtitle}>
-                        Quy trình gọn nhẹ, bạn chỉ cần liên hệ — chúng tôi lo phần còn lại
+                        Quy trình gọn nhẹ, bạn chỉ cần liên hệ, chúng tôi lo phần còn lại
                     </p>
                 </div>
 

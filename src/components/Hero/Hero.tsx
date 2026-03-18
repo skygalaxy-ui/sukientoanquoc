@@ -39,7 +39,7 @@ export default function Hero({ heroImage }: HeroProps) {
                 </h1>
 
                 <p className={styles.subtitle}>
-                    Từ teambuilding, company trip đến sự kiện doanh nghiệp — 
+                    Từ teambuilding, company trip đến sự kiện doanh nghiệp, 
                     chúng tôi tạo nên những khoảnh khắc đáng nhớ cùng đội ngũ của bạn trên 63 tỉnh thành
                 </p>
 

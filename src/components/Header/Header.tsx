@@ -74,39 +74,41 @@ export default function Header() {
     };
 
     return (
-        <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
-            <nav className={styles.nav}>
-                <Link href="/" className={styles.logo}>
-                    <img src="/logo.png" alt="Sự Kiện Toàn Quốc" className={styles.logoImg} />
-                    <span>Sự Kiện Toàn Quốc</span>
-                </Link>
+        <>
+            <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
+                <nav className={styles.nav}>
+                    <Link href="/" className={styles.logo}>
+                        <img src="/logo.png" alt="Sự Kiện Toàn Quốc" className={styles.logoImg} />
+                        <span>Sự Kiện Toàn Quốc</span>
+                    </Link>
 
-                <div className={styles.links}>
-                    <a href="#services">Dịch vụ</a>
-                    <a href="#portfolio">Dự án</a>
-                    <a href="#process">Quy trình</a>
-                    <Link href="/blog">Blog</Link>
-                    <a href="#contact">Liên hệ</a>
-                </div>
+                    <div className={styles.links}>
+                        <Link href="/#services">Dịch vụ</Link>
+                        <Link href="/#portfolio">Dự án</Link>
+                        <Link href="/#process">Quy trình</Link>
+                        <Link href="/blog">Blog</Link>
+                        <Link href="/#contact">Liên hệ</Link>
+                    </div>
 
-                <a href="#contact" className={styles.ctaDesktop}>
-                    Tư vấn miễn phí
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                </a>
+                    <Link href="/#contact" className={styles.ctaDesktop}>
+                        Tư vấn miễn phí
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </Link>
 
-                <button
-                    ref={burgerRef}
-                    className={`${styles.burger} ${menuOpen ? styles.burgerActive : ""}`}
-                    onClick={() => setMenuOpen(!menuOpen)}
-                    aria-label={menuOpen ? "Đóng menu" : "Mở menu"}
-                    aria-expanded={menuOpen}
-                    aria-controls="mobile-menu"
-                >
-                    <span /><span /><span />
-                </button>
-            </nav>
+                    <button
+                        ref={burgerRef}
+                        className={`${styles.burger} ${menuOpen ? styles.burgerActive : ""}`}
+                        onClick={() => setMenuOpen(!menuOpen)}
+                        aria-label={menuOpen ? "Đóng menu" : "Mở menu"}
+                        aria-expanded={menuOpen}
+                        aria-controls="mobile-menu"
+                    >
+                        <span /><span /><span />
+                    </button>
+                </nav>
+            </header>
 
             {menuOpen && (
                 <div
@@ -118,18 +120,57 @@ export default function Header() {
                     aria-label="Menu điều hướng"
                     onKeyDown={handleMenuKeyDown}
                 >
-                    <div className={styles.mobileLinks}>
-                        <a href="#services" onClick={() => setMenuOpen(false)}>Dịch vụ</a>
-                        <a href="#portfolio" onClick={() => setMenuOpen(false)}>Dự án</a>
-                        <a href="#process" onClick={() => setMenuOpen(false)}>Quy trình</a>
-                        <Link href="/blog" onClick={() => setMenuOpen(false)}>Blog</Link>
-                        <a href="#contact" onClick={() => setMenuOpen(false)}>Liên hệ</a>
+                    <div className={styles.mobileMenuHeader}>
+                        <Link href="/" className={styles.mobileMenuLogo} onClick={() => setMenuOpen(false)}>
+                            <img src="/logo.png" alt="Logo" className={styles.logoImg} />
+                            <span>Sự Kiện Toàn Quốc</span>
+                        </Link>
+                        <button
+                            className={styles.closeBtn}
+                            onClick={() => setMenuOpen(false)}
+                            aria-label="Đóng menu"
+                        >
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                                <path d="M18 6L6 18M6 6l12 12" />
+                            </svg>
+                        </button>
                     </div>
-                    <a href="#contact" className={styles.ctaMobile} onClick={() => setMenuOpen(false)}>
-                        Tư vấn miễn phí
-                    </a>
+
+                    <div className={styles.mobileLinks}>
+                        <Link href="/#services" onClick={() => setMenuOpen(false)}>
+                            <span>Dịch vụ</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                        </Link>
+                        <Link href="/#portfolio" onClick={() => setMenuOpen(false)}>
+                            <span>Dự án</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                        </Link>
+                        <Link href="/#process" onClick={() => setMenuOpen(false)}>
+                            <span>Quy trình</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                        </Link>
+                        <Link href="/blog" onClick={() => setMenuOpen(false)}>
+                            <span>Blog</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                        </Link>
+                        <Link href="/#contact" onClick={() => setMenuOpen(false)}>
+                            <span>Liên hệ</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                        </Link>
+                    </div>
+
+                    <div className={styles.mobileMenuFooter}>
+                        <a href="tel:0857999545" className={styles.mobilePhone}>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" /></svg>
+                            0857 999 545
+                        </a>
+                        <Link href="/#contact" className={styles.ctaMobile} onClick={() => setMenuOpen(false)}>
+                            Nhận báo giá miễn phí
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                        </Link>
+                    </div>
                 </div>
             )}
-        </header>
+        </>
     );
 }

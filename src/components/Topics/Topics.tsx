@@ -1,11 +1,11 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import styles from "./Topics.module.css";
 
 const topics = [
     {
         title: "SỰ KIỆN DOANH NGHIỆP",
         color: "#8B5CF6",
-        desc: "Teambuilding, Year End Party, Company Trip, Lễ kỷ niệm thành lập — tất cả được thiết kế riêng cho thương hiệu.",
+        desc: "Teambuilding, Year End Party, Company Trip, Lễ kỷ niệm thành lập, tất cả được thiết kế riêng cho thương hiệu.",
         image: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=200&q=80",
     },
     {

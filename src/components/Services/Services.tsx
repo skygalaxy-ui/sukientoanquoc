@@ -11,22 +11,22 @@ interface ServicesProps {
 
 const serviceKeys = ['teambuilding', 'company_trip', 'year_end_party', 'workshop', 'sports_day', 'family_day'];
 const defaultImages: Record<string, string> = {
-    teambuilding: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=85',
-    company_trip: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=85',
-    year_end_party: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=85',
-    workshop: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=85',
-    sports_day: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&q=85',
-    family_day: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=800&q=85',
+    teambuilding: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800&q=85',
+    company_trip: 'https://images.unsplash.com/photo-1583521214690-73421a1829a9?w=800&q=85',
+    year_end_party: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=800&q=85',
+    workshop: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=85',
+    sports_day: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800&q=85',
+    family_day: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&q=85',
 };
 
 function getServices(images?: Record<string, string>) {
     return [
-        { badge: 'TEAMBUILDING', color: '#F97316', title: 'Teambuilding Ngoài Trời', desc: 'Trò chơi vận động, thử thách nhóm ngoài trời — tăng tinh thần đoàn kết và khả năng làm việc nhóm hiệu quả.', image: images?.service_teambuilding || defaultImages.teambuilding, eventType: 'teambuilding' },
+        { badge: 'TEAMBUILDING', color: '#F97316', title: 'Teambuilding Ngoài Trời', desc: 'Trò chơi vận động, thử thách nhóm ngoài trời giúp tăng tinh thần đoàn kết và khả năng làm việc nhóm hiệu quả.', image: images?.service_teambuilding || defaultImages.teambuilding, eventType: 'teambuilding' },
         { badge: 'COMPANY TRIP', color: '#F97316', title: 'Du Lịch Kết Hợp Team', desc: 'Kết hợp nghỉ dưỡng và hoạt động nhóm tại các địa điểm đẹp nhất. Tái tạo năng lượng cho cả team.', image: images?.service_company_trip || defaultImages.company_trip, eventType: 'company-trip' },
         { badge: 'YEAR END PARTY', color: '#F97316', title: 'Tiệc Cuối Năm & Gala', desc: 'Year End Party ấn tượng với concept độc đáo, chương trình nghệ thuật sôi động và bữa tiệc đẳng cấp.', image: images?.service_year_end_party || defaultImages.year_end_party, eventType: 'year-end-party' },
         { badge: 'WORKSHOP', color: '#F97316', title: 'Workshop & Đào Tạo', desc: 'Chương trình đào tạo kỹ năng qua hoạt động thực tế: leadership, communication, problem-solving.', image: images?.service_workshop || defaultImages.workshop, eventType: 'workshop' },
-        { badge: 'SPORTS DAY', color: '#F97316', title: 'Ngày Hội Thể Thao', desc: 'Giải đấu nội bộ, Olympic mini, ngày hội thể thao — khơi dậy tinh thần thi đấu và gắn kết nhân viên.', image: images?.service_sports_day || defaultImages.sports_day, eventType: 'sports-day' },
-        { badge: 'FAMILY DAY', color: '#F97316', title: 'Ngày Hội Gia Đình', desc: 'Sự kiện gia đình cho nhân viên với trò chơi, ẩm thực và giải trí — tăng sự gắn bó với công ty.', image: images?.service_family_day || defaultImages.family_day, eventType: 'family-day' },
+        { badge: 'SPORTS DAY', color: '#F97316', title: 'Ngày Hội Thể Thao', desc: 'Giải đấu nội bộ, Olympic mini, ngày hội thể thao giúp khơi dậy tinh thần thi đấu và gắn kết nhân viên.', image: images?.service_sports_day || defaultImages.sports_day, eventType: 'sports-day' },
+        { badge: 'FAMILY DAY', color: '#F97316', title: 'Ngày Hội Gia Đình', desc: 'Sự kiện gia đình cho nhân viên với trò chơi, ẩm thực và giải trí giúp tăng sự gắn bó với công ty.', image: images?.service_family_day || defaultImages.family_day, eventType: 'family-day' },
     ];
 }
 

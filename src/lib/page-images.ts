@@ -3,61 +3,61 @@ import { supabase } from './supabase';
 // Default images (fallback khi chưa set trong CMS)
 const DEFAULT_IMAGES: Record<string, string> = {
   // Hero
-  'hero_bg': 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1920&q=90',
+  'hero_bg': 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1920&q=90',
   
   // Feature
-  'feature_main': 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=800&q=85',
+  'feature_main': 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&q=85',
   
   // Services
-  'service_teambuilding': 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=85',
-  'service_company_trip': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=85',
-  'service_year_end_party': 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=85',
-  'service_workshop': 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=85',
-  'service_sports_day': 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&q=85',
-  'service_family_day': 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=800&q=85',
+  'service_teambuilding': 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800&q=85',
+  'service_company_trip': 'https://images.unsplash.com/photo-1583521214690-73421a1829a9?w=800&q=85',
+  'service_year_end_party': 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=800&q=85',
+  'service_workshop': 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=85',
+  'service_sports_day': 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800&q=85',
+  'service_family_day': 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&q=85',
   
   // Portfolio
-  'portfolio_1': 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80&fm=webp',
-  'portfolio_2': 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&q=80&fm=webp',
-  'portfolio_3': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&fm=webp',
-  'portfolio_4': 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&q=80&fm=webp',
-  'portfolio_5': 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80&fm=webp',
-  'portfolio_6': 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=600&q=80&fm=webp',
+  'portfolio_1': 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=600&q=80&fm=webp',
+  'portfolio_2': 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=600&q=80&fm=webp',
+  'portfolio_3': 'https://images.unsplash.com/photo-1583521214690-73421a1829a9?w=600&q=80&fm=webp',
+  'portfolio_4': 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&q=80&fm=webp',
+  'portfolio_5': 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&q=80&fm=webp',
+  'portfolio_6': 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=600&q=80&fm=webp',
   
-  // Speakers
-  'speaker_1': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80&fm=webp',
-  'speaker_2': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80&fm=webp',
-  'speaker_3': 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&q=80&fm=webp',
+  // Speakers (Asian avatars)
+  'speaker_1': 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=120&q=80&fm=webp',
+  'speaker_2': 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&q=80&fm=webp',
+  'speaker_3': 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=120&q=80&fm=webp',
   
   // Sponsor
-  'sponsor_bg': 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1920&q=85',
+  'sponsor_bg': 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1920&q=85',
   
   // Events
-  'event_teambuilding_1': 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&q=80',
-  'event_teambuilding_2': 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=400&q=80',
-  'event_gala_1': 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&q=80',
-  'event_gala_2': 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=400&q=80',
-  'event_workshop_1': 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=400&q=80',
-  'event_workshop_2': 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=400&q=80',
+  'event_teambuilding_1': 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=400&q=80',
+  'event_teambuilding_2': 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&q=80',
+  'event_gala_1': 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=400&q=80',
+  'event_gala_2': 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&q=80',
+  'event_workshop_1': 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&q=80',
+  'event_workshop_2': 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=400&q=80',
   
   // VideoGrid
-  'video_1': 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&q=80',
-  'video_2': 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=600&q=80',
-  'video_3': 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&q=80',
-  'video_4': 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=600&q=80',
+  'video_1': 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&q=80',
+  'video_2': 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=600&q=80',
+  'video_3': 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=600&q=80',
+  'video_4': 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&q=80',
 
   // Topics
-  'topic_main': 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=200&q=80',
+  'topic_main': 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=200&q=80',
 
   // Service pages hero
-  'servicepage_teambuilding': 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1920&q=90&fm=webp',
-  'servicepage_company_trip': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=90&fm=webp',
-  'servicepage_year_end_party': 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1920&q=90&fm=webp',
-  'servicepage_workshop': 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1920&q=90&fm=webp',
-  'servicepage_sports_day': 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1920&q=90&fm=webp',
-  'servicepage_family_day': 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=1920&q=90&fm=webp',
-  'servicepage_khai_truong': 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1920&q=90&fm=webp',
-  'servicepage_hoi_nghi': 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=1920&q=90&fm=webp',
+  'servicepage_teambuilding': 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1920&q=90&fm=webp',
+  'servicepage_company_trip': 'https://images.unsplash.com/photo-1583521214690-73421a1829a9?w=1920&q=90&fm=webp',
+  'servicepage_year_end_party': 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=1920&q=90&fm=webp',
+  'servicepage_workshop': 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1920&q=90&fm=webp',
+  'servicepage_sports_day': 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=1920&q=90&fm=webp',
+  'servicepage_family_day': 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=1920&q=90&fm=webp',
+  'servicepage_khai_truong': 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1920&q=90&fm=webp',
+  'servicepage_hoi_nghi': 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1920&q=90&fm=webp',
 };
 
 let cachedImages: Record<string, string> | null = null;

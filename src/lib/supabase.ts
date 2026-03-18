@@ -4,10 +4,13 @@ import { withTenantId } from './tenant-filter';
 import { adminDb } from './admin-db';
 
 // ==================== CLIENT ====================
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Create client with fallback — functions will return empty data if not configured
+export const supabase = supabaseUrl && supabaseAnonKey
+    ? createClient(supabaseUrl, supabaseAnonKey)
+    : createClient('https://placeholder.supabase.co', 'placeholder-key');
 
 // ==================== POSTS CRUD ====================
 
