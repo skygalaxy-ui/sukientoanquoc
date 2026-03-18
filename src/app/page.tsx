@@ -10,6 +10,7 @@ import Marquee from "@/components/Marquee/Marquee";
 import Portfolio from "@/components/Portfolio/Portfolio";
 import ContactForm from "@/components/ContactForm/ContactForm";
 import Footer from "@/components/Footer/Footer";
+import LatestNews from "@/components/LatestNews/LatestNews";
 
 import { getPageImages } from "@/lib/page-images";
 
@@ -40,6 +41,7 @@ export default async function Home() {
         />
         <Speakers images={images} />
         <Sponsor images={images} />
+        <LatestNews />
         <ContactForm />
       </main>
       <Footer />
