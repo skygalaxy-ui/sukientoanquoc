@@ -24,6 +24,10 @@ export default async function Footer() {
                             <a href="/dich-vu/company-trip">Company Trip</a>
                             <a href="/dich-vu/year-end-party">Year End Party</a>
                             <a href="/dich-vu/workshop">Workshop & Đào tạo</a>
+                            <a href="/dich-vu/sports-day">Sports Day</a>
+                            <a href="/dich-vu/family-day">Family Day</a>
+                            <a href="/dich-vu/hoi-nghi">Hội Nghị</a>
+                            <a href="/dich-vu/khai-truong">Khai Trương</a>
                         </div>
                         <div className={styles.col}>
                             <h4 className={styles.colTitle}>Pháp lý</h4>

@@ -12,7 +12,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { slug } = await params;
     const post = await getPostBySlug(slug);
-    if (!post) return { title: "B├뿯½i vi뿯½║┐t kh├┤ng t├뿯½m th뿯½║뿯½y" };
+    if (!post) return { title: "Bài viết không tìm thấy" };
 
     return {
         title: post.meta_title || post.title,
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             publishedTime: post.published_at || post.created_at,
             modifiedTime: post.updated_at || undefined,
             url: `https://sukientoanquoc.com/blog/${slug}`,
-            siteName: "S뿯½╗뿯▽ Ki뿯½╗뿯½n To├뿯½n Qu뿯½╗뿯½c",
+            siteName: "Sự Kiện Toàn Quốc",
             images: post.featured_image ? [post.featured_image] : [],
         },
         twitter: {
@@ -79,12 +79,12 @@ export default async function BlogPostPage({ params }: Props) {
                         dateModified: post.updated_at || post.published_at || post.created_at,
                         author: {
                             "@type": "Organization",
-                            name: "S뿯½╗뿯▽ Ki뿯½╗뿯½n To├뿯½n Qu뿯½╗뿯½c",
+                            name: "Sự Kiện Toàn Quốc",
                             url: "https://sukientoanquoc.com",
                         },
                         publisher: {
                             "@type": "Organization",
-                            name: "S뿯½╗뿯▽ Ki뿯½╗뿯½n To├뿯½n Qu뿯½╗뿯½c",
+                            name: "Sự Kiện Toàn Quốc",
                             url: "https://sukientoanquoc.com",
                         },
                         mainEntityOfPage: {
@@ -92,7 +92,7 @@ export default async function BlogPostPage({ params }: Props) {
                             "@id": `https://sukientoanquoc.com/blog/${slug}`,
                         },
                         keywords: post.tags?.join(", ") || "",
-                        articleSection: category?.name || "S뿯½╗뿯▽ ki뿯½╗뿯½n",
+                        articleSection: category?.name || "Sự kiện",
                         wordCount: post.content ? post.content.replace(/<[^>]*>/g, "").split(/\s+/).length : 0,
                     }),
                 }}
@@ -106,7 +106,7 @@ export default async function BlogPostPage({ params }: Props) {
                         "@context": "https://schema.org",
                         "@type": "BreadcrumbList",
                         itemListElement: [
-                            { "@type": "ListItem", position: 1, name: "Trang ch뿯½╗뿯½", item: "https://sukientoanquoc.com" },
+                            { "@type": "ListItem", position: 1, name: "Trang chủ", item: "https://sukientoanquoc.com" },
                             { "@type": "ListItem", position: 2, name: "Blog", item: "https://sukientoanquoc.com/blog" },
                             ...(category ? [{ "@type": "ListItem", position: 3, name: category.name }] : []),
                             { "@type": "ListItem", position: category ? 4 : 3, name: post.title },
@@ -139,9 +139,9 @@ export default async function BlogPostPage({ params }: Props) {
                             href="/"
                             style={{ color: "var(--text-muted)", textDecoration: "none" }}
                         >
-                            Trang ch뿯½╗뿯½
+                            Trang chủ
                         </Link>
-                        <span>뿯ν뿯½║</span>
+                        <span>›</span>
                         <Link
                             href="/blog"
                             style={{ color: "var(--text-muted)", textDecoration: "none" }}
@@ -150,7 +150,7 @@ export default async function BlogPostPage({ params }: Props) {
                         </Link>
                         {category && (
                             <>
-                                <span>뿯ν뿯½║</span>
+                                <span>›</span>
                                 <span style={{ color: "var(--orange)" }}>
                                     {category.name}
                                 </span>
@@ -204,7 +204,7 @@ export default async function BlogPostPage({ params }: Props) {
                         }}
                     >
                         <span>
-                            ≡뿯ƽ뿯½뿯½{" "}
+                            📅{" "}
                             {post.published_at
                                 ? formatDate(post.published_at)
                                 : formatDate(post.created_at)}
@@ -324,7 +324,7 @@ export default async function BlogPostPage({ params }: Props) {
                                 marginBottom: 24,
                             }}
                         >
-                            B├뿯½i vi뿯½║┐t li├뿯½n quan
+                            Bài viết liên quan
                         </h2>
                         <div
                             style={{
@@ -415,7 +415,7 @@ export default async function BlogPostPage({ params }: Props) {
                                 marginBottom: 8,
                             }}
                         >
-                            B뿯½║뿯½n c뿯½║뿯½n t뿯½╗뿯½ ch뿯½╗⌐c s뿯½╗뿯▽ ki뿯½╗뿯½n?
+                            Bạn cần tổ chức sự kiện?
                         </h3>
                         <p
                             style={{
@@ -424,7 +424,7 @@ export default async function BlogPostPage({ params }: Props) {
                                 marginBottom: 20,
                             }}
                         >
-                            Li├뿯½n h뿯½╗뿯½ ngay v뿯½╗뿯½i S뿯½╗뿯▽ Ki뿯½╗뿯½n To├뿯½n Qu뿯½╗뿯½c ─뿯½뿯½╗뿯½ ─뿯½╞뿯▽뿯½╗뿯½c t╞뿯▽ v뿯½║뿯½n mi뿯½╗뿯½n ph├뿯½!
+                            Liên hệ ngay với Sự Kiện Toàn Quốc để được tư vấn miễn phí!
                         </p>
                         <Link
                             href="/#contact"
@@ -441,7 +441,7 @@ export default async function BlogPostPage({ params }: Props) {
                                 textDecoration: "none",
                             }}
                         >
-                            Li├뿯½n h뿯½╗뿯½ t╞뿯▽ v뿯½║뿯½n 뿯ν뿯½뿯½
+                            Liên hệ tư vấn →
                         </Link>
                     </div>
                 </section>
