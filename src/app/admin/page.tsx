@@ -37,14 +37,14 @@ function WeeklyChart({ posts, allPosts }: { posts: Post[]; allPosts: number }) {
     const max = Math.max(...days.map(d => d.count), 1);
 
     return (
-        <div className="flex items-end gap-2 h-28">
+        <div className="flex items-end gap-1.5 h-20">
             {days.map((day, i) => (
-                <div key={i} className="flex-1 flex flex-col items-center gap-1.5">
+                <div key={i} className="flex-1 flex flex-col items-center gap-1">
                     <span className="text-[10px] font-medium text-gray-500">{day.count || ''}</span>
                     <div
                         className={`w-full rounded-t-md transition-all duration-500 ${day.count > 0 ? 'bg-orange-500' : 'bg-gray-100'}`}
                         style={{
-                            height: `${Math.max(4, (day.count / max) * 80)}px`,
+                            height: `${Math.max(4, (day.count / max) * 60)}px`,
                             animationDelay: `${i * 80}ms`,
                         }}
                     />
@@ -208,7 +208,7 @@ export default function AdminDashboard() {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-4">
             {/* Auto-publish notification */}
             {autoPublished.length > 0 && (
                 <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 flex items-start gap-3 animate-fade-in-up shadow-sm">
@@ -245,46 +245,48 @@ export default function AdminDashboard() {
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                 {statCards.map((stat, idx) => (
                     <div
                         key={idx}
-                        className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all group cursor-default hover:-translate-y-1 animate-fade-in-up opacity-0"
-                        style={{ animationDelay: `${idx * 100}ms`, animationFillMode: 'forwards' }}
+                        className="bg-white rounded-xl p-3.5 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all group cursor-default animate-fade-in-up opacity-0"
+                        style={{ animationDelay: `${idx * 80}ms`, animationFillMode: 'forwards' }}
                     >
-                        <div className={`w-11 h-11 rounded-xl ${stat.bgLight} flex items-center justify-center transition-transform group-hover:scale-110 duration-300`}>
-                            <stat.icon className={`w-5 h-5 ${stat.color}`} />
+                        <div className="flex items-center gap-2.5 mb-2">
+                            <div className={`w-8 h-8 rounded-lg ${stat.bgLight} flex items-center justify-center`}>
+                                <stat.icon className={`w-4 h-4 ${stat.color}`} />
+                            </div>
+                            <p className="text-2xl font-bold text-gray-900">
+                                {loading ? (
+                                    <span className="inline-block w-8 h-6 bg-gray-100 rounded animate-pulse" />
+                                ) : (
+                                    stat.value
+                                )}
+                            </p>
                         </div>
-                        <p className="text-3xl font-bold text-gray-900 mb-1">
-                            {loading ? (
-                                <span className="inline-block w-12 h-8 bg-gray-100 rounded animate-pulse" />
-                            ) : (
-                                stat.value
-                            )}
-                        </p>
-                        <p className="text-gray-500 text-sm group-hover:text-gray-900 transition-colors">{stat.label}</p>
-                        <p className="text-xs text-gray-400 mt-1">{stat.sub}</p>
+                        <p className="text-gray-500 text-xs font-medium">{stat.label}</p>
+                        <p className="text-[10px] text-gray-400 mt-0.5">{stat.sub}</p>
                     </div>
                 ))}
             </div>
 
             {/* Activity Chart + Export */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-                    <div className="flex items-center justify-between mb-4">
-                        <h3 className="font-semibold text-gray-900">Hoạt động 7 ngày qua</h3>
-                        <span className="text-xs text-gray-400">Bài viết mới mỗi ngày</span>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+                <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+                    <div className="flex items-center justify-between mb-3">
+                        <h3 className="font-semibold text-gray-900 text-sm">Hoạt động 7 ngày qua</h3>
+                        <span className="text-[10px] text-gray-400">Bài viết mới mỗi ngày</span>
                     </div>
                     {loading ? (
-                        <div className="h-32 bg-gray-50 rounded-xl animate-pulse" />
+                        <div className="h-20 bg-gray-50 rounded-lg animate-pulse" />
                     ) : (
                         <WeeklyChart posts={weeklyPosts} allPosts={stats.posts} />
                     )}
                 </div>
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 flex flex-col justify-between">
+                <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex flex-col justify-between">
                     <div>
-                        <h3 className="font-semibold text-gray-900 mb-1">Xuất dữ liệu</h3>
-                        <p className="text-xs text-gray-400 mb-4">Tải xuống danh sách bài viết dưới dạng CSV</p>
+                        <h3 className="font-semibold text-gray-900 text-sm mb-1">Xuất dữ liệu</h3>
+                        <p className="text-[11px] text-gray-400 mb-3">Tải xuống danh sách bài viết dưới dạng CSV</p>
                     </div>
                     <button
                         onClick={async () => {
@@ -307,7 +309,7 @@ export default function AdminDashboard() {
                             link.download = `posts_${new Date().toISOString().slice(0, 10)}.csv`;
                             link.click();
                         }}
-                        className="w-full py-2.5 bg-gray-900 text-white rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
+                        className="w-full py-2 bg-gray-900 text-white rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
                     >
                         <BarChart3 className="w-4 h-4" />
                         Export CSV
@@ -316,14 +318,14 @@ export default function AdminDashboard() {
             </div>
 
             {/* Content Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
                 {/* Recent Posts - 2 columns */}
-                <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100">
-                    <div className="flex items-center justify-between p-5 border-b border-gray-100">
-                        <h2 className="font-semibold text-gray-900">Bài viết gần đây</h2>
-                        <Link href="/admin/posts" className="text-sm text-gray-500 hover:text-gray-900 font-medium flex items-center gap-1 transition-colors">
+                <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100">
+                    <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
+                        <h2 className="font-semibold text-gray-900 text-sm">Bài viết gần đây</h2>
+                        <Link href="/admin/posts" className="text-xs text-gray-500 hover:text-gray-900 font-medium flex items-center gap-1 transition-colors">
                             Xem tất cả
-                            <ArrowUpRight className="w-3.5 h-3.5" />
+                            <ArrowUpRight className="w-3 h-3" />
                         </Link>
                     </div>
 
@@ -351,25 +353,22 @@ export default function AdminDashboard() {
                             </Link>
                         </div>
                     ) : (
-                        <div className="p-3">
+                        <div className="p-2">
                             {recentPosts.map((post) => (
-                                <div key={post.id} className="flex items-center gap-4 p-3 rounded-xl hover:bg-gray-50 transition-colors group">
-                                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                                <div key={post.id} className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors group">
+                                    <div className="w-9 h-9 rounded-md bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center flex-shrink-0 overflow-hidden">
                                         {post.featured_image ? (
                                             <img src={post.featured_image} alt="" className="w-full h-full object-cover" />
                                         ) : (
-                                            <FileText className="w-5 h-5 text-gray-400" />
+                                            <FileText className="w-4 h-4 text-gray-400" />
                                         )}
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <p className="text-gray-900 font-medium truncate text-sm group-hover:text-orange-600 transition-colors">
                                             {post.title}
                                         </p>
-                                        <div className="flex items-center gap-3 mt-1 text-xs text-gray-400">
-                                            <span className="flex items-center gap-1">
-                                                <Clock className="w-3 h-3" />
-                                                {formatTimeAgo(post.created_at)}
-                                            </span>
+                                        <div className="flex items-center gap-2 mt-0.5 text-[11px] text-gray-400">
+                                            <span>{formatTimeAgo(post.created_at)}</span>
                                             <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${post.is_published ? 'bg-orange-50 text-orange-600'
                                                 : (post.scheduled_at && new Date(post.scheduled_at) > new Date()) ? 'bg-gray-100 text-gray-600'
                                                     : 'bg-gray-100 text-gray-500'
@@ -380,11 +379,9 @@ export default function AdminDashboard() {
                                             </span>
                                         </div>
                                     </div>
-                                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <Link href={`/admin/posts/${post.id}`} className="p-2 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600">
-                                            <Edit3 className="w-4 h-4" />
-                                        </Link>
-                                    </div>
+                                    <Link href={`/admin/posts/${post.id}`} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-300 hover:text-gray-600 opacity-0 group-hover:opacity-100 transition-all">
+                                        <Edit3 className="w-3.5 h-3.5" />
+                                    </Link>
                                 </div>
                             ))}
                         </div>
@@ -392,7 +389,7 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Right Column */}
-                <div className="space-y-4">
+                <div className="space-y-3">
                     {/* Drafts Card */}
                     {draftPosts.length > 0 && (
                         <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
@@ -454,61 +451,46 @@ export default function AdminDashboard() {
                     )}
 
                     {/* Quick Actions */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-                        <h3 className="font-semibold text-gray-900 mb-4">Thao tác nhanh</h3>
-                        <div className="space-y-2">
-                            <Link href="/admin/posts/new" className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors group">
-                                <div className="w-9 h-9 rounded-lg bg-gray-200 flex items-center justify-center">
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-3.5">
+                        <h3 className="font-semibold text-gray-900 text-sm mb-2.5">Thao tác nhanh</h3>
+                        <div className="grid grid-cols-2 gap-2">
+                            <Link href="/admin/posts/new" className="flex flex-col items-center gap-1.5 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors group">
+                                <div className="w-8 h-8 rounded-lg bg-gray-200 flex items-center justify-center">
                                     <Plus className="w-4 h-4 text-gray-600" />
                                 </div>
-                                <div>
-                                    <p className="text-sm font-medium text-gray-900 group-hover:text-gray-600 transition-colors">Tạo bài viết</p>
-                                    <p className="text-xs text-gray-400">Viết bài mới</p>
-                                </div>
+                                <p className="text-xs font-medium text-gray-700 text-center">Bài viết mới</p>
                             </Link>
-                            <Link href="/admin/categories" className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors group">
-                                <div className="w-9 h-9 rounded-lg bg-gray-200 flex items-center justify-center">
+                            <Link href="/admin/categories" className="flex flex-col items-center gap-1.5 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors group">
+                                <div className="w-8 h-8 rounded-lg bg-gray-200 flex items-center justify-center">
                                     <FolderOpen className="w-4 h-4 text-gray-600" />
                                 </div>
-                                <div>
-                                    <p className="text-sm font-medium text-gray-900 group-hover:text-gray-600 transition-colors">Quản lý chuyên mục</p>
-                                    <p className="text-xs text-gray-400">Thêm, sửa, xóa</p>
-                                </div>
+                                <p className="text-xs font-medium text-gray-700 text-center">Chuyên mục</p>
                             </Link>
-                            <Link href="/admin/media" className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors group">
-                                <div className="w-9 h-9 rounded-lg bg-gray-200 flex items-center justify-center">
+                            <Link href="/admin/media" className="flex flex-col items-center gap-1.5 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors group">
+                                <div className="w-8 h-8 rounded-lg bg-gray-200 flex items-center justify-center">
                                     <ImageIcon className="w-4 h-4 text-gray-600" />
                                 </div>
-                                <div>
-                                    <p className="text-sm font-medium text-gray-900 group-hover:text-gray-600 transition-colors">Thư viện ảnh</p>
-                                    <p className="text-xs text-gray-400">{stats.imagesCount} ảnh đã tải</p>
-                                </div>
+                                <p className="text-xs font-medium text-gray-700 text-center">Thư viện ảnh</p>
                             </Link>
-                            <Link href="/admin/seo-audit" className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors group">
-                                <div className="w-9 h-9 rounded-lg bg-gray-200 flex items-center justify-center">
+                            <Link href="/admin/seo-audit" className="flex flex-col items-center gap-1.5 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors group">
+                                <div className="w-8 h-8 rounded-lg bg-gray-200 flex items-center justify-center">
                                     <Search className="w-4 h-4 text-gray-600" />
                                 </div>
-                                <div>
-                                    <p className="text-sm font-medium text-gray-900 group-hover:text-gray-600 transition-colors">SEO Audit</p>
-                                    <p className="text-xs text-gray-400">Kiểm tra On-Page toàn tập</p>
-                                </div>
+                                <p className="text-xs font-medium text-gray-700 text-center">SEO Audit</p>
                             </Link>
                         </div>
                     </div>
 
                     {/* Sự Kiện Toàn Quốc Card */}
-                    <div className="bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl p-5 text-white">
-                        <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center mb-4">
-                            <span className="font-black text-[10px]">SETQ</span>
-                        </div>
-                        <h3 className="font-semibold mb-2">Sự Kiện Toàn Quốc CMS</h3>
-                        <p className="text-sm text-orange-100 mb-4">Viết tiêu đề hấp dẫn, mô tả meta độc đáo, và thêm ảnh đại diện cho mỗi bài để tăng CTR từ Google.</p>
-                        <div className="flex items-center justify-between text-xs text-orange-200">
-                            <div className="flex items-center gap-2">
-                                <BarChart3 className="w-3.5 h-3.5" />
+                    <div className="bg-gradient-to-br from-orange-500 to-red-600 rounded-xl p-4 text-white">
+                        <h3 className="font-semibold text-sm mb-1.5">💡 Mẹo SEO</h3>
+                        <p className="text-xs text-orange-100 mb-3 leading-relaxed">Viết tiêu đề hấp dẫn, mô tả meta độc đáo, và thêm ảnh đại diện cho mỗi bài để tăng CTR.</p>
+                        <div className="flex items-center justify-between text-[10px] text-orange-200">
+                            <div className="flex items-center gap-1.5">
+                                <BarChart3 className="w-3 h-3" />
                                 <span>{stats.posts > 0 ? Math.round((stats.published / stats.posts) * 100) : 0}% đã xuất bản</span>
                             </div>
-                            <span className="text-orange-300/50 text-[10px]">© Sự Kiện Toàn Quốc</span>
+                            <a href="https://t.me/cmssupport10xsolution" target="_blank" rel="noopener noreferrer" className="text-orange-300/70 hover:text-white transition-colors">10x Solution</a>
                         </div>
                     </div>
                 </div>

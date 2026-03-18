@@ -228,8 +228,8 @@ export default function LoginPage() {
                     </div>
                 )}
 
-                <p className="text-center text-xs text-gray-400 mt-6">
-                    © 2026 Sự Kiện Toàn Quốc
+                <p className="text-center text-xs text-gray-500 mt-6">
+                    © 2026 <a href="https://t.me/cmssupport10xsolution" target="_blank" rel="noopener noreferrer" className="font-semibold text-gray-600 hover:text-gray-800 transition-colors">10x Solution</a>
                 </p>
             </div>
 

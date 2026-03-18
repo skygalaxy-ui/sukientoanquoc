@@ -157,7 +157,7 @@ export default function Sidebar() {
                 </button>
                 {!collapsed && (
                     <div className="px-3 pt-2 pb-1">
-                        <p className="text-[10px] text-gray-300 text-center">© {new Date().getFullYear()} Sự Kiện Toàn Quốc</p>
+                        <p className="text-[10px] text-gray-300 text-center">© {new Date().getFullYear()} <a href="https://t.me/cmssupport10xsolution" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-500 transition-colors">10x Solution</a></p>
                     </div>
                 )}
             </div>

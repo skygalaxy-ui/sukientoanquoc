@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap');
 
 /* ==================== WEBSITE CSS VARIABLES ==================== */
 :root {
@@ -69,8 +69,8 @@
   --radius-2xl: 48px;
 
   /* FONTS */
-  --font-display: 'Montserrat', -apple-system, sans-serif;
-  --font-body: 'Montserrat', -apple-system, sans-serif;
+  --font-display: 'Be Vietnam Pro', -apple-system, sans-serif;
+  --font-body: 'Be Vietnam Pro', -apple-system, sans-serif;
 
   /* EASING */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
