@@ -229,7 +229,7 @@ export default function LoginPage() {
                 )}
 
                 <p className="text-center text-xs text-gray-400 mt-6">
-                    © 2026 {process.env.NEXT_PUBLIC_SITE_NAME || "CMS"}. All rights reserved.
+                    © 2026 Sự Kiện Toàn Quốc
                 </p>
             </div>
 
