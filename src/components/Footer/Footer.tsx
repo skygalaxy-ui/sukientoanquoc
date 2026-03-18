@@ -61,10 +61,7 @@ export default async function Footer() {
                 </div>
 
                 <div className={styles.bottom}>
-                    <p>© 2026 Công ty Tổ chức Sự Kiện Toàn Quốc National Events. All Rights Reserved.</p>
-                    <p style={{ marginTop: '8px', fontSize: '12px', opacity: 0.6 }}>
-                        Powered by <a href="https://t.me/cmssupport10xsolution" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>10x Solution</a>
-                    </p>
+                    <p>© {new Date().getFullYear()} Tổ chức Sự Kiện Toàn Quốc National Events. All Rights Reserved.</p>
                 </div>
             </div>
         </footer>
