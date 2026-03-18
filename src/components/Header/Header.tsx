@@ -14,8 +14,19 @@ function getFocusableElements(container: HTMLElement | null) {
 export default function Header() {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [logoUrl, setLogoUrl] = useState("/logo.png");
     const burgerRef = useRef<HTMLButtonElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
+
+    // Load logo from branding config
+    useEffect(() => {
+        fetch('/api/admin/branding')
+            .then(r => r.json())
+            .then(d => {
+                if (d.branding?.logoUrl) setLogoUrl(d.branding.logoUrl);
+            })
+            .catch(() => {});
+    }, []);
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 50);
@@ -78,7 +89,7 @@ export default function Header() {
             <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
                 <nav className={styles.nav}>
                     <Link href="/" className={styles.logo}>
-                        <img src="/logo.png" alt="Sự Kiện Toàn Quốc" className={styles.logoImg} />
+                        <img src={logoUrl} alt="Sự Kiện Toàn Quốc" className={styles.logoImg} />
                         <span>Sự Kiện Toàn Quốc</span>
                     </Link>
 
@@ -122,7 +133,7 @@ export default function Header() {
                 >
                     <div className={styles.mobileMenuHeader}>
                         <Link href="/" className={styles.mobileMenuLogo} onClick={() => setMenuOpen(false)}>
-                            <img src="/logo.png" alt="Logo" className={styles.logoImg} />
+                            <img src={logoUrl} alt="Logo" className={styles.logoImg} />
                             <span>Sự Kiện Toàn Quốc</span>
                         </Link>
                         <button

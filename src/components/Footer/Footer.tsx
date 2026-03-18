@@ -1,12 +1,16 @@
 import styles from "./Footer.module.css";
+import { getBranding } from "@/lib/branding";
 
-export default function Footer() {
+export default async function Footer() {
+    const branding = await getBranding();
+    const logoUrl = branding.logoUrl || "/logo.png";
+
     return (
         <footer className={styles.footer}>
             <div className={styles.container}>
                 <div className={styles.top}>
                     <div className={styles.brand}>
-                        <img src="/logo.png" alt="Sự Kiện Toàn Quốc" className={styles.logoImg} />
+                        <img src={logoUrl} alt="Sự Kiện Toàn Quốc" className={styles.logoImg} />
                         <div>
                             <span className={styles.brandName}>Sự Kiện Toàn Quốc</span>
                             <span className={styles.brandSub}>Teambuilding & Event</span>

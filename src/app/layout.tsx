@@ -1,68 +1,75 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { getBranding } from "@/lib/branding";
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://sukientoanquoc.com"),
-  title: {
-    default: "Sự Kiện Toàn Quốc — Tổ chức Teambuilding & Event chuyên nghiệp hàng đầu Việt Nam",
-    template: "%s | Sự Kiện Toàn Quốc",
-  },
-  description:
-    "Sự Kiện Toàn Quốc - Đơn vị tổ chức teambuilding, company trip, year end party, workshop chuyên nghiệp phủ sóng 63 tỉnh thành. 500+ sự kiện thành công. Hotline: 0857 999 545.",
-  keywords: [
-    "tổ chức sự kiện",
-    "sự kiện toàn quốc",
-    "teambuilding",
-    "company trip",
-    "year end party",
-    "workshop",
-    "tổ chức sự kiện doanh nghiệp",
-    "event",
-    "hội nghị",
-    "festival",
-    "gala dinner",
-    "khai trương",
-    "sports day",
-    "family day",
-    "tổ chức teambuilding",
-    "công ty tổ chức sự kiện",
-  ],
-  openGraph: {
-    title: "Sự Kiện Toàn Quốc — Gắn kết đội nhóm, bùng nổ năng lượng",
-    description: "Đơn vị tổ chức teambuilding & event chuyên nghiệp hàng đầu Việt Nam. 500+ sự kiện thành công trên 63 tỉnh thành.",
-    url: "https://sukientoanquoc.com",
-    siteName: "Sự Kiện Toàn Quốc",
-    type: "website",
-    locale: "vi_VN",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Sự Kiện Toàn Quốc — Teambuilding & Event chuyên nghiệp",
-    description: "Tổ chức teambuilding, company trip, year end party chuyên nghiệp. 500+ sự kiện thành công.",
-  },
-  alternates: {
-    canonical: "https://sukientoanquoc.com",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+export async function generateMetadata(): Promise<Metadata> {
+  const branding = await getBranding();
+  const faviconUrl = branding.faviconUrl || "/favicon.png";
+  const logoUrl = branding.logoUrl || "/logo.png";
+
+  return {
+    metadataBase: new URL("https://sukientoanquoc.com"),
+    title: {
+      default: "Sự Kiện Toàn Quốc — Tổ chức Teambuilding & Event chuyên nghiệp hàng đầu Việt Nam",
+      template: "%s | Sự Kiện Toàn Quốc",
+    },
+    description:
+      "Sự Kiện Toàn Quốc - Đơn vị tổ chức teambuilding, company trip, year end party, workshop chuyên nghiệp phủ sóng 63 tỉnh thành. 500+ sự kiện thành công. Hotline: 0857 999 545.",
+    keywords: [
+      "tổ chức sự kiện",
+      "sự kiện toàn quốc",
+      "teambuilding",
+      "company trip",
+      "year end party",
+      "workshop",
+      "tổ chức sự kiện doanh nghiệp",
+      "event",
+      "hội nghị",
+      "festival",
+      "gala dinner",
+      "khai trương",
+      "sports day",
+      "family day",
+      "tổ chức teambuilding",
+      "công ty tổ chức sự kiện",
+    ],
+    openGraph: {
+      title: "Sự Kiện Toàn Quốc — Gắn kết đội nhóm, bùng nổ năng lượng",
+      description: "Đơn vị tổ chức teambuilding & event chuyên nghiệp hàng đầu Việt Nam. 500+ sự kiện thành công trên 63 tỉnh thành.",
+      url: "https://sukientoanquoc.com",
+      siteName: "Sự Kiện Toàn Quốc",
+      type: "website",
+      locale: "vi_VN",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Sự Kiện Toàn Quốc — Teambuilding & Event chuyên nghiệp",
+      description: "Tổ chức teambuilding, company trip, year end party chuyên nghiệp. 500+ sự kiện thành công.",
+    },
+    alternates: {
+      canonical: "https://sukientoanquoc.com",
+    },
+    robots: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
-  },
-  icons: {
-    icon: [
-      { url: "/favicon.png", type: "image/png", sizes: "32x32" },
-      { url: "/favicon.png", type: "image/png", sizes: "192x192" },
-    ],
-    shortcut: "/favicon.png",
-    apple: "/logo.png",
-  },
-};
+    icons: {
+      icon: [
+        { url: faviconUrl, type: "image/png", sizes: "32x32" },
+        { url: faviconUrl, type: "image/png", sizes: "192x192" },
+      ],
+      shortcut: faviconUrl,
+      apple: logoUrl,
+    },
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",
