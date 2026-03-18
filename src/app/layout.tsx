@@ -1,6 +1,10 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { getBranding } from "@/lib/branding";
+import GoogleAnalytics, { GoogleSearchConsoleVerification } from "@/components/GoogleAnalytics";
+
+const GA4_ID = "G-BR3HRLCN9L";
 
 export async function generateMetadata(): Promise<Metadata> {
   const branding = await getBranding();
@@ -85,10 +89,24 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <head>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA4_ID}');
+          `}
+        </Script>
         <link
           href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
+        <meta name="google-site-verification" content="KumBN_mmL75xS9jtTQCkhpbgIpveq1G4pYXKV_ojtbc" />
+        <GoogleSearchConsoleVerification />
       </head>
       <body className="antialiased">
         <script
