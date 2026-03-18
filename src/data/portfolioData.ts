@@ -25,7 +25,7 @@ export const portfolioEvents: Record<string, PortfolioEvent> = {
         location: "Bãi biển Mỹ Khê, Đà Nẵng",
         date: "Tháng 10, 2025",
         description: "Chương trình teambuilding 2 ngày 1 đêm tại bãi biển Mỹ Khê, Đà Nẵng cho toàn bộ nhân viên FPT Software miền Trung. Với chủ đề 'Vượt Sóng Chinh Phục', chương trình gồm các trò chơi vận động trên biển, thử thách đội nhóm và gala dinner bên bờ biển.",
-        heroImage: "https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=1920&q=90&fm=webp",
+        heroImage: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1920&q=90&fm=webp",
         highlights: [
             { value: "300", label: "Nhân viên tham gia" },
             { value: "2N1Đ", label: "Thời gian" },
@@ -66,7 +66,7 @@ export const portfolioEvents: Record<string, PortfolioEvent> = {
         location: "JW Marriott Hanoi",
         date: "Tháng 12, 2025",
         description: "Đêm tiệc Year End Party hoành tráng cho Viettel Group với chủ đề 'Future Connect'. Sân khấu LED 20m, chương trình nghệ thuật sôi động với ca sỹ khách mời, DJ set, bốc thăm trúng thưởng giá trị và bữa tiệc đẳng cấp 5 sao.",
-        heroImage: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1920&q=90&fm=webp",
+        heroImage: "https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?w=1920&q=90&fm=webp",
         highlights: [
             { value: "500", label: "Khách tham dự" },
             { value: "20m", label: "Sân khấu LED" },
@@ -107,7 +107,7 @@ export const portfolioEvents: Record<string, PortfolioEvent> = {
         location: "Vinpearl Resort Phú Quốc",
         date: "Tháng 8, 2025",
         description: "Chuyến company trip 3 ngày 2 đêm tại Phú Quốc cho đội ngũ MoMo. Kết hợp nghỉ dưỡng 5 sao tại Vinpearl Resort với các hoạt động teambuilding trên biển, khám phá đảo ngọc và tiệc BBQ bên bờ biển.",
-        heroImage: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1920&q=90&fm=webp",
+        heroImage: "https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=1920&q=90&fm=webp",
         highlights: [
             { value: "200", label: "Nhân viên tham gia" },
             { value: "3N2Đ", label: "Thời gian" },
@@ -148,7 +148,7 @@ export const portfolioEvents: Record<string, PortfolioEvent> = {
         location: "Sân vận động Quân khu 7, TP.HCM",
         date: "Tháng 6, 2025",
         description: "Ngày hội thể thao Olympic Mini cho toàn bộ nhân viên Samsung Electronics Việt Nam. 20+ bộ môn thi đấu từ bóng đá, bóng chuyền, cầu lông đến kéo co, chạy tiếp sức. Hệ thống trọng tài chuyên nghiệp, bảng điểm điện tử và lễ trao giải trang trọng.",
-        heroImage: "https://images.unsplash.com/photo-1530549387789-4c1017266635?w=1920&q=90&fm=webp",
+        heroImage: "https://images.unsplash.com/photo-1461896836934-bd45ea8ba7cd?w=1920&q=90&fm=webp",
         highlights: [
             { value: "800", label: "VĐV tham gia" },
             { value: "20+", label: "Bộ môn thi đấu" },
@@ -189,7 +189,7 @@ export const portfolioEvents: Record<string, PortfolioEvent> = {
         location: "Pullman Saigon Centre",
         date: "Tháng 9, 2025",
         description: "Chương trình đào tạo kỹ năng Leadership 2 ngày cho đội ngũ quản lý cấp trung Masan Group. Phương pháp 'Learning by Doing' với các bài tập thực hành, case study thực tế và coaching 1:1 từ trainer quốc tế.",
-        heroImage: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1920&q=90&fm=webp",
+        heroImage: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1920&q=90&fm=webp",
         highlights: [
             { value: "150", label: "Quản lý tham gia" },
             { value: "2 ngày", label: "Thời gian" },
@@ -230,7 +230,7 @@ export const portfolioEvents: Record<string, PortfolioEvent> = {
         location: "Vinhomes Central Park, TP.HCM",
         date: "Tháng 11, 2025",
         description: "Ngày hội gia đình quy mô lớn với chủ đề 'Carnival Wonderland' cho toàn bộ nhân viên và gia đình Vingroup. Gian hàng ẩm thực đa quốc gia, khu vui chơi trẻ em, biểu diễn xiếc & ảo thuật, photo booth và chương trình bốc thăm trúng thưởng.",
-        heroImage: "https://images.unsplash.com/photo-1472162072942-cd5147eb3902?w=1920&q=90&fm=webp",
+        heroImage: "https://images.unsplash.com/photo-1609234656388-0ff363383899?w=1920&q=90&fm=webp",
         highlights: [
             { value: "1000+", label: "Gia đình tham gia" },
             { value: "30+", label: "Gian hàng" },

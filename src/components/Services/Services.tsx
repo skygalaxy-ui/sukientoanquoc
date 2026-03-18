@@ -11,14 +11,14 @@ interface ServicesProps {
 
 const serviceKeys = ['teambuilding', 'company_trip', 'year_end_party', 'workshop', 'sports_day', 'family_day', 'hoi_nghi', 'khai_truong'];
 const defaultImages: Record<string, string> = {
-    teambuilding: 'https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=800&q=85',
-    company_trip: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=85',
-    year_end_party: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=85',
-    workshop: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=85',
-    sports_day: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800&q=85',
-    family_day: 'https://images.unsplash.com/photo-1472162072942-cd5147eb3902?w=800&q=85',
-    hoi_nghi: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=85',
-    khai_truong: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=85',
+    teambuilding: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=85',
+    company_trip: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&q=85',
+    year_end_party: 'https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?w=800&q=85',
+    workshop: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=85',
+    sports_day: 'https://images.unsplash.com/photo-1461896836934-bd45ea8ba7cd?w=800&q=85',
+    family_day: 'https://images.unsplash.com/photo-1609234656388-0ff363383899?w=800&q=85',
+    hoi_nghi: 'https://images.unsplash.com/photo-1587825140708-dfaf18c4e236?w=800&q=85',
+    khai_truong: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=85',
 };
 
 function getServices(images?: Record<string, string>) {
