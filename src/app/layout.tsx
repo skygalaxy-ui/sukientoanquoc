@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
       template: "%s | Sự Kiện Toàn Quốc",
     },
     description:
-      "Sự Kiện Toàn Quốc - Đơn vị tổ chức teambuilding, company trip, year end party, workshop chuyên nghiệp phủ sóng 63 tỉnh thành. 500+ sự kiện thành công. Hotline: 0857 999 545.",
+      "Sự Kiện Toàn Quốc - Đơn vị tổ chức teambuilding, company trip, year end party, workshop chuyên nghiệp phủ sóng 63 tỉnh thành. 500+ sự kiện thành công. Hotline: 0854 517 868.",
     keywords: [
       "tổ chức sự kiện",
       "sự kiện toàn quốc",
@@ -119,7 +119,7 @@ export default function RootLayout({
               image: "https://sukientoanquoc.com/logo.png",
               "@id": "https://sukientoanquoc.com",
               url: "https://sukientoanquoc.com",
-              telephone: "0857999545",
+              telephone: "0854517868",
               email: "sale@sukientoanquoc.com",
               priceRange: "$$",
               address: {

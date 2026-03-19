@@ -36,7 +36,7 @@ export default async function Footer() {
                         </div>
                         <div className={styles.col}>
                             <h4 className={styles.colTitle}>Liên hệ</h4>
-                            <a href="tel:0857999545">Hotline: 0857999545</a>
+                            <a href="tel:0854517868">Hotline: 0854517868</a>
                             <a href="mailto:sale@sukientoanquoc.com">sale@sukientoanquoc.com</a>
                             <div className={styles.socials}>
                                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
