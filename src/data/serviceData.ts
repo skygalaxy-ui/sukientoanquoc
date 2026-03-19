@@ -93,7 +93,7 @@ export const serviceDetails: Record<string, ServiceData> = {
         ],
         gallery: [
             { url: "https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=800&q=85", alt: "Đà Nẵng - Cầu Rồng" },
-            { url: "https://images.unsplash.com/photo-1540996417985-67e39e5a5e8f?w=800&q=85", alt: "Phú Quốc biển xanh" },
+            { url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=85", alt: "Phú Quốc biển xanh" },
             { url: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&q=85", alt: "Camping đội nhóm" },
             { url: "https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=800&q=85", alt: "Biển đẹp resort" },
         ],
@@ -210,9 +210,9 @@ export const serviceDetails: Record<string, ServiceData> = {
         ],
         gallery: [
             { url: "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&q=85", alt: "Thi đấu thể thao" },
-            { url: "https://images.unsplash.com/photo-1461896836934-bd45ea8ba7cd?w=800&q=85", alt: "Chạy marathon" },
+            { url: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&q=85", alt: "Chạy marathon" },
             { url: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=85", alt: "Bóng đá nội bộ" },
-            { url: "https://images.unsplash.com/photo-1526676037777-05a232554f77?w=800&q=85", alt: "Trao giải thể thao" },
+            { url: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=85", alt: "Trao giải thể thao" },
         ],
         process: [
             { step: "01", name: "Đăng ký & Phân đội", desc: "Ghi nhận số lượng, chia đội và chọn bộ môn thi đấu phù hợp." },
@@ -290,7 +290,7 @@ export const serviceDetails: Record<string, ServiceData> = {
             { url: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=85", alt: "Lễ khai trương" },
             { url: "https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=800&q=85", alt: "Sân khấu khai trương" },
             { url: "https://images.unsplash.com/photo-1560523160-754a9e25c68f?w=800&q=85", alt: "Cắt băng khánh thành" },
-            { url: "https://images.unsplash.com/photo-1587825140708-dfaf18c4e225?w=800&q=85", alt: "Sự kiện khai trương" },
+            { url: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=85", alt: "Sự kiện khai trương" },
         ],
         process: [
             { step: "01", name: "Tiếp nhận yêu cầu", desc: "Lắng nghe mong muốn và khảo sát mặt bằng thực tế." },
@@ -329,7 +329,7 @@ export const serviceDetails: Record<string, ServiceData> = {
             { url: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&q=85", alt: "Hội nghị doanh nghiệp" },
             { url: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=85", alt: "Hội thảo chuyên đề" },
             { url: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&q=85", alt: "Thuyết trình hội nghị" },
-            { url: "https://images.unsplash.com/photo-1587825140708-dfaf18c4e225?w=800&q=85", alt: "Tea-break networking" },
+            { url: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=85", alt: "Tea-break networking" },
         ],
         process: [
             { step: "01", name: "Tư vấn địa điểm", desc: "Lựa chọn không gian phù hợp với quy mô và tính chất hội nghị." },

@@ -8,7 +8,7 @@ interface HeroProps {
 }
 
 export default function Hero({ heroImage }: HeroProps) {
-    const bgSrc = heroImage || "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1920&q=90";
+    const bgSrc = heroImage || "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1920&q=90";
 
     return (
         <section className={styles.hero}>

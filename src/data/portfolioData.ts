@@ -38,7 +38,7 @@ export const portfolioEvents: Record<string, PortfolioEvent> = {
             { url: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=800&q=85", alt: "Gala dinner bên bờ biển" },
             { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=85", alt: "Team gắn kết" },
             { url: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800&q=85", alt: "Hoạt động nhóm ngoài trời" },
-            { url: "https://images.unsplash.com/photo-1506869640319-fe1a24fd76cb?w=800&q=85", alt: "Trao giải thưởng" },
+            { url: "https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=800&q=85", alt: "Trao giải thưởng" },
         ],
         program: [
             { time: "07:00", activity: "Tập trung - Check-in tại resort" },
@@ -116,7 +116,7 @@ export const portfolioEvents: Record<string, PortfolioEvent> = {
         ],
         gallery: [
             { url: "https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=800&q=85", alt: "Resort view biển" },
-            { url: "https://images.unsplash.com/photo-1540996417985-67e39e5a5e8f?w=800&q=85", alt: "Phú Quốc biển xanh" },
+            { url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=85", alt: "Phú Quốc biển xanh" },
             { url: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&q=85", alt: "Hoạt động nhóm ngoài trời" },
             { url: "https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=800&q=85", alt: "Nghỉ dưỡng biển" },
             { url: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=800&q=85", alt: "BBQ bên biển" },
@@ -148,7 +148,7 @@ export const portfolioEvents: Record<string, PortfolioEvent> = {
         location: "Sân vận động Quân khu 7, TP.HCM",
         date: "Tháng 6, 2025",
         description: "Ngày hội thể thao Olympic Mini cho toàn bộ nhân viên Samsung Electronics Việt Nam. 20+ bộ môn thi đấu từ bóng đá, bóng chuyền, cầu lông đến kéo co, chạy tiếp sức. Hệ thống trọng tài chuyên nghiệp, bảng điểm điện tử và lễ trao giải trang trọng.",
-        heroImage: "https://images.unsplash.com/photo-1461896836934-bd45ea8ba7cd?w=1920&q=90&fm=webp",
+        heroImage: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=1920&q=90&fm=webp",
         highlights: [
             { value: "800", label: "VĐV tham gia" },
             { value: "20+", label: "Bộ môn thi đấu" },
@@ -158,8 +158,8 @@ export const portfolioEvents: Record<string, PortfolioEvent> = {
         gallery: [
             { url: "https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800&q=85", alt: "Thi đấu thể thao" },
             { url: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=85", alt: "Bóng đá nội bộ" },
-            { url: "https://images.unsplash.com/photo-1526676037777-05a232554f77?w=800&q=85", alt: "Trao giải thể thao" },
-            { url: "https://images.unsplash.com/photo-1461896836934-bd45ea8ba7cd?w=800&q=85", alt: "Chạy marathon" },
+            { url: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=85", alt: "Trao giải thể thao" },
+            { url: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&q=85", alt: "Chạy marathon" },
             { url: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&q=85", alt: "Chạy tiếp sức" },
             { url: "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&q=85", alt: "Thi đấu bơi" },
         ],

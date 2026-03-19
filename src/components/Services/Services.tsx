@@ -17,7 +17,7 @@ const defaultImages: Record<string, string> = {
     workshop: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=85',
     sports_day: 'https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=800&q=85',
     family_day: 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800&q=85',
-    hoi_nghi: 'https://images.unsplash.com/photo-1587825140708-dfaf18c4e236?w=800&q=85',
+    hoi_nghi: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&q=85',
     khai_truong: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=85',
 };
 

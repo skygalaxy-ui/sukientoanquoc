@@ -13,7 +13,7 @@ const DEFAULT_IMAGES: Record<string, string> = {
   'service_company_trip': 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=85',
   'service_year_end_party': 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=85',
   'service_workshop': 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=85',
-  'service_sports_day': 'https://images.unsplash.com/photo-1461896836934-bd45ea8ba7cd?w=800&q=85',
+  'service_sports_day': 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&q=85',
   'service_family_day': 'https://images.unsplash.com/photo-1472162072942-cd5147eb3902?w=800&q=85',
   
   // Portfolio
