@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useReveal } from "@/hooks/useReveal";
+import { useReveal } from "@/hooks/useAnimations";
 import styles from "./Portfolio.module.css";
 
 interface PortfolioProps {

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { adminDb } from '@/lib/admin-db';
 import { supabase } from '@/lib/supabase';
 
@@ -31,6 +32,13 @@ export async function POST(request: Request) {
 
         if (error) {
             return NextResponse.json({ error: 'Failed to save images' }, { status: 500 });
+        }
+
+        // Revalidate all pages that use page images
+        try {
+            revalidatePath('/');
+        } catch (e) {
+            console.warn('[Page Images] Revalidation warning:', e);
         }
 
         return NextResponse.json({ success: true });

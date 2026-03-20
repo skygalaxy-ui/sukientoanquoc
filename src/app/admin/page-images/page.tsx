@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { Image as ImageIcon, Save, Loader2 } from 'lucide-react';
 import { IMAGE_KEYS, getDefaultImages } from '@/lib/page-images';
 
 export default function PageImagesAdmin() {
@@ -55,7 +56,10 @@ export default function PageImagesAdmin() {
         <div style={{ padding: '24px', maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
                 <div>
-                    <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 4 }}>🖼️ Quản lý ảnh giao diện</h1>
+                    <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 4, display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <ImageIcon size={24} style={{ color: '#F97316' }} />
+                        Quản lý ảnh giao diện
+                    </h1>
                     <p style={{ color: '#6b7280', fontSize: 14 }}>
                         Thay đổi ảnh trên website mà không cần deploy. Ảnh cập nhật trong 60 giây.
                     </p>
@@ -72,9 +76,12 @@ export default function PageImagesAdmin() {
                         fontWeight: 600,
                         cursor: saving ? 'not-allowed' : 'pointer',
                         fontSize: 14,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 6,
                     }}
                 >
-                    {saving ? 'Đang lưu...' : '💾 Lưu thay đổi'}
+                    {saving ? <><Loader2 size={14} style={{ animation: 'spin 1s linear infinite' }} /> Đang lưu...</> : <><Save size={14} /> Lưu thay đổi</>}
                 </button>
             </div>
 

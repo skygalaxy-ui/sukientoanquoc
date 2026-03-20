@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { verifyToken } from "@/lib/jwt";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 
@@ -6,7 +7,8 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
  * Admin DB Proxy — All write operations go through here.
  * 1. Verify JWT token
  * 2. Execute query with service_role (bypasses RLS)
- * 3. Return result
+ * 3. Revalidate frontend pages on content changes
+ * 4. Return result
  *
  * Supported operations: insert, update, upsert, delete
  */
@@ -80,6 +82,30 @@ export async function POST(request: NextRequest) {
         if (error) {
             console.error(`[Admin DB] ${operation} on ${table}:`, error);
             return NextResponse.json({ error: error.message }, { status: 500 });
+        }
+
+        // 3. On-demand revalidation — refresh frontend pages immediately
+        try {
+            if (table === 'posts') {
+                revalidatePath('/');          // Homepage LatestNews
+                revalidatePath('/tin-tuc');    // News listing page
+                // Revalidate individual post pages if we have slug info
+                if (result && Array.isArray(result)) {
+                    for (const item of result) {
+                        if (item.slug) {
+                            revalidatePath(`/${item.slug}`);
+                        }
+                    }
+                }
+            } else if (table === 'categories' || table === 'tags') {
+                revalidatePath('/tin-tuc');
+            } else if (table === 'page_content' || table === 'site_settings') {
+                revalidatePath('/');           // Homepage
+                revalidatePath('/tin-tuc');
+            }
+        } catch (revalidateError) {
+            // Don't fail the request if revalidation fails
+            console.warn('[Admin DB] Revalidation warning:', revalidateError);
         }
 
         return NextResponse.json({ success: true, data: result });

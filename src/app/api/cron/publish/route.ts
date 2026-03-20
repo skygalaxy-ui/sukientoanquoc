@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { supabaseAdmin } from '@/lib/supabase-admin';
 
 /**
@@ -64,6 +65,16 @@ export async function GET(request: NextRequest) {
         }
 
         console.log(`[Cron] Published ${publishedPosts.length} posts at ${currentTime}`);
+
+        // Revalidate frontend pages immediately
+        if (publishedPosts.length > 0) {
+            try {
+                revalidatePath('/');
+                revalidatePath('/tin-tuc');
+            } catch (e) {
+                console.warn('[Cron] Revalidation warning:', e);
+            }
+        }
 
         return NextResponse.json({
             success: true,

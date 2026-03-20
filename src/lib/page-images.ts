@@ -1,4 +1,4 @@
-import { supabase } from './supabase';
+import { supabase } from './db/client';
 
 // Default images (fallback khi chưa set trong CMS)
 const DEFAULT_IMAGES: Record<string, string> = {
