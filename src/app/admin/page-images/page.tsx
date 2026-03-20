@@ -1,14 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Image as ImageIcon, Save, Loader2 } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Image as ImageIcon, Save, Loader2, Upload } from 'lucide-react';
 import { IMAGE_KEYS, getDefaultImages } from '@/lib/page-images';
+import { uploadImage } from '@/lib/supabase';
 
 export default function PageImagesAdmin() {
     const [images, setImages] = useState<Record<string, string>>({});
     const [saving, setSaving] = useState(false);
+    const [uploading, setUploading] = useState<string | null>(null);
     const [message, setMessage] = useState('');
     const [activeSection, setActiveSection] = useState('Trang chủ');
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const uploadKeyRef = useRef<string>('');
 
     const defaults = getDefaultImages();
     const sections = Array.from(new Set(IMAGE_KEYS.map(k => k.section)));
@@ -30,7 +34,7 @@ export default function PageImagesAdmin() {
                 body: JSON.stringify({ images }),
             });
             if (res.ok) {
-                setMessage('✅ Đã lưu! Ảnh sẽ cập nhật trên website trong vòng 60 giây.');
+                setMessage('✅ Đã lưu! Ảnh sẽ cập nhật trên website ngay lập tức.');
             } else {
                 setMessage('❌ Lỗi khi lưu. Vui lòng thử lại.');
             }
@@ -52,8 +56,47 @@ export default function PageImagesAdmin() {
         });
     };
 
+    const handleUploadClick = (key: string) => {
+        uploadKeyRef.current = key;
+        fileInputRef.current?.click();
+    };
+
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const key = uploadKeyRef.current;
+        setUploading(key);
+        setMessage('');
+
+        try {
+            const url = await uploadImage(file);
+            if (url) {
+                handleChange(key, url);
+                setMessage(`✅ Upload thành công! Nhấn "Lưu thay đổi" để áp dụng.`);
+            } else {
+                setMessage('❌ Upload thất bại. Vui lòng thử lại.');
+            }
+        } catch {
+            setMessage('❌ Lỗi khi upload ảnh.');
+        }
+
+        setUploading(null);
+        // Reset file input để có thể upload lại cùng file
+        if (fileInputRef.current) fileInputRef.current.value = '';
+    };
+
     return (
         <div style={{ padding: '24px', maxWidth: 1200, margin: '0 auto' }}>
+            {/* Hidden file input */}
+            <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                style={{ display: 'none' }}
+            />
+
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
                 <div>
                     <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 4, display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -61,7 +104,7 @@ export default function PageImagesAdmin() {
                         Quản lý ảnh giao diện
                     </h1>
                     <p style={{ color: '#6b7280', fontSize: 14 }}>
-                        Thay đổi ảnh trên website mà không cần deploy. Ảnh cập nhật trong 60 giây.
+                        Thay đổi ảnh trên website mà không cần deploy. Upload trực tiếp hoặc dán URL.
                     </p>
                 </div>
                 <button
@@ -125,6 +168,7 @@ export default function PageImagesAdmin() {
                 {IMAGE_KEYS.filter(k => k.section === activeSection).map(item => {
                     const currentUrl = images[item.key] || defaults[item.key] || '';
                     const isCustom = !!images[item.key];
+                    const isUploading = uploading === item.key;
 
                     return (
                         <div key={item.key} style={{
@@ -155,6 +199,23 @@ export default function PageImagesAdmin() {
                                         Tùy chỉnh
                                     </span>
                                 )}
+                                {isUploading && (
+                                    <div style={{
+                                        position: 'absolute',
+                                        inset: 0,
+                                        background: 'rgba(0,0,0,0.5)',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        color: 'white',
+                                        fontSize: 13,
+                                        fontWeight: 600,
+                                        gap: 8,
+                                    }}>
+                                        <Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} />
+                                        Đang upload...
+                                    </div>
+                                )}
                             </div>
 
                             {/* Controls */}
@@ -162,21 +223,44 @@ export default function PageImagesAdmin() {
                                 <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 8, color: '#1f2937' }}>
                                     {item.label}
                                 </div>
-                                <input
-                                    type="text"
-                                    value={images[item.key] || ''}
-                                    onChange={(e) => handleChange(item.key, e.target.value)}
-                                    placeholder="Dán URL ảnh từ Media Library..."
-                                    style={{
-                                        width: '100%',
-                                        padding: '8px 10px',
-                                        border: '1px solid #e5e7eb',
-                                        borderRadius: 6,
-                                        fontSize: 12,
-                                        marginBottom: 8,
-                                        outline: 'none',
-                                    }}
-                                />
+                                <div style={{ display: 'flex', gap: 6, marginBottom: 8 }}>
+                                    <input
+                                        type="text"
+                                        value={images[item.key] || ''}
+                                        onChange={(e) => handleChange(item.key, e.target.value)}
+                                        placeholder="Dán URL ảnh hoặc upload..."
+                                        style={{
+                                            flex: 1,
+                                            padding: '8px 10px',
+                                            border: '1px solid #e5e7eb',
+                                            borderRadius: 6,
+                                            fontSize: 12,
+                                            outline: 'none',
+                                        }}
+                                    />
+                                    <button
+                                        onClick={() => handleUploadClick(item.key)}
+                                        disabled={isUploading}
+                                        title="Upload ảnh"
+                                        style={{
+                                            padding: '8px 12px',
+                                            background: isUploading ? '#e5e7eb' : '#3b82f6',
+                                            color: 'white',
+                                            border: 'none',
+                                            borderRadius: 6,
+                                            cursor: isUploading ? 'not-allowed' : 'pointer',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 4,
+                                            fontSize: 12,
+                                            fontWeight: 500,
+                                            whiteSpace: 'nowrap',
+                                        }}
+                                    >
+                                        {isUploading ? <Loader2 size={14} style={{ animation: 'spin 1s linear infinite' }} /> : <Upload size={14} />}
+                                        Upload
+                                    </button>
+                                </div>
                                 <div style={{ display: 'flex', gap: 8 }}>
                                     {isCustom && (
                                         <button
@@ -204,10 +288,9 @@ export default function PageImagesAdmin() {
             <div style={{ marginTop: 24, padding: 16, background: '#eff6ff', borderRadius: 8, fontSize: 13, color: '#1e40af' }}>
                 <strong>💡 Hướng dẫn:</strong>
                 <ol style={{ marginTop: 8, paddingLeft: 16 }}>
-                    <li>Vào <strong>Media</strong> trong sidebar để upload ảnh mới</li>
-                    <li>Copy URL ảnh từ Media Library</li>
-                    <li>Dán URL vào ô tương ứng ở đây</li>
-                    <li>Nhấn <strong>Lưu thay đổi</strong> — ảnh sẽ cập nhật trên web trong 60 giây</li>
+                    <li>Nhấn nút <strong style={{ color: '#3b82f6' }}>Upload</strong> để tải ảnh trực tiếp từ máy tính</li>
+                    <li>Hoặc dán URL ảnh từ Media Library vào ô nhập</li>
+                    <li>Nhấn <strong>Lưu thay đổi</strong> — ảnh sẽ cập nhật trên web ngay lập tức</li>
                 </ol>
             </div>
         </div>
