@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Image as ImageIcon, Save, Loader2, Upload } from 'lucide-react';
 import { IMAGE_KEYS, getDefaultImages } from '@/lib/page-images';
-import { uploadImage } from '@/lib/supabase';
 
 export default function PageImagesAdmin() {
     const [images, setImages] = useState<Record<string, string>>({});
@@ -70,15 +69,25 @@ export default function PageImagesAdmin() {
         setMessage('');
 
         try {
-            const url = await uploadImage(file);
-            if (url) {
-                handleChange(key, url);
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('bucket', 'post-images');
+
+            const res = await fetch('/api/admin/upload', {
+                method: 'POST',
+                body: formData,
+            });
+
+            const data = await res.json();
+
+            if (res.ok && data.url) {
+                handleChange(key, data.url);
                 setMessage(`✅ Upload thành công! Nhấn "Lưu thay đổi" để áp dụng.`);
             } else {
-                setMessage('❌ Upload thất bại. Vui lòng thử lại.');
+                setMessage(`❌ Upload thất bại: ${data.error || 'Lỗi không xác định'}`);
             }
         } catch {
-            setMessage('❌ Lỗi khi upload ảnh.');
+            setMessage('❌ Lỗi kết nối khi upload.');
         }
 
         setUploading(null);
