@@ -106,7 +106,8 @@ export default function PostsPage() {
 
     const getPostStatus = (post: Post) => {
         if (post.is_published) return 'published';
-        if (post.scheduled_at && new Date(post.scheduled_at) > new Date()) return 'scheduled';
+        if ((post.scheduled_at && new Date(post.scheduled_at) > new Date()) ||
+            (post.published_at && !post.is_published && new Date(post.published_at) > new Date())) return 'scheduled';
         return 'draft';
     };
 
@@ -285,10 +286,11 @@ export default function PostsPage() {
                                     <div className="col-span-2">
                                         {(() => {
                                             const status = getPostStatus(post);
+                                            const isScheduled = status === 'scheduled';
                                             const config = status === 'published'
                                                 ? { bg: 'bg-orange-50 text-orange-700 hover:bg-orange-100', dot: 'bg-orange-500', label: 'Xuất bản' }
-                                                : post.scheduled_at && new Date(post.scheduled_at) > new Date()
-                                                    ? { bg: 'bg-gray-50 text-gray-700 hover:bg-gray-100', dot: 'bg-gray-500', label: 'Lên lịch' }
+                                                : isScheduled
+                                                    ? { bg: 'bg-blue-50 text-blue-700 hover:bg-blue-100', dot: 'bg-blue-500', label: 'Lên lịch' }
                                                     : { bg: 'bg-amber-50 text-amber-700 hover:bg-amber-100', dot: 'bg-amber-500', label: 'Nháp' };
                                             return (
                                                 <button
@@ -305,11 +307,12 @@ export default function PostsPage() {
                                     <div className="col-span-2 hidden sm:flex flex-col justify-center text-sm">
                                         {(() => {
                                             const status = getPostStatus(post);
-                                            if (status === 'scheduled' && post.scheduled_at) {
-                                                const d = new Date(post.scheduled_at);
+                                            const scheduledDate = post.scheduled_at || post.published_at;
+                                            if (status === 'scheduled' && scheduledDate) {
+                                                const d = new Date(scheduledDate);
                                                 return (
                                                     <>
-                                                        <span className="text-orange-600 font-medium flex items-center gap-1">
+                                                        <span className="text-blue-600 font-medium flex items-center gap-1">
                                                             <Calendar className="w-3.5 h-3.5" />
                                                             {d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' })}
                                                         </span>
