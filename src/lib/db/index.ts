@@ -1,13 +1,17 @@
 /**
- * DEPRECATED: File này chỉ re-export từ @/lib/db để giữ backward compatibility.
+ * Database module — Central exports for all DB operations.
  * 
- * Cho import mới, hãy dùng:
+ * Usage:
  *   import { supabase } from '@/lib/db';
- *   import { getPosts } from '@/lib/db';
+ *   import { getPosts, getPostBySlug } from '@/lib/db';
+ *   import { getCategories, createCategory } from '@/lib/db';
  */
+
+// Client
+export { supabase } from './client';
+
+// Posts
 export {
-    supabase,
-    // Posts
     getPosts,
     getPostById,
     getPublishedPosts,
@@ -20,21 +24,33 @@ export {
     permanentDeletePost,
     duplicatePost,
     checkAndPublishScheduledPosts,
-    // Categories
+} from './posts';
+
+// Categories
+export {
     getCategories,
     createCategory,
     updateCategory,
     deleteCategory,
-    // Tags
+} from './categories';
+
+// Tags
+export {
     getTags,
     createTag,
     updateTag,
     deleteTag,
-    // Media
+} from './tags';
+
+// Media
+export {
     uploadImage,
     listStorageImages,
     deleteStorageImage,
-    // Settings & Content
+} from './media';
+
+// Settings & Content
+export {
     getSiteSettings,
     saveSiteSetting,
     getScheduledContent,
@@ -44,4 +60,6 @@ export {
     getAllPageContent,
     savePageContent,
     getIntegrationSettings,
-} from './db';
+} from './settings';
+
+export type { IntegrationSettings } from './settings';

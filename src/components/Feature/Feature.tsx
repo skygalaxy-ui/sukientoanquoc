@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useReveal } from "@/hooks/useReveal";
+import { useReveal } from "@/hooks/useAnimations";
 import styles from "./Feature.module.css";
 
 const services = [

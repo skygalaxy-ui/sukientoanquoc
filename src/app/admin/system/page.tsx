@@ -359,7 +359,7 @@ export default function SystemStatusPage() {
 
             {/* Footer */}
             <div className="text-center py-4">
-                <p className="text-xs text-gray-300">Powered by <span className="font-semibold text-gray-400">Sự Kiện Toàn Quốc</span> &copy; {new Date().getFullYear()}</p>
+                <p className="text-xs text-gray-300">Powered by <a href="https://t.me/cmssupport10xsolution" target="_blank" rel="noopener noreferrer" className="font-semibold text-gray-400 hover:text-gray-500 transition-colors">10x Solution</a> &copy; {new Date().getFullYear()}</p>
             </div>
         </div>
     );

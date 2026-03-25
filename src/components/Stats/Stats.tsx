@@ -1,7 +1,6 @@
 "use client";
 
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { useCountUp } from "@/hooks/useCountUp";
+import { useScrollAnimation, useCountUp } from "@/hooks/useAnimations";
 import styles from "./Stats.module.css";
 
 const stats = [

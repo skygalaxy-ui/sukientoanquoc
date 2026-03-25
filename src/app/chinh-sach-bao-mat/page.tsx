@@ -58,9 +58,9 @@ export default function PrivacyPolicy() {
 
                     <div className={styles.contactInfo}>
                         <p>Mọi thắc mắc xin vui lòng liên hệ:</p>
-                        <p><strong>CÔNG TY SỰ KIỆN TOÀN QUỐC</strong></p>
+                        <p><strong>SỰ KIỆN TOÀN QUỐC</strong></p>
                         <p>Email: sale@sukientoanquoc.com</p>
-                        <p>Hotline: 0857 999 545</p>
+                        <p>Hotline: 0854 517 868</p>
                     </div>
                 </div>
             </main>

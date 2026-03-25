@@ -2,21 +2,23 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useReveal } from "@/hooks/useReveal";
+import { useReveal } from "@/hooks/useAnimations";
 import styles from "./Services.module.css";
 
 interface ServicesProps {
     images?: Record<string, string>;
 }
 
-const serviceKeys = ['teambuilding', 'company_trip', 'year_end_party', 'workshop', 'sports_day', 'family_day'];
+const serviceKeys = ['teambuilding', 'company_trip', 'year_end_party', 'workshop', 'sports_day', 'family_day', 'hoi_nghi', 'khai_truong'];
 const defaultImages: Record<string, string> = {
-    teambuilding: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800&q=85',
-    company_trip: 'https://images.unsplash.com/photo-1583521214690-73421a1829a9?w=800&q=85',
-    year_end_party: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=800&q=85',
-    workshop: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=85',
-    sports_day: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800&q=85',
-    family_day: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&q=85',
+    teambuilding: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=85',
+    company_trip: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&q=85',
+    year_end_party: 'https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?w=800&q=85',
+    workshop: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=85',
+    sports_day: 'https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=800&q=85',
+    family_day: 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800&q=85',
+    hoi_nghi: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&q=85',
+    khai_truong: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=85',
 };
 
 function getServices(images?: Record<string, string>) {
@@ -27,6 +29,8 @@ function getServices(images?: Record<string, string>) {
         { badge: 'WORKSHOP', color: '#F97316', title: 'Workshop & Đào Tạo', desc: 'Chương trình đào tạo kỹ năng qua hoạt động thực tế: leadership, communication, problem-solving.', image: images?.service_workshop || defaultImages.workshop, eventType: 'workshop' },
         { badge: 'SPORTS DAY', color: '#F97316', title: 'Ngày Hội Thể Thao', desc: 'Giải đấu nội bộ, Olympic mini, ngày hội thể thao giúp khơi dậy tinh thần thi đấu và gắn kết nhân viên.', image: images?.service_sports_day || defaultImages.sports_day, eventType: 'sports-day' },
         { badge: 'FAMILY DAY', color: '#F97316', title: 'Ngày Hội Gia Đình', desc: 'Sự kiện gia đình cho nhân viên với trò chơi, ẩm thực và giải trí giúp tăng sự gắn bó với công ty.', image: images?.service_family_day || defaultImages.family_day, eventType: 'family-day' },
+        { badge: 'HỘI NGHỊ', color: '#F97316', title: 'Hội Nghị & Hội Thảo', desc: 'Tổ chức hội nghị khách hàng, hội thảo chuyên đề với sân khấu, âm thanh ánh sáng chuyên nghiệp.', image: images?.service_hoi_nghi || defaultImages.hoi_nghi, eventType: 'hoi-nghi' },
+        { badge: 'KHAI TRƯƠNG', color: '#F97316', title: 'Lễ Khai Trương', desc: 'Tổ chức lễ khai trương, khánh thành hoành tráng, tạo ấn tượng mạnh mẽ cho thương hiệu.', image: images?.service_khai_truong || defaultImages.khai_truong, eventType: 'khai-truong' },
     ];
 }
 

@@ -1,12 +1,16 @@
 import styles from "./Footer.module.css";
+import { getBranding } from "@/lib/branding";
 
-export default function Footer() {
+export default async function Footer() {
+    const branding = await getBranding();
+    const logoUrl = branding.logoUrl || "/logo.png";
+
     return (
         <footer className={styles.footer}>
             <div className={styles.container}>
                 <div className={styles.top}>
                     <div className={styles.brand}>
-                        <img src="/logo.png" alt="Sự Kiện Toàn Quốc" className={styles.logoImg} />
+                        <img src={logoUrl} alt="Sự Kiện Toàn Quốc" className={styles.logoImg} />
                         <div>
                             <span className={styles.brandName}>Sự Kiện Toàn Quốc</span>
                             <span className={styles.brandSub}>Teambuilding & Event</span>
@@ -20,6 +24,10 @@ export default function Footer() {
                             <a href="/dich-vu/company-trip">Company Trip</a>
                             <a href="/dich-vu/year-end-party">Year End Party</a>
                             <a href="/dich-vu/workshop">Workshop & Đào tạo</a>
+                            <a href="/dich-vu/sports-day">Sports Day</a>
+                            <a href="/dich-vu/family-day">Family Day</a>
+                            <a href="/dich-vu/hoi-nghi">Hội Nghị</a>
+                            <a href="/dich-vu/khai-truong">Khai Trương</a>
                         </div>
                         <div className={styles.col}>
                             <h4 className={styles.colTitle}>Pháp lý</h4>
@@ -28,7 +36,7 @@ export default function Footer() {
                         </div>
                         <div className={styles.col}>
                             <h4 className={styles.colTitle}>Liên hệ</h4>
-                            <a href="tel:0857999545">Hotline: 0857999545</a>
+                            <a href="tel:0854517868">Hotline: 0854517868</a>
                             <a href="mailto:sale@sukientoanquoc.com">sale@sukientoanquoc.com</a>
                             <div className={styles.socials}>
                                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
@@ -57,7 +65,7 @@ export default function Footer() {
                 </div>
 
                 <div className={styles.bottom}>
-                    <p>© 2026 Công ty Tổ chức Sự Kiện Toàn Quốc National Events. All Rights Reserved.</p>
+                    <p>© {new Date().getFullYear()} Tổ chức Sự Kiện Toàn Quốc National Events. All Rights Reserved.</p>
                 </div>
             </div>
         </footer>

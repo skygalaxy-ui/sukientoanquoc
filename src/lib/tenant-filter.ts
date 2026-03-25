@@ -1,4 +1,4 @@
-import { supabase } from './supabase';
+import { supabase } from './db/client';
 
 /**
  * Create a tenant-scoped query builder.

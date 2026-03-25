@@ -14,8 +14,19 @@ function getFocusableElements(container: HTMLElement | null) {
 export default function Header() {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [logoUrl, setLogoUrl] = useState("/logo.png");
     const burgerRef = useRef<HTMLButtonElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
+
+    // Load logo from branding config
+    useEffect(() => {
+        fetch('/api/admin/branding')
+            .then(r => r.json())
+            .then(d => {
+                if (d.branding?.logoUrl) setLogoUrl(d.branding.logoUrl);
+            })
+            .catch(() => {});
+    }, []);
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 50);
@@ -78,7 +89,7 @@ export default function Header() {
             <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
                 <nav className={styles.nav}>
                     <Link href="/" className={styles.logo}>
-                        <img src="/logo.png" alt="Sự Kiện Toàn Quốc" className={styles.logoImg} />
+                        <img src={logoUrl} alt="Sự Kiện Toàn Quốc" className={styles.logoImg} />
                         <span>Sự Kiện Toàn Quốc</span>
                     </Link>
 
@@ -122,7 +133,7 @@ export default function Header() {
                 >
                     <div className={styles.mobileMenuHeader}>
                         <Link href="/" className={styles.mobileMenuLogo} onClick={() => setMenuOpen(false)}>
-                            <img src="/logo.png" alt="Logo" className={styles.logoImg} />
+                            <img src={logoUrl} alt="Logo" className={styles.logoImg} />
                             <span>Sự Kiện Toàn Quốc</span>
                         </Link>
                         <button
@@ -160,9 +171,9 @@ export default function Header() {
                     </div>
 
                     <div className={styles.mobileMenuFooter}>
-                        <a href="tel:0857999545" className={styles.mobilePhone}>
+                        <a href="tel:0854517868" className={styles.mobilePhone}>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" /></svg>
-                            0857 999 545
+                            0854 517 868
                         </a>
                         <Link href="/#contact" className={styles.ctaMobile} onClick={() => setMenuOpen(false)}>
                             Nhận báo giá miễn phí

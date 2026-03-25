@@ -1,6 +1,6 @@
 "use client";
 
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useScrollAnimation } from "@/hooks/useAnimations";
 import styles from "./Process.module.css";
 
 const steps = [
