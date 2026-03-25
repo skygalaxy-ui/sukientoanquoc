@@ -3,6 +3,7 @@
 import Sidebar from "@/components/admin/Sidebar";
 import { AuthProvider } from "@/lib/auth-context";
 import { MessageCircle } from "lucide-react";
+import Script from "next/script";
 
 export default function AdminLayout({
     children,
@@ -11,6 +12,7 @@ export default function AdminLayout({
 }) {
     return (
         <AuthProvider>
+            <Script src="https://cdn.tailwindcss.com" strategy="beforeInteractive" />
             <div className="min-h-screen bg-gray-50/80">
                 <Sidebar />
                 <main className="ml-[260px] transition-all duration-300">
