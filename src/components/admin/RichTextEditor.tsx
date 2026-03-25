@@ -14,9 +14,9 @@ import {
     List, ListOrdered, Quote, Code, Image as ImageIcon,
     Link as LinkIcon, AlignLeft, AlignCenter, AlignRight,
     Heading1, Heading2, Heading3, Undo, Redo, Minus, Highlighter,
-    Type,
+    Type, Code2, Eye
 } from 'lucide-react';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface RichTextEditorProps {
     content: string;
@@ -25,6 +25,7 @@ interface RichTextEditorProps {
 }
 
 export default function RichTextEditor({ content, onChange, placeholder = "Viết nội dung..." }: RichTextEditorProps) {
+    const [isHtmlMode, setIsHtmlMode] = useState(false);
     const editor = useEditor({
         immediatelyRender: false,
         extensions: [
@@ -175,17 +176,27 @@ export default function RichTextEditor({ content, onChange, placeholder = "Viế
 
                 <Separator />
 
-                {/* History */}
-                <ToolbarButton onClick={() => editor.chain().focus().undo().run()} title="Hoàn tác">
-                    <Undo size={15} />
-                </ToolbarButton>
-                <ToolbarButton onClick={() => editor.chain().focus().redo().run()} title="Làm lại">
-                    <Redo size={15} />
+                <Separator />
+
+                {/* View Mode */}
+                <ToolbarButton onClick={() => setIsHtmlMode(!isHtmlMode)} active={isHtmlMode} title={isHtmlMode ? "Xem trực quan" : "Xem mã HTML"}>
+                    {isHtmlMode ? <Eye size={15} /> : <Code2 size={15} />}
                 </ToolbarButton>
             </div>
 
             {/* Editor Content */}
-            <EditorContent editor={editor} />
+            <div className="min-h-[400px]">
+                {isHtmlMode ? (
+                    <textarea
+                        value={content}
+                        onChange={(e) => onChange(e.target.value)}
+                        className="w-full h-full min-h-[400px] p-4 font-mono text-sm border-none focus:ring-0 resize-none bg-gray-50/30"
+                        placeholder="Dán mã HTML vào đây..."
+                    />
+                ) : (
+                    <EditorContent editor={editor} className="p-4" />
+                )}
+            </div>
         </div>
     );
 }
