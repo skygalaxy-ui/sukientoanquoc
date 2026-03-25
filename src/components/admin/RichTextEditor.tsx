@@ -1,5 +1,7 @@
 "use client";
 
+import React from 'react';
+
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
@@ -8,7 +10,7 @@ import Image from '@tiptap/extension-image';
 import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import Highlight from '@tiptap/extension-highlight';
-import { TextStyleKit } from '@tiptap/extension-text-style';
+import TextStyle from '@tiptap/extension-text-style';
 import {
     Bold, Italic, Underline as UnderlineIcon, Strikethrough,
     List, ListOrdered, Quote, Code, Image as ImageIcon,
@@ -37,7 +39,7 @@ export default function RichTextEditor({ content, onChange, placeholder = "Viế
             Underline,
             TextAlign.configure({ types: ['heading', 'paragraph'] }),
             Highlight.configure({ multicolor: true }),
-            TextStyleKit,
+            TextStyle,
         ],
         content,
         onUpdate: ({ editor }) => {
