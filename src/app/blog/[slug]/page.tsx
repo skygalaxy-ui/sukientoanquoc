@@ -186,8 +186,9 @@ export default async function BlogPostPage({ params }: Props) {
                                 color: "var(--text-heading)",
                             }}
                         >
-                            {post.title}
-                        </h1>
+                             {/* Title - ensure sentence case in frontend display */}
+                             {post.title}
+                         </h1>
 
                         {/* Meta Info */}
                         <div
@@ -286,7 +287,7 @@ export default async function BlogPostPage({ params }: Props) {
                     </article>
 
                     {/* Sidebar */}
-                    <div className="hidden lg:block">
+                    <div className="blog-sidebar-wrapper">
                         <BlogSidebar 
                             recentPosts={recentPosts} 
                             categories={categories} 
@@ -502,12 +503,36 @@ export default async function BlogPostPage({ params }: Props) {
                     font-weight: 700;
                 }
 
+                .blog-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 340px;
+                    gap: 32px;
+                    width: 100%;
+                }
+                .blog-sidebar-wrapper {
+                    position: sticky;
+                    top: 96px;
+                    height: fit-content;
+                }
                 @media (max-width: 1024px) {
                     .blog-grid {
                         grid-template-columns: 1fr !important;
                     }
+                    .blog-sidebar-wrapper {
+                        position: relative !important;
+                        top: 0 !important;
+                    }
                     .main-article {
                         padding: 24px !important;
+                        borderRadius: 16px !important;
+                        border: 1px solid #eee !important;
+                        background: white !important;
+                        boxShadow: 0 4px 20px -10px rgba(0,0,0,0.05) !important;
+                    }
+                }
+                @media (max-width: 640px) {
+                    .main-article {
+                        padding: 16px !important;
                         border: none !important;
                         background: transparent !important;
                         box-shadow: none !important;

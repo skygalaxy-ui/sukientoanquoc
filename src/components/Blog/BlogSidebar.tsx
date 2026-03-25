@@ -11,84 +11,166 @@ interface BlogSidebarProps {
 
 export default function BlogSidebar({ recentPosts, categories }: BlogSidebarProps) {
     return (
-        <aside className="space-y-8 sticky top-24">
+        <aside style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
             {/* Search */}
-            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-                <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <Search className="w-5 h-5 text-orange-500" />
+            <div style={{ background: 'white', padding: '24px', borderRadius: '24px', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-heading)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Search size={20} color="var(--orange)" />
                     Tìm kiếm
                 </h3>
-                <div className="relative">
+                <div style={{ position: 'relative' }}>
                     <input
                         type="text"
                         placeholder="Tìm bài viết..."
-                        className="w-full pl-4 pr-10 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all text-sm"
+                        style={{
+                            width: '100%',
+                            padding: '12px 40px 12px 16px',
+                            background: 'var(--bg-light)',
+                            border: '1px solid var(--border)',
+                            borderRadius: '12px',
+                            fontSize: '14px',
+                            outline: 'none',
+                        }}
                     />
-                    <button className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-orange-500 transition-colors">
-                        <Search className="w-4 h-4" />
-                    </button>
+                    <div style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }}>
+                        <Search size={16} />
+                    </div>
                 </div>
             </div>
 
             {/* CTA Widget */}
-            <div className="bg-gradient-to-br from-orange-600 to-orange-400 p-6 rounded-2xl shadow-lg shadow-orange-500/20 text-white overflow-hidden relative group">
-                <div className="relative z-10">
-                    <h3 className="text-xl font-bold mb-2">Tư vấn sự kiện?</h3>
-                    <p className="text-white/80 text-sm mb-6 leading-relaxed">
+            <div style={{ 
+                background: 'var(--gradient-orange)', 
+                padding: '24px', 
+                borderRadius: '24px', 
+                boxShadow: 'var(--shadow-orange)', 
+                color: 'white', 
+                position: 'relative', 
+                overflow: 'hidden' 
+            }}>
+                <div style={{ position: 'relative', zIndex: 1 }}>
+                    <h3 style={{ fontSize: '20px', fontWeight: 800, marginBottom: '8px' }}>Tư vấn sự kiện?</h3>
+                    <p style={{ fontSize: '14px', opacity: 0.9, marginBottom: '24px', lineHeight: 1.5 }}>
                         Liên hệ ngay để nhận báo giá và kịch bản chương trình miễn phí.
                     </p>
-                    <div className="space-y-3">
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         <a 
                             href="tel:0901234567" 
-                            className="flex items-center gap-3 bg-white/20 hover:bg-white/30 backdrop-blur-md px-4 py-3 rounded-xl transition-all border border-white/10"
+                            style={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                gap: '12px', 
+                                background: 'rgba(255,255,255,0.2)', 
+                                padding: '12px 16px', 
+                                borderRadius: '12px', 
+                                textDecoration: 'none', 
+                                color: 'white',
+                                border: '1px solid rgba(255,255,255,0.1)',
+                                fontWeight: 700,
+                                fontSize: '14px'
+                            }}
                         >
-                            <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-orange-600">
-                                <Phone className="w-4 h-4" />
-                            </div>
-                            <span className="font-bold text-sm">GỌI: 090 123 4567</span>
+                            <span style={{ 
+                                width: '32px', 
+                                height: '32px', 
+                                borderRadius: '50%', 
+                                background: 'white', 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                justifyContent: 'center', 
+                                color: 'var(--orange)' 
+                            }}>
+                                <Phone size={16} style={{ margin: 'auto' }} />
+                            </span>
+                            Gọi: 090 123 4567
                         </a>
                         <a 
                             href="https://zalo.me/0901234567" 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="flex items-center gap-3 bg-white text-orange-600 px-4 py-3 rounded-xl transition-all font-bold text-sm shadow-md hover:shadow-lg active:scale-[0.98]"
+                            style={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                gap: '12px', 
+                                background: 'white', 
+                                padding: '12px 16px', 
+                                borderRadius: '12px', 
+                                textDecoration: 'none', 
+                                color: 'var(--orange)',
+                                fontWeight: 800,
+                                fontSize: '14px',
+                                boxShadow: 'var(--shadow-md)'
+                            }}
                         >
-                            <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
-                                <MessageSquare className="w-4 h-4 fill-orange-600" />
-                            </div>
-                            <span>ZALO TƯ VẤN</span>
+                            <span style={{ 
+                                width: '32px', 
+                                height: '32px', 
+                                borderRadius: '50%', 
+                                background: 'var(--bg-light)', 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                justifyContent: 'center' 
+                            }}>
+                                <MessageSquare size={16} fill="var(--orange)" color="var(--orange)" style={{ margin: 'auto' }} />
+                            </span>
+                            Zalo tư vấn
                         </a>
                     </div>
                 </div>
-                {/* Decorative blob */}
-                <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
             </div>
 
             {/* Recent Posts */}
-            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-                <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2 border-b border-gray-50 pb-4">
-                    <Bookmark className="w-5 h-5 text-orange-500" />
+            <div style={{ background: 'white', padding: '24px', borderRadius: '24px', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
+                <h3 style={{ 
+                    fontSize: '18px', 
+                    fontWeight: 700, 
+                    color: 'var(--text-heading)', 
+                    marginBottom: '20px', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '8px',
+                    paddingBottom: '16px',
+                    borderBottom: '1px solid var(--bg-light)'
+                }}>
+                    <Bookmark size={20} color="var(--orange)" />
                     Mới nhất
                 </h3>
-                <div className="space-y-5">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                     {recentPosts.map((post) => (
                         <Link 
                             key={post.id} 
                             href={`/blog/${post.slug}`} 
-                            className="group flex gap-4 min-w-0"
+                            style={{ display: 'flex', gap: '16px', textDecoration: 'none', color: 'inherit' }}
                         >
-                            <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border border-gray-50 shadow-sm">
+                            <div style={{ 
+                                width: '80px', 
+                                height: '80px', 
+                                borderRadius: '16px', 
+                                overflow: 'hidden', 
+                                flexShrink: 0, 
+                                border: '1px solid var(--bg-light)' 
+                            }}>
                                 <img 
                                     src={post.featured_image || "/blog-placeholder.jpg"} 
                                     alt={post.title}
-                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                 />
                             </div>
-                            <div className="min-w-0 flex flex-col justify-center">
-                                <h4 className="text-sm font-bold text-gray-800 line-clamp-2 leading-relaxed group-hover:text-orange-600 transition-colors">
+                            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minWidth: 0 }}>
+                                <h4 style={{ 
+                                    fontSize: '14px', 
+                                    fontWeight: 700, 
+                                    color: 'var(--text-heading)', 
+                                    margin: 0,
+                                    lineHeight: 1.4,
+                                    display: '-webkit-box',
+                                    WebkitLineClamp: 2,
+                                    WebkitBoxOrient: 'vertical',
+                                    overflow: 'hidden'
+                                }}>
                                     {post.title}
                                 </h4>
-                                <span className="text-[11px] text-gray-400 mt-1 block uppercase tracking-wider font-semibold">
+                                <span style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px', textTransform: 'uppercase', fontWeight: 600 }}>
                                     {new Date(post.published_at || post.created_at).toLocaleDateString('vi-VN')}
                                 </span>
                             </div>
@@ -98,17 +180,28 @@ export default function BlogSidebar({ recentPosts, categories }: BlogSidebarProp
             </div>
 
             {/* Categories */}
-            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">Danh mục</h3>
-                <div className="flex flex-col gap-2">
+            <div style={{ background: 'white', padding: '24px', borderRadius: '24px', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-heading)', marginBottom: '16px' }}>Danh mục</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {categories.map((cat) => (
                         <Link 
                             key={cat.id} 
                             href={`/blog?category=${cat.id}`}
-                            className="flex items-center justify-between p-3 rounded-lg hover:bg-orange-50 text-gray-600 hover:text-orange-600 transition-all group"
+                            style={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                justifyContent: 'space-between', 
+                                padding: '12px', 
+                                borderRadius: '8px', 
+                                textDecoration: 'none', 
+                                color: 'var(--text-secondary)',
+                                fontSize: '14px',
+                                fontWeight: 500,
+                                transition: 'all 0.2s'
+                            }}
                         >
-                            <span className="text-sm font-medium">{cat.name}</span>
-                            <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
+                            <span>{cat.name}</span>
+                            <ChevronRight size={16} />
                         </Link>
                     ))}
                 </div>
