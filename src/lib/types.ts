@@ -41,6 +41,7 @@ export interface Tag {
 export interface MediaFile {
     name: string;
     url: string;
+    path: string;
     size: number;
     created_at: string;
     type: string;

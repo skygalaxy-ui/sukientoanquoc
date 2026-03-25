@@ -1,16 +1,21 @@
 import { NextResponse } from 'next/server';
-import { readFile, writeFile, mkdir } from 'fs/promises';
-import path from 'path';
+import { supabaseAdmin } from '@/lib/supabase-admin';
 
-const BRANDING_FILE = path.join(process.cwd(), 'public', 'branding.json');
-
+// Read branding from site_settings table
 async function readBranding() {
-    try {
-        const data = await readFile(BRANDING_FILE, 'utf-8');
-        return JSON.parse(data);
-    } catch {
-        return {};
+    const { data, error } = await supabaseAdmin
+        .from('site_settings')
+        .select('key, value')
+        .in('key', ['logo_url', 'favicon_url']);
+
+    if (error || !data) return {};
+
+    const result: Record<string, string> = {};
+    for (const row of data) {
+        if (row.key === 'logo_url') result.logoUrl = row.value;
+        if (row.key === 'favicon_url') result.faviconUrl = row.value;
     }
+    return result;
 }
 
 export async function GET() {
@@ -26,9 +31,36 @@ export async function POST(request: Request) {
     try {
         const { branding } = await request.json();
 
-        // Ensure public directory exists
-        await mkdir(path.dirname(BRANDING_FILE), { recursive: true });
-        await writeFile(BRANDING_FILE, JSON.stringify(branding, null, 2), 'utf-8');
+        // Save each branding field to site_settings
+        const updates = [];
+        if (branding.logoUrl !== undefined) {
+            updates.push(
+                supabaseAdmin
+                    .from('site_settings')
+                    .upsert({ key: 'logo_url', value: branding.logoUrl || '' }, { onConflict: 'key' })
+            );
+        }
+        if (branding.faviconUrl !== undefined) {
+            updates.push(
+                supabaseAdmin
+                    .from('site_settings')
+                    .upsert({ key: 'favicon_url', value: branding.faviconUrl || '' }, { onConflict: 'key' })
+            );
+        }
+
+        // Handle removal: if logoUrl or faviconUrl is empty/undefined, delete the key
+        if (branding.logoUrl === '' || branding.logoUrl === undefined) {
+            updates.push(
+                supabaseAdmin.from('site_settings').delete().eq('key', 'logo_url')
+            );
+        }
+        if (branding.faviconUrl === '' || branding.faviconUrl === undefined) {
+            updates.push(
+                supabaseAdmin.from('site_settings').delete().eq('key', 'favicon_url')
+            );
+        }
+
+        await Promise.all(updates);
 
         return NextResponse.json({ success: true });
     } catch (error) {

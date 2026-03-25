@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
+import { supabaseAdmin } from '@/lib/supabase-admin';
+
+const BUCKET = 'post-images';
 
 export async function POST(request: Request) {
     try {
@@ -20,26 +21,40 @@ export async function POST(request: Request) {
         const fileExt = file.name.split('.').pop()?.toLowerCase() || 'png';
         const buffer = Buffer.from(await file.arrayBuffer());
 
-        const publicDir = path.join(process.cwd(), 'public');
-        await mkdir(publicDir, { recursive: true });
+        // Use a fixed name so it always overwrites: branding/logo.png or branding/favicon.png
+        const storagePath = `branding/${type}.${fileExt}`;
 
-        // Save as logo.png or favicon.png directly
-        const targetName = type === 'favicon' ? `favicon.${fileExt}` : `logo.${fileExt}`;
-        const filePath = path.join(publicDir, targetName);
-        await writeFile(filePath, buffer);
+        // Upload to Supabase Storage (overwrite existing)
+        const { error: uploadError } = await supabaseAdmin.storage
+            .from(BUCKET)
+            .upload(storagePath, buffer, {
+                contentType: file.type || 'image/png',
+                cacheControl: '60', // Short cache so updates show quickly
+                upsert: true,       // Overwrite if exists
+            });
 
-        // Also save a timestamped backup
-        const uploadsDir = path.join(publicDir, 'uploads');
-        await mkdir(uploadsDir, { recursive: true });
-        const backupName = `${type}-${Date.now()}.${fileExt}`;
-        await writeFile(path.join(uploadsDir, backupName), buffer);
+        if (uploadError) {
+            console.error('[Branding Upload] Supabase error:', uploadError);
+            return NextResponse.json({ error: 'Upload thất bại: ' + uploadError.message }, { status: 500 });
+        }
 
-        const publicUrl = `/${targetName}`;
+        // Get public URL
+        const { data: urlData } = supabaseAdmin.storage
+            .from(BUCKET)
+            .getPublicUrl(storagePath);
+
+        const publicUrl = urlData.publicUrl;
+
+        // Also save to site_settings table so the frontend website can read it
+        const settingKey = type === 'favicon' ? 'favicon_url' : 'logo_url';
+        await supabaseAdmin
+            .from('site_settings')
+            .upsert({ key: settingKey, value: publicUrl }, { onConflict: 'key' });
 
         return NextResponse.json({
             url: publicUrl,
             publicUrl: publicUrl,
-            fileName: targetName,
+            fileName: storagePath,
         });
     } catch (error) {
         console.error('[Branding Upload] Error:', error);

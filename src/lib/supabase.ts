@@ -209,38 +209,54 @@ export async function uploadImage(file: File, bucket: string = 'post-images'): P
 
         if (error) {
             console.error('[Upload] Error:', error);
+            alert(`Lỗi khi tải ảnh: ${error.message}`);
             return null;
         }
 
         const { data: urlData } = supabase.storage.from(bucket).getPublicUrl(fileName);
         return urlData.publicUrl;
-    } catch (error) {
+    } catch (error: any) {
         console.error('[Upload] Unexpected error:', error);
+        alert(`Lỗi hệ thống khi tải ảnh: ${error.message || 'Không xác định'}`);
         return null;
     }
 }
 
 export async function listStorageImages(bucket: string = 'post-images'): Promise<MediaFile[]> {
     try {
-        const { data, error } = await supabase.storage
+        // List root
+        const { data: rootData, error: rootError } = await supabase.storage
             .from(bucket)
-            .list('', { limit: 200, sortBy: { column: 'created_at', order: 'desc' } });
+            .list('', { limit: 100, sortBy: { column: 'created_at', order: 'desc' } });
 
-        if (error) { console.error('Error listing images:', error); return []; }
+        if (rootError) { console.error('Error listing root images:', rootError); }
 
-        const imageFiles = (data || []).filter(f =>
+        // List branding folder
+        const { data: brandingData, error: brandingError } = await supabase.storage
+            .from(bucket)
+            .list('branding', { limit: 20, sortBy: { column: 'created_at', order: 'desc' } });
+
+        if (brandingError) { console.error('Error listing branding images:', brandingError); }
+
+        const allFiles = [
+            ...(rootData || []).map(f => ({ ...f, path: f.name })),
+            ...(brandingData || []).map(f => ({ ...f, path: `branding/${f.name}` }))
+        ];
+
+        const imageFiles = allFiles.filter(f =>
             f.name && !f.name.startsWith('.') &&
-            /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(f.name)
+            /\.(jpg|jpeg|png|gif|webp|svg|ico)$/i.test(f.name)
         );
 
         return imageFiles.map(f => {
-            const { data: urlData } = supabase.storage.from(bucket).getPublicUrl(f.name);
+            const { data: urlData } = supabase.storage.from(bucket).getPublicUrl(f.path);
             return {
                 name: f.name,
                 url: urlData.publicUrl,
                 size: (f.metadata as any)?.size || 0,
                 created_at: f.created_at || '',
                 type: (f.metadata as any)?.mimetype || 'image/jpeg',
+                path: f.path
             };
         });
     } catch (error) {
@@ -252,10 +268,15 @@ export async function listStorageImages(bucket: string = 'post-images'): Promise
 export async function deleteStorageImage(fileName: string, bucket: string = 'post-images'): Promise<boolean> {
     try {
         const { error } = await supabase.storage.from(bucket).remove([fileName]);
-        if (error) { console.error('Error deleting:', error); return false; }
+        if (error) {
+            console.error('Error deleting:', error);
+            alert(`Lỗi khi xóa ảnh: ${error.message}`);
+            return false;
+        }
         return true;
-    } catch (error) {
+    } catch (error: any) {
         console.error('Delete error:', error);
+        alert(`Lỗi hệ thống khi xóa ảnh: ${error.message || 'Không xác định'}`);
         return false;
     }
 }

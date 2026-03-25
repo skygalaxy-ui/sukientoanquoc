@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
+import { supabaseAdmin } from '@/lib/supabase-admin';
+
+const BUCKET = 'post-images';
 
 export async function POST(request: Request) {
     try {
@@ -18,23 +19,33 @@ export async function POST(request: Request) {
         }
 
         const fileExt = file.name.split('.').pop()?.toLowerCase() || 'png';
-        const prefix = folder ? `${folder}-` : '';
-        const fileName = `${prefix}${Date.now()}.${fileExt}`;
+        const prefix = folder ? `${folder}/` : '';
+        const fileName = `${prefix}${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
 
         const buffer = Buffer.from(await file.arrayBuffer());
 
-        // Save to public directory
-        const publicDir = path.join(process.cwd(), 'public', 'uploads');
-        await mkdir(publicDir, { recursive: true });
-        
-        const filePath = path.join(publicDir, fileName);
-        await writeFile(filePath, buffer);
+        // Upload to Supabase Storage
+        const { error: uploadError } = await supabaseAdmin.storage
+            .from(BUCKET)
+            .upload(fileName, buffer, {
+                contentType: file.type || 'image/png',
+                cacheControl: '3600',
+                upsert: false,
+            });
 
-        const publicUrl = `/uploads/${fileName}`;
+        if (uploadError) {
+            console.error('[Upload API] Supabase error:', uploadError);
+            return NextResponse.json({ error: 'Upload thất bại: ' + uploadError.message }, { status: 500 });
+        }
+
+        // Get public URL
+        const { data: urlData } = supabaseAdmin.storage
+            .from(BUCKET)
+            .getPublicUrl(fileName);
 
         return NextResponse.json({
-            url: publicUrl,
-            publicUrl: publicUrl,
+            url: urlData.publicUrl,
+            publicUrl: urlData.publicUrl,
             fileName,
         });
     } catch (error) {

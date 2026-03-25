@@ -72,7 +72,7 @@ export default function AdminDashboard() {
     useEffect(() => {
         async function checkAutoPublish() {
             try {
-                const res = await fetch(`/api/cron/publish?key=${process.env.NEXT_PUBLIC_CRON_SECRET || 'cms-cron-secret-2026'}`);
+                const res = await fetch(`/api/cron/publish?key=${process.env.NEXT_PUBLIC_CRON_SECRET || 'sukientoanquoc-cron-2026'}`);
                 const data = await res.json();
                 if (data.published > 0 && data.posts) {
                     setAutoPublished(data.posts.map((p: { title: string }) => p.title));

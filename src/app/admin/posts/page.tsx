@@ -106,8 +106,19 @@ export default function PostsPage() {
 
     const getPostStatus = (post: Post) => {
         if (post.is_published) return 'published';
-        if (post.scheduled_at && new Date(post.scheduled_at) > new Date()) return 'scheduled';
+        if (post.scheduled_at) return 'scheduled';
         return 'draft';
+    };
+
+    const getStatusInfo = (post: Post) => {
+        if (post.is_published) return { bg: 'bg-orange-100 text-orange-700', dot: 'bg-orange-500', label: 'Xuất bản' };
+        if (post.scheduled_at) {
+            const isFuture = new Date(post.scheduled_at) > new Date();
+            return isFuture
+                ? { bg: 'bg-blue-100 text-blue-700 font-bold', dot: 'bg-blue-500', label: 'Lên lịch' }
+                : { bg: 'bg-indigo-100 text-indigo-700', dot: 'bg-indigo-500', label: 'Chờ xuất bản' };
+        }
+        return { bg: 'bg-amber-100 text-amber-700', dot: 'bg-amber-500', label: 'Nháp' };
     };
 
     const filteredPosts = posts.filter(post => {
@@ -284,12 +295,7 @@ export default function PostsPage() {
 
                                     <div className="col-span-2">
                                         {(() => {
-                                            const status = getPostStatus(post);
-                                            const config = status === 'published'
-                                                ? { bg: 'bg-orange-50 text-orange-700 hover:bg-orange-100', dot: 'bg-orange-500', label: 'Xuất bản' }
-                                                : post.scheduled_at && new Date(post.scheduled_at) > new Date()
-                                                    ? { bg: 'bg-gray-50 text-gray-700 hover:bg-gray-100', dot: 'bg-gray-500', label: 'Lên lịch' }
-                                                    : { bg: 'bg-amber-50 text-amber-700 hover:bg-amber-100', dot: 'bg-amber-500', label: 'Nháp' };
+                                            const config = getStatusInfo(post);
                                             return (
                                                 <button
                                                     onClick={() => togglePublish(post)}
