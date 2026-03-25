@@ -1,12 +1,16 @@
 import Image from "next/image";
 import styles from "./Sponsor.module.css";
 
-export default function Sponsor() {
+interface SponsorProps {
+    images?: Record<string, string>;
+}
+
+export default function Sponsor({ images = {} }: SponsorProps) {
     return (
         <section className={styles.section} id="contact">
             <div className={styles.bgImage}>
                 <Image
-                    src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1920&q=85"
+                    src={images.sponsor_bg || "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1920&q=85"}
                     alt="Đội nhóm cùng nhau teambuilding ngoài trời"
                     fill
                     sizes="100vw"

@@ -81,7 +81,11 @@ const services = [
     },
 ];
 
-export default function Feature() {
+interface FeatureProps {
+    images?: Record<string, string>;
+}
+
+export default function Feature({ images = {} }: FeatureProps) {
     const { ref: headerRef, isVisible: headerVisible } = useReveal();
     const { ref: gridRef, isVisible: gridVisible } = useReveal(0.1);
 
@@ -111,7 +115,7 @@ export default function Feature() {
                 >
                     <div className={styles.imageCard}>
                         <Image
-                            src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=800&q=85"
+                            src={images.feature_main || "https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=800&q=85"}
                             alt="Đội nhóm vui vẻ trong hoạt động teambuilding"
                             fill
                             sizes="(max-width: 767px) 100vw, 50vw"

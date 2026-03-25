@@ -11,30 +11,35 @@ import Portfolio from "@/components/Portfolio/Portfolio";
 import ContactForm from "@/components/ContactForm/ContactForm";
 import Footer from "@/components/Footer/Footer";
 import FloatingContact from "@/components/FloatingContact/FloatingContact";
+import { getPageImages } from "@/lib/page-images";
 
-export default function Home() {
+export const revalidate = 60; // ISR: revalidate every 60 seconds
+
+export default async function Home() {
+  const images = await getPageImages();
+
   return (
     <>
       <Header />
       <main>
-        <Hero />
+        <Hero images={images} />
         <Marquee
           items={["Hà Nội", "TP. Hồ Chí Minh", "Đà Nẵng", "Cần Thơ", "Hải Phòng", "Quảng Ninh", "Bình Dương", "Nha Trang"]}
           variant="cities"
           speed={30}
         />
-        <Feature />
+        <Feature images={images} />
         <Stats />
-        <Services />
-        <Portfolio />
+        <Services images={images} />
+        <Portfolio images={images} />
         <Process />
         <Marquee
           items={["Khai Trương", "Hội Nghị", "Festival", "Roadshow", "Teambuilding", "Gala Dinner", "Khánh Thành", "Động Thổ"]}
           variant="purple"
           speed={40}
         />
-        <Speakers />
-        <Sponsor />
+        <Speakers images={images} />
+        <Sponsor images={images} />
         <ContactForm />
       </main>
       <Footer />
@@ -42,3 +47,4 @@ export default function Home() {
     </>
   );
 }
+

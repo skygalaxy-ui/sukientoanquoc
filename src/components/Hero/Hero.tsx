@@ -3,12 +3,18 @@
 import Image from "next/image";
 import styles from "./Hero.module.css";
 
-export default function Hero() {
+interface HeroProps {
+    images?: Record<string, string>;
+}
+
+export default function Hero({ images = {} }: HeroProps) {
+    const heroBg = images.hero_bg || "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1920&q=90";
+
     return (
         <section className={styles.hero}>
             <div className={styles.bgImage}>
                 <Image
-                    src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1920&q=90"
+                    src={heroBg}
                     alt="Đội nhóm vui vẻ trong hoạt động teambuilding ngoài trời"
                     fill
                     priority

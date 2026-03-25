@@ -246,19 +246,32 @@ export async function uploadImage(file: File, bucket: string = 'post-images'): P
 
 export async function listStorageImages(bucket: string = 'post-images'): Promise<MediaFile[]> {
     try {
-        const { data, error } = await supabase.storage
+        // List root
+        const { data: rootData, error: rootError } = await supabase.storage
             .from(bucket)
-            .list('', { limit: 200, sortBy: { column: 'created_at', order: 'desc' } });
+            .list('', { limit: 100, sortBy: { column: 'created_at', order: 'desc' } });
 
-        if (error) { console.error('Error listing images:', error); return []; }
+        if (rootError) { console.error('Error listing root images:', rootError); }
 
-        const imageFiles = (data || []).filter(f =>
+        // List branding folder
+        const { data: brandingData, error: brandingError } = await supabase.storage
+            .from(bucket)
+            .list('branding', { limit: 20, sortBy: { column: 'created_at', order: 'desc' } });
+
+        if (brandingError) { console.error('Error listing branding images:', brandingError); }
+
+        const allFiles = [
+            ...(rootData || []).map(f => ({ ...f, path: f.name })),
+            ...(brandingData || []).map(f => ({ ...f, path: `branding/${f.name}` }))
+        ];
+
+        const imageFiles = allFiles.filter(f =>
             f.name && !f.name.startsWith('.') &&
-            /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(f.name)
+            /\.(jpg|jpeg|png|gif|webp|svg|ico)$/i.test(f.name)
         );
 
         return imageFiles.map(f => {
-            const { data: urlData } = supabase.storage.from(bucket).getPublicUrl(f.name);
+            const { data: urlData } = supabase.storage.from(bucket).getPublicUrl(f.path);
             return {
                 name: f.name,
                 url: urlData.publicUrl,

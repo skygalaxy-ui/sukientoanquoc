@@ -4,6 +4,10 @@ import Image from "next/image";
 import { useReveal } from "@/hooks/useReveal";
 import styles from "./Speakers.module.css";
 
+interface SpeakersProps {
+    images?: Record<string, string>;
+}
+
 const clientLogos = [
     { name: "Vingroup", color: "#1A3C7E" },
     { name: "Viettel", color: "#E4002B" },
@@ -24,7 +28,9 @@ const testimonials = [
         name: "Nguyễn Văn Nam",
         role: "Trưởng phòng Marketing",
         company: "Pegas Touristik Việt Nam",
-        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80&fm=webp",
+        avatar: "",
+        avatarKey: "speaker_1",
+        defaultAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80&fm=webp",
         text: "Hợp tác cùng SKTQ cho chuỗi Roadshow 10 tỉnh thành, tôi ấn tượng nhất với khả năng điều phối nhân sự và thiết bị linh hoạt. Mọi thứ diễn ra đúng tiến độ dù thời tiết không thuận lợi.",
         rating: 5,
     },
@@ -32,7 +38,9 @@ const testimonials = [
         name: "Trần Bảo Ngọc",
         role: "Phó Giám đốc điều hành",
         company: "Cam Ranh Bay Resort",
-        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80&fm=webp",
+        avatar: "",
+        avatarKey: "speaker_2",
+        defaultAvatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80&fm=webp",
         text: "Sự kiện Year End Party vừa qua khách mời rất hài lòng. Hệ thống âm thanh ánh sáng chuẩn quốc tế và kịch bản sáng tạo đã làm nên một buổi tối bùng nổ cảm xúc. Cảm ơn National Events!",
         rating: 5,
     },
@@ -40,7 +48,9 @@ const testimonials = [
         name: "Lê Hoàng Phúc",
         role: "CEO",
         company: "NAI New World",
-        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&q=80&fm=webp",
+        avatar: "",
+        avatarKey: "speaker_3",
+        defaultAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&q=80&fm=webp",
         text: "Quy trình làm việc chuyên nghiệp, báo giá minh bạch và không phát sinh phí ngoài. Đây là đơn vị tổ chức sự kiện uy tín nhất mà doanh nghiệp chúng tôi từng hợp tác.",
         rating: 5,
     },
@@ -59,7 +69,7 @@ const QuoteIcon = () => (
     </svg>
 );
 
-export default function Speakers() {
+export default function Speakers({ images = {} }: SpeakersProps) {
     const { ref: headerRef, isVisible: headerVisible } = useReveal();
     const { ref: logosRef, isVisible: logosVisible } = useReveal(0.1);
     const { ref: testRef, isVisible: testVisible } = useReveal(0.1);
@@ -123,7 +133,7 @@ export default function Speakers() {
 
                                 <div className={styles.testAuthor}>
                                     <div className={styles.testAvatar}>
-                                        <Image src={t.avatar} alt={t.name} fill sizes="48px" />
+                                        <Image src={images[t.avatarKey] || t.defaultAvatar} alt={t.name} fill sizes="48px" />
                                     </div>
                                     <div className={styles.testInfo}>
                                         <span className={styles.testName}>{t.name}</span>
