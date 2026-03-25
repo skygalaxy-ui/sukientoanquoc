@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { uploadImage, listStorageImages, deleteStorageImage } from "@/lib/supabase";
 import { MediaFile } from "@/lib/types";
 import {
     X, Upload, Trash2, Check, Loader2, Search, Image as ImageIcon, Copy
@@ -28,8 +27,14 @@ export default function MediaLibrary({ isOpen, onClose, onSelect, bucket = 'post
 
     async function loadImages() {
         setLoading(true);
-        const data = await listStorageImages(bucket);
-        setImages(data);
+        try {
+            const res = await fetch(`/api/admin/media?bucket=${bucket}`);
+            const data = await res.json();
+            setImages(data.images || []);
+        } catch (err) {
+            console.error('Failed to load images:', err);
+            setImages([]);
+        }
         setLoading(false);
     }
 
@@ -43,7 +48,10 @@ export default function MediaLibrary({ isOpen, onClose, onSelect, bucket = 'post
                 alert(`${file.name} quá lớn (tối đa 5MB)`);
                 continue;
             }
-            await uploadImage(file, bucket);
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('bucket', bucket);
+            await fetch('/api/admin/upload', { method: 'POST', body: formData });
         }
         await loadImages();
         setUploading(false);
@@ -52,8 +60,12 @@ export default function MediaLibrary({ isOpen, onClose, onSelect, bucket = 'post
 
     async function handleDelete(fileName: string) {
         if (!confirm('Xóa ảnh này?')) return;
-        const success = await deleteStorageImage(fileName, bucket);
-        if (success) {
+        const res = await fetch('/api/admin/media', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fileName, bucket }),
+        });
+        if (res.ok) {
             setImages(images.filter(img => img.name !== fileName));
             if (selectedImage === fileName) setSelectedImage(null);
         }

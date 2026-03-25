@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Image as ImageIcon, Save, Loader2, Upload } from 'lucide-react';
+import { Image as ImageIcon, Save, Loader2, Upload, FolderOpen } from 'lucide-react';
 import { IMAGE_KEYS, getDefaultImages } from '@/lib/page-images';
+import MediaLibrary from '@/components/admin/MediaLibrary';
 
 export default function PageImagesAdmin() {
     const [images, setImages] = useState<Record<string, string>>({});
@@ -12,6 +13,8 @@ export default function PageImagesAdmin() {
     const [activeSection, setActiveSection] = useState('Trang chủ');
     const fileInputRef = useRef<HTMLInputElement>(null);
     const uploadKeyRef = useRef<string>('');
+    const [showMediaLibrary, setShowMediaLibrary] = useState(false);
+    const [mediaPickerKey, setMediaPickerKey] = useState('');
 
     const defaults = getDefaultImages();
     const sections = Array.from(new Set(IMAGE_KEYS.map(k => k.section)));
@@ -269,6 +272,27 @@ export default function PageImagesAdmin() {
                                         {isUploading ? <Loader2 size={14} style={{ animation: 'spin 1s linear infinite' }} /> : <Upload size={14} />}
                                         Upload
                                     </button>
+                                    <button
+                                        onClick={() => { setMediaPickerKey(item.key); setShowMediaLibrary(true); }}
+                                        title="Chọn từ thư viện"
+                                        style={{
+                                            padding: '8px 12px',
+                                            background: '#6366f1',
+                                            color: 'white',
+                                            border: 'none',
+                                            borderRadius: 6,
+                                            cursor: 'pointer',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 4,
+                                            fontSize: 12,
+                                            fontWeight: 500,
+                                            whiteSpace: 'nowrap' as const,
+                                        }}
+                                    >
+                                        <FolderOpen size={14} />
+                                        Thư viện
+                                    </button>
                                 </div>
                                 <div style={{ display: 'flex', gap: 8 }}>
                                     {isCustom && (
@@ -300,8 +324,18 @@ export default function PageImagesAdmin() {
                     <li>Nhấn nút <strong style={{ color: '#3b82f6' }}>Upload</strong> để tải ảnh trực tiếp từ máy tính</li>
                     <li>Hoặc dán URL ảnh từ Media Library vào ô nhập</li>
                     <li>Nhấn <strong>Lưu thay đổi</strong> — ảnh sẽ cập nhật trên web ngay lập tức</li>
+                    <li>Hoặc nhấn <strong style={{ color: '#6366f1' }}>Thư viện</strong> để chọn ảnh đã upload trước đó</li>
                 </ol>
             </div>
+            <MediaLibrary
+                isOpen={showMediaLibrary}
+                onClose={() => setShowMediaLibrary(false)}
+                onSelect={(url) => {
+                    handleChange(mediaPickerKey, url);
+                    setShowMediaLibrary(false);
+                    setMessage(`✅ Đã chọn ảnh từ thư viện cho "${IMAGE_KEYS.find(k => k.key === mediaPickerKey)?.label || mediaPickerKey}". Nhấn Lưu thay đổi.`);
+                }}
+            />
         </div>
     );
 }

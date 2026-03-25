@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { uploadImage, listStorageImages, deleteStorageImage } from "@/lib/supabase";
 import { MediaFile } from "@/lib/types";
 import { Upload, Trash2, Loader2, Search, Image as ImageIcon, Copy, Check, ExternalLink } from "lucide-react";
 
@@ -17,8 +16,14 @@ export default function MediaPage() {
 
     async function loadImages() {
         setLoading(true);
-        const data = await listStorageImages('post-images');
-        setImages(data);
+        try {
+            const res = await fetch('/api/admin/media');
+            const data = await res.json();
+            setImages(data.images || []);
+        } catch (err) {
+            console.error('Failed to load images:', err);
+            setImages([]);
+        }
         setLoading(false);
     }
 
@@ -27,7 +32,10 @@ export default function MediaPage() {
         setUploading(true);
         for (const file of Array.from(files)) {
             if (file.size > 5 * 1024 * 1024) { alert(`${file.name} quá lớn (max 5MB)`); continue; }
-            await uploadImage(file, 'post-images');
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('bucket', 'post-images');
+            await fetch('/api/admin/upload', { method: 'POST', body: formData });
         }
         await loadImages(); setUploading(false);
         if (fileInputRef.current) fileInputRef.current.value = '';
@@ -35,7 +43,11 @@ export default function MediaPage() {
 
     async function handleDelete(name: string) {
         if (!confirm('Xóa ảnh?')) return;
-        await deleteStorageImage(name, 'post-images');
+        await fetch('/api/admin/media', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fileName: name, bucket: 'post-images' }),
+        });
         setImages(images.filter(i => i.name !== name));
     }
 
