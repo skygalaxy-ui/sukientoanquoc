@@ -10,7 +10,7 @@ import Image from '@tiptap/extension-image';
 import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import Highlight from '@tiptap/extension-highlight';
-import TextStyle from '@tiptap/extension-text-style';
+import { TextStyle } from '@tiptap/extension-text-style';
 import {
     Bold, Italic, Underline as UnderlineIcon, Strikethrough,
     List, ListOrdered, Quote, Code, Image as ImageIcon,
