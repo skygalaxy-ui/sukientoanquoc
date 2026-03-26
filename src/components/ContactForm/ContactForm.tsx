@@ -80,7 +80,7 @@ export default function ContactForm() {
                                 </div>
                                 <div>
                                     <div className={styles.itemLabel}>Điện thoại</div>
-                                    <a href="tel:0857999545" className={styles.itemValue}>0857 999 545</a>
+                                    <a href="tel:0854 517 868" className={styles.itemValue}>0854 517 868</a>
                                 </div>
                             </div>
 

@@ -101,8 +101,8 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                         <div className="bg-white/5 p-8 rounded-2xl border border-white/10 hidden lg:block">
                             <h3 className="text-xl font-bold mb-6">Nhận báo giá ngay</h3>
                             <p className="text-gray-400 mb-8">Giải pháp tối ưu cho ngân sách của bạn. Tư vấn 24/7 hoàn toàn miễn phí.</p>
-                            <a href={`tel:0857999545`} className="block w-full text-center bg-purple-600 hover:bg-purple-700 p-4 rounded-xl font-bold transition-all">
-                                0857 999 545
+                            <a href={`tel:0854 517 868`} className="block w-full text-center bg-purple-600 hover:bg-purple-700 p-4 rounded-xl font-bold transition-all">
+                                0854 517 868
                             </a>
                         </div>
                     </div>

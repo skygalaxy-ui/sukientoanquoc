@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getScheduledContent, createScheduledContent, updateScheduledContent, deleteScheduledContent } from "@/lib/supabase";
+import { getScheduledContent, createScheduledContent, updateScheduledContent, deleteScheduledContent, supabase } from "@/lib/supabase";
 import { ScheduledContent } from "@/lib/types";
 import {
     Calendar, Plus, Trash2, Edit3, Check,
@@ -30,7 +30,26 @@ export default function ContentCalendarPage() {
     async function loadItems() {
         setLoading(true);
         const data = await getScheduledContent();
-        setItems(data);
+        
+        // Lấy lịch tự động từ bảng posts
+        const { data: draftData } = await supabase
+            .from('posts')
+            .select('id, title, scheduled_at')
+            .eq('is_published', false)
+            .not('scheduled_at', 'is', null);
+            
+        const autoPosts = (draftData || []).map(p => ({
+            id: p.id,
+            title: p.title,
+            type: 'article' as const,
+            scheduled_date: p.scheduled_at ? p.scheduled_at.split('T')[0] : '',
+            notes: 'Tự động đăng tự động bởi CMS',
+            status: 'scheduled' as const,
+            author: 'Hệ thống Auto'
+        }));
+        
+        // Hợp nhất (Merge) lịch thủ công + Lịch bài CMS tự động
+        setItems([...data, ...autoPosts] as ScheduledContent[]);
         setLoading(false);
     }
 
