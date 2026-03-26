@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useReveal } from "@/hooks/useReveal";
 import styles from "./Portfolio.module.css";
 
@@ -16,6 +17,7 @@ const projectDefaults = [
         defaultImage: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80&fm=webp",
         tag: "TEAMBUILDING",
         color: "#F97316",
+        href: "/dich-vu/teambuilding",
     },
     {
         title: "YEAR END PARTY 2025",
@@ -24,6 +26,7 @@ const projectDefaults = [
         defaultImage: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&q=80&fm=webp",
         tag: "YEAR END PARTY",
         color: "#8B5CF6",
+        href: "/dich-vu/year-end-party",
     },
     {
         title: "COMPANY TRIP PHÚ QUỐC",
@@ -32,6 +35,7 @@ const projectDefaults = [
         defaultImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&fm=webp",
         tag: "COMPANY TRIP",
         color: "#22C55E",
+        href: "/dich-vu/company-trip",
     },
     {
         title: "SPORTS DAY NỘI BỘ",
@@ -40,6 +44,7 @@ const projectDefaults = [
         defaultImage: "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&q=80&fm=webp",
         tag: "SPORTS DAY",
         color: "#EF4444",
+        href: "/su-kien",
     },
     {
         title: "WORKSHOP LEADERSHIP",
@@ -48,6 +53,7 @@ const projectDefaults = [
         defaultImage: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80&fm=webp",
         tag: "WORKSHOP",
         color: "#3B82F6",
+        href: "/dich-vu/workshop",
     },
     {
         title: "FAMILY DAY & CARNIVAL",
@@ -56,6 +62,7 @@ const projectDefaults = [
         defaultImage: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=600&q=80&fm=webp",
         tag: "FAMILY DAY",
         color: "#F59E0B",
+        href: "/su-kien",
     },
 ];
 
@@ -86,7 +93,7 @@ export default function Portfolio({ images = {} }: PortfolioProps) {
                     className={`${styles.grid} reveal-stagger ${gridVisible ? "visible" : ""}`}
                 >
                     {projectDefaults.map((p) => (
-                        <div key={p.title} className={styles.card}>
+                        <Link href={p.href} key={p.title} className={styles.card}>
                             <div className={styles.imgWrap}>
                                 <Image src={images[p.imageKey] || p.defaultImage} alt={p.title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
                                 <div className={styles.overlay} />
@@ -98,7 +105,7 @@ export default function Portfolio({ images = {} }: PortfolioProps) {
                                 <h3 className={styles.cardTitle}>{p.title}</h3>
                                 <p className={styles.client}>{p.client}</p>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>
