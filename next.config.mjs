@@ -25,6 +25,20 @@ const nextConfig = {
     "@tiptap/extension-text-style",
     "@tiptap/extension-underline",
   ],
+  async redirects() {
+    return [
+      {
+        source: '/services/:path*',
+        destination: '/dich-vu/:path*',
+        permanent: true,
+      },
+      {
+        source: '/category/dich-vu/:path*',
+        destination: '/dich-vu/:path*',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
