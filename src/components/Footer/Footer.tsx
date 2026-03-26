@@ -33,7 +33,7 @@ export default function Footer() {
                         </div>
                         <div className={styles.col}>
                             <h4 className={styles.colTitle}>Liên hệ</h4>
-                            <a href="tel:0854 517 868">Hotline: 0854 517 868</a>
+                            <a href="tel:0854517868">Hotline: 0854 517 868</a>
                             <a href="mailto:sale@sukientoanquoc.com">sale@sukientoanquoc.com</a>
                             <div className={styles.socials}>
                                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">

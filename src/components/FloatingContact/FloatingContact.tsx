@@ -18,7 +18,7 @@ export default function FloatingContact() {
             {expanded && (
                 <div className={styles.options}>
                     <a
-                        href="tel:0854 517 868"
+                        href="tel:0854517868"
                         className={styles.option}
                         style={{ background: "#10B981" }}
                         aria-label="Gọi hotline"
@@ -29,7 +29,7 @@ export default function FloatingContact() {
                         <span className={styles.optionLabel}>0854 517 868</span>
                     </a>
                     <a
-                        href="https://zalo.me/0854 517 868"
+                        href="https://zalo.me/0854517868"
                         target="_blank"
                         rel="noopener"
                         className={styles.option}
