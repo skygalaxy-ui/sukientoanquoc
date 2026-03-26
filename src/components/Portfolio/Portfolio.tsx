@@ -44,7 +44,7 @@ const projectDefaults = [
         defaultImage: "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&q=80&fm=webp",
         tag: "SPORTS DAY",
         color: "#EF4444",
-        href: "/su-kien",
+        href: "/dich-vu/sports-day",
     },
     {
         title: "WORKSHOP LEADERSHIP",
@@ -62,7 +62,7 @@ const projectDefaults = [
         defaultImage: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=600&q=80&fm=webp",
         tag: "FAMILY DAY",
         color: "#F59E0B",
-        href: "/su-kien",
+        href: "/dich-vu/family-day",
     },
 ];
 
