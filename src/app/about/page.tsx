@@ -7,7 +7,7 @@ import ContactForm from '@/components/ContactForm/ContactForm';
 import FloatingContact from '@/components/FloatingContact/FloatingContact';
 
 export const metadata: Metadata = {
-    title: 'Về Chúng Tôi | Sự Kiện Toàn Quốc - Đối Tác Vận Hành MICE #1 (2026)',
+    title: 'Về chúng tôi | Sự Kiện Toàn Quốc - Đối tác vận hành MICE #1 (2026)',
     description: 'Sự Kiện Toàn Quốc (SKTQ) là đơn vị dẫn đầu trong lĩnh vực quản trị và tổ chức sự kiện B2B, Teambuilding, Company Trip tại Việt Nam. Hơn 10 năm kinh nghiệm thực chiến.',
     keywords: 'về sự kiện toàn quốc, giới thiệu công ty sự kiện, event agency việt nam, công ty tổ chức sự kiện uy tín',
     openGraph: {
@@ -40,9 +40,9 @@ export default function AboutPage() {
                         VỀ SỰ KIỆN TOÀN QUỐC
                     </span>
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-display tracking-tight mb-8 leading-tight">
-                        Kiến Tạo Khoảnh Khắc <br />
+                        Kiến tạo khoảnh khắc <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">
-                            Nâng Tầm Doanh Nghiệp
+                            nâng tầm doanh nghiệp
                         </span>
                     </h1>
                     <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-12">

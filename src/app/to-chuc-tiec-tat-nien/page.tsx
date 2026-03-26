@@ -7,8 +7,7 @@ import ContactForm from '@/components/ContactForm/ContactForm';
 import FloatingContact from '@/components/FloatingContact/FloatingContact';
 
 export const metadata: Metadata = {
-    title: 'Dịch vụ Tổ Chức Tiệc Tất Niên (Year End Party 2026)',
-    titleTemplate: '%s | Sự Kiện Toàn Quốc',
+    title: 'Dịch vụ tổ chức tiệc tất niên (Year End Party 2026)',
     description: 'Chuyên gia thiết kế kịch bản Tiệc Tất Niên (YEP) siêu lầy lội hoặc Concept tri ân sang trọng chuẩn dạ tiệc hoàng gia. Cung cấp MC, ca sĩ, ban nhạc và đạo diễn sân khấu trọn gói.',
     keywords: 'tổ chức tiệc tất niên, công ty tổ chức year end party, kịch bản tất niên công ty, mc tiệc tất niên',
     openGraph: {
@@ -41,9 +40,9 @@ export default function TatNienPage() {
                         NĂNG LỰC GALA DINNER (YEP 2026)
                     </span>
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-display tracking-tight mb-8 leading-tight">
-                        Kiến Tạo Thước Phim Ký Ức <br />
+                        Kiến tạo thước phim ký ức <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">
-                            Tiệc Tất Niên Hoành Tráng
+                            tiệc tất niên hoành tráng
                         </span>
                     </h1>
                     <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-12">

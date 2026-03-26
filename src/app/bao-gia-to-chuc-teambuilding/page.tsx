@@ -7,7 +7,7 @@ import ContactForm from '@/components/ContactForm/ContactForm';
 import FloatingContact from '@/components/FloatingContact/FloatingContact';
 
 export const metadata: Metadata = {
-    title: 'Bảng Báo Giá Tổ Chức Teambuilding & Company Trip (Mới 2026)',
+    title: 'Bảng báo giá tổ chức teambuilding & company trip (mới 2026)',
     description: 'Tham khảo ngay báo giá chi tiết từng hạng mục thiết kế kịch bản, thuê cung cấp MC, đạo cụ game ngoài trời và các gói Teambuilding theo ngân sách.',
     keywords: 'báo giá tổ chức teambuilding, chi phí chạy company trip, giá thuê mc teambuilding, kịch bản teambuilding giá rẻ',
     openGraph: {
@@ -40,9 +40,9 @@ export default function BaoGiaPage() {
                         THUYẾT MINH TÀI CHÍNH NỘI BỘ
                     </span>
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-display tracking-tight mb-8 leading-tight">
-                        Bài Toán Báo Giá Chạy Sự Kiện <br />
+                        Bài toán báo giá chạy sự kiện <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">
-                            Không Thay Đổi & Phát Sinh
+                            không thay đổi & phát sinh
                         </span>
                     </h1>
                     <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-12">
