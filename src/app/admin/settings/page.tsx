@@ -16,6 +16,16 @@ export default function SettingsPage() {
         portfolio_5: '',
     });
 
+    // Content Settings (page_content)
+    const [pageContent, setPageContent] = useState({
+        portfolio_1_title: '', portfolio_1_client: '',
+        portfolio_2_title: '', portfolio_2_client: '',
+        portfolio_3_title: '', portfolio_3_client: '',
+        portfolio_4_title: '', portfolio_4_client: '',
+        portfolio_5_title: '', portfolio_5_client: '',
+        portfolio_6_title: '', portfolio_6_client: '',
+    });
+
     // General Info (site_general)
     const [general, setGeneral] = useState({
         siteName: "Sự Kiện Toàn Quốc",
@@ -35,6 +45,12 @@ export default function SettingsPage() {
                     setImages(prev => ({ ...prev, ...parsed }));
                 }
 
+                const contentRow = data.find((r: any) => r.key === 'page_content');
+                if (contentRow?.value) {
+                    const parsed = typeof contentRow.value === 'string' ? JSON.parse(contentRow.value) : contentRow.value;
+                    setPageContent(prev => ({ ...prev, ...parsed }));
+                }
+
                 const genRow = data.find((r: any) => r.key === 'site_general');
                 if (genRow?.value) {
                     const parsed = typeof genRow.value === 'string' ? JSON.parse(genRow.value) : genRow.value;
@@ -52,6 +68,12 @@ export default function SettingsPage() {
         await supabase.from('site_settings').upsert({
             key: 'page_images',
             value: images,
+            updated_at: new Date().toISOString()
+        }, { onConflict: 'key' });
+
+        await supabase.from('site_settings').upsert({
+            key: 'page_content',
+            value: pageContent,
             updated_at: new Date().toISOString()
         }, { onConflict: 'key' });
 
@@ -140,6 +162,33 @@ export default function SettingsPage() {
                         <input type="url" value={images.portfolio_5} onChange={(e) => setImages({ ...images, portfolio_5: e.target.value })}
                             placeholder="https://..." className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-900/10" />
                     </div>
+                </div>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
+                    <Globe className="w-4 h-4 text-purple-500" />
+                    <h2 className="font-semibold text-gray-900">Nội dung Chữ - Khối Dự Án Trang Chủ</h2>
+                </div>
+                <div className="p-6 space-y-6">
+                    {[1, 2, 3, 4, 5, 6].map((num) => {
+                        const titleKey = `portfolio_${num}_title` as keyof typeof pageContent;
+                        const clientKey = `portfolio_${num}_client` as keyof typeof pageContent;
+                        return (
+                            <div key={num} className="grid grid-cols-1 md:grid-cols-2 gap-4 border-b border-gray-100 pb-4 last:border-0 last:pb-0">
+                                <div>
+                                    <label className="text-sm font-medium text-gray-700 mb-1 block">Tên Dự Án {num}</label>
+                                    <input type="text" value={pageContent[titleKey] || ''} onChange={(e) => setPageContent({ ...pageContent, [titleKey]: e.target.value })}
+                                        placeholder="Ví dụ: TEAMBUILDING BIỂN ĐÀ NẴNG" className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-900/10" />
+                                </div>
+                                <div>
+                                    <label className="text-sm font-medium text-gray-700 mb-1 block">Khách hàng & Quy mô {num}</label>
+                                    <input type="text" value={pageContent[clientKey] || ''} onChange={(e) => setPageContent({ ...pageContent, [clientKey]: e.target.value })}
+                                        placeholder="Ví dụ: FPT Software — 300 người" className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-900/10" />
+                                </div>
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
         </div>

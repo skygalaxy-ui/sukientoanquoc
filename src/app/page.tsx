@@ -12,11 +12,13 @@ import ContactForm from "@/components/ContactForm/ContactForm";
 import Footer from "@/components/Footer/Footer";
 import FloatingContact from "@/components/FloatingContact/FloatingContact";
 import { getPageImages } from "@/lib/page-images";
+import { getPageContent } from "@/lib/page-content";
 
 export const revalidate = 60; // ISR: revalidate every 60 seconds
 
 export default async function Home() {
   const images = await getPageImages();
+  const content = await getPageContent();
 
   return (
     <>
@@ -31,7 +33,7 @@ export default async function Home() {
         <Feature images={images} />
         <Stats />
         <Services images={images} />
-        <Portfolio images={images} />
+        <Portfolio images={images} content={content} />
         <Process />
         <Marquee
           items={["Khai Trương", "Hội Nghị", "Festival", "Roadshow", "Teambuilding", "Gala Dinner", "Khánh Thành", "Động Thổ"]}
