@@ -12,7 +12,7 @@ export default function AdminLayout({
 }) {
     return (
         <AuthProvider>
-            <Script src="https://cdn.tailwindcss.com" strategy="beforeInteractive" />
+            <Script src="https://cdn.tailwindcss.com?plugins=typography,forms" strategy="beforeInteractive" />
             <div className="min-h-screen bg-gray-50/80">
                 <Sidebar />
                 <main className="ml-[260px] transition-all duration-300">
