@@ -77,11 +77,7 @@ export default function Header() {
         <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
             <nav className={styles.nav}>
                 <Link href="/" className={styles.logo}>
-                    <div className={styles.logoIcon}>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="currentColor" fillOpacity="0.9" />
-                        </svg>
-                    </div>
+                    <img src="/favicon.png" alt="Sự Kiện Toàn Quốc" className={styles.logoImg} />
                     <span>Sự Kiện Toàn Quốc</span>
                 </Link>
 

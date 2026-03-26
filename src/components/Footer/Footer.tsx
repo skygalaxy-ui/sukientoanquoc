@@ -6,11 +6,7 @@ export default function Footer() {
             <div className={styles.container}>
                 <div className={styles.top}>
                     <div className={styles.brand}>
-                        <div className={styles.logoIcon}>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="currentColor" fillOpacity="0.9" />
-                            </svg>
-                        </div>
+                        <img src="/favicon.png" alt="Sự Kiện Toàn Quốc" className={styles.logoImg} />
                         <div>
                             <span className={styles.brandName}>Sự Kiện Toàn Quốc</span>
                             <span className={styles.brandSub}>Teambuilding & Event</span>
