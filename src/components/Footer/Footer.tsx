@@ -7,7 +7,7 @@ interface FooterProps {
 export default function Footer({ content = {} }: FooterProps) {
     const companyName = content.footer_company_name || 'Sự Kiện Toàn Quốc';
     const cDesc = content.footer_description || 'Teambuilding & Event';
-    const cAddress = content.footer_address || 'Địa chỉ: 123 Đường B, Quận 1, TPHCM';
+
     const cHotline = content.footer_hotline || 'Hotline: 0854 517 868';
     const cEmail = content.footer_email || 'sale@sukientoanquoc.com';
 
@@ -39,7 +39,7 @@ export default function Footer({ content = {} }: FooterProps) {
                         </div>
                         <div className={styles.col}>
                             <h4 className={styles.colTitle}>Liên hệ</h4>
-                            <p style={{marginBottom: 8, fontSize: 14, color: '#9ca3af'}}>{cAddress}</p>
+
                             <a href={`tel:${cHotline.replace(/\D/g, '')}`}>{cHotline}</a>
                             <a href={`mailto:${cEmail.replace('Email: ', '')}`}>{cEmail}</a>
                             <div className={styles.socials}>

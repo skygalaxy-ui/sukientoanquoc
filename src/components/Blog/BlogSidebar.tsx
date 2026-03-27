@@ -55,7 +55,7 @@ export default function BlogSidebar({ recentPosts, categories }: BlogSidebarProp
                     </p>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         <a 
-                            href="tel:0901234567" 
+                            href="tel:0854517868" 
                             style={{ 
                                 display: 'flex', 
                                 alignItems: 'center', 
@@ -82,10 +82,10 @@ export default function BlogSidebar({ recentPosts, categories }: BlogSidebarProp
                             }}>
                                 <Phone size={16} style={{ margin: 'auto' }} />
                             </span>
-                            Gọi: 090 123 4567
+                            Gọi: 0854 517 868
                         </a>
                         <a 
-                            href="https://zalo.me/0901234567" 
+                            href="https://zalo.me/0854517868" 
                             target="_blank" 
                             rel="noopener noreferrer"
                             style={{ 

@@ -24,8 +24,7 @@ const DEFAULT_CONTENT: Record<string, string> = {
   // Footer
   'footer_company_name': 'CÔNG TY TNHH SỰ KIỆN TOÀN QUỐC',
   'footer_description': 'Đơn vị tổ chức sự kiện uy tín chuyên nghiệp hàng đầu tại Việt Nam.',
-  'footer_address': 'Tầng 12, Tòa nhà Bitexco, Số 2 Hải Triều, Q.1, TP.HCM',
-  'footer_hotline': 'Hotline: 0857 999 545',
+  'footer_hotline': 'Hotline: 0854 517 868',
   'footer_email': 'Email: info@sukientoanquoc.com',
 
   // Portfolio Section (From original)
