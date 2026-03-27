@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { duplicatePost, restorePost, permanentDeletePost } from "@/lib/supabase";
+import { duplicatePostAction, restorePostAction, permanentDeletePostAction, updatePostAction, deletePostAction } from "@/actions/admin.actions";
 import { tenantQuery } from "@/lib/tenant-filter";
-import { adminDb } from "@/lib/admin-db";
 import { useAuth } from "@/lib/auth-context";
 import { Post, Category } from "@/lib/types";
 import {
@@ -40,33 +39,33 @@ export default function PostsPage() {
 
     async function togglePublish(post: Post) {
         const now = new Date().toISOString();
-        await adminDb.update('posts', {
+        await updatePostAction(post.id, {
             is_published: !post.is_published,
             published_at: !post.is_published ? now : null,
             updated_at: now
-        }, { column: 'id', value: post.id });
+        } as Partial<Post>);
         fetchData();
     }
 
     async function handleDelete(id: string) {
         if (!confirm('Chuyển bài viết vào thùng rác?')) return;
-        await adminDb.update('posts', { deleted_at: new Date().toISOString(), is_published: false }, { column: 'id', value: id });
+        await deletePostAction(id);
         fetchData();
     }
 
     async function handleRestore(id: string) {
-        await restorePost(id);
+        await restorePostAction(id);
         fetchData();
     }
 
     async function handlePermanentDelete(id: string) {
         if (!confirm('⚠️ Xóa vĩnh viễn? Không thể khôi phục!')) return;
-        await permanentDeletePost(id);
+        await permanentDeletePostAction(id);
         fetchData();
     }
 
     async function handleDuplicate(id: string) {
-        const result = await duplicatePost(id);
+        const result = await duplicatePostAction(id);
         if (result) fetchData();
     }
 
@@ -75,7 +74,7 @@ export default function PostsPage() {
         setBulkLoading(true);
         const now = new Date().toISOString();
         for (const id of selectedPosts) {
-            await adminDb.update('posts', { is_published: true, published_at: now, updated_at: now }, { column: 'id', value: id });
+            await updatePostAction(id, { is_published: true, published_at: now, updated_at: now } as Partial<Post>);
         }
         setSelectedPosts([]);
         setBulkLoading(false);
@@ -86,7 +85,7 @@ export default function PostsPage() {
         if (!confirm(`Chuyển ${selectedPosts.length} bài về nháp?`)) return;
         setBulkLoading(true);
         for (const id of selectedPosts) {
-            await adminDb.update('posts', { is_published: false, scheduled_at: null, updated_at: new Date().toISOString() }, { column: 'id', value: id });
+            await updatePostAction(id, { is_published: false, scheduled_at: null, updated_at: new Date().toISOString() } as Partial<Post>);
         }
         setSelectedPosts([]);
         setBulkLoading(false);
@@ -97,7 +96,7 @@ export default function PostsPage() {
         if (!confirm(`⚠️ Xóa vĩnh viễn ${selectedPosts.length} bài viết?`)) return;
         setBulkLoading(true);
         for (const id of selectedPosts) {
-            await adminDb.delete('posts', { column: 'id', value: id });
+            await permanentDeletePostAction(id);
         }
         setSelectedPosts([]);
         setBulkLoading(false);

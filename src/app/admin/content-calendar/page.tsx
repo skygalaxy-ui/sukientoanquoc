@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getScheduledContent, createScheduledContent, updateScheduledContent, deleteScheduledContent, supabase } from "@/lib/supabase";
+import { getScheduledContent, supabase } from "@/lib/supabase";
+import { createScheduledContentAction, updateScheduledContentAction, deleteScheduledContentAction } from "@/actions/admin.actions";
 import { ScheduledContent } from "@/lib/types";
 import {
     Calendar, Plus, Trash2, Edit3, Check,
@@ -71,8 +72,8 @@ export default function ContentCalendarPage() {
         if (!form.title.trim() || !form.scheduled_date) return;
         setSaving(true);
         const data = { title: form.title, type: form.type as ScheduledContent['type'], scheduled_date: form.scheduled_date, author: form.author, category: form.category, notes: form.notes, status: 'scheduled' as const };
-        if (editingId) await updateScheduledContent(editingId, data);
-        else await createScheduledContent(data);
+        if (editingId) await updateScheduledContentAction(editingId, data);
+        else await createScheduledContentAction(data);
         setForm({ title: "", type: "article", scheduled_date: "", author: "", category: "", notes: "" });
         setEditingId(null); setShowForm(false); setSaving(false);
         loadItems();
@@ -81,7 +82,7 @@ export default function ContentCalendarPage() {
 
     async function handleDelete(id: string) {
         if (!confirm('Xóa?')) return;
-        await deleteScheduledContent(id); loadItems();
+        await deleteScheduledContentAction(id); loadItems();
     }
 
     const prevMonth = () => setCurrentDate(new Date(year, month - 1, 1));

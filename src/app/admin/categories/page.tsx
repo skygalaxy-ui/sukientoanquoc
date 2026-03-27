@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { tenantQuery, withTenantId } from "@/lib/tenant-filter";
-import { adminDb } from "@/lib/admin-db";
+import { tenantQuery } from "@/lib/tenant-filter";
+import { createCategoryAction, updateCategoryAction, deleteCategoryAction } from "@/actions/admin.actions";
 import { useAuth } from "@/lib/auth-context";
 import { Category } from "@/lib/types";
 import { Plus, Edit3, Trash2, FolderOpen, Loader2, X, Check } from "lucide-react";
@@ -32,9 +32,9 @@ export default function CategoriesPage() {
         setSaving(true);
         const slug = form.slug || generateSlug(form.name);
         if (editingId) {
-            await adminDb.update('categories', { name: form.name, slug, description: form.description || null }, { column: 'id', value: editingId });
+            await updateCategoryAction(editingId, { name: form.name, slug, description: form.description || null } as Partial<Category>);
         } else {
-            await adminDb.insert('categories', withTenantId({ name: form.name, slug, description: form.description || null }, tenantId));
+            await createCategoryAction({ name: form.name, slug, description: form.description || null } as Partial<Category>);
         }
         setForm({ name: "", slug: "", description: "" });
         setEditingId(null);
@@ -45,7 +45,7 @@ export default function CategoriesPage() {
 
     async function handleDelete(id: string) {
         if (!confirm('Xóa chuyên mục này?')) return;
-        await adminDb.delete('categories', { column: 'id', value: id });
+        await deleteCategoryAction(id);
         fetchCategories();
     }
 

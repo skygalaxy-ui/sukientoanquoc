@@ -1,4 +1,5 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { supabaseAdmin } from "@/lib/supabase-admin";
 
 interface ContactPayload {
   name: string;
@@ -30,11 +31,25 @@ export async function POST(request: Request) {
       );
     }
 
-    console.info("[contact-form] New lead", {
+    const leadData = {
       name: payload.name.trim(),
       phone: payload.phone.trim(),
-      eventType: payload.eventType,
-      message: payload.message?.trim() ?? "",
+      event_type: payload.eventType,
+      message: payload.message?.trim() || null,
+    };
+
+    // Save lead to database
+    const { error } = await supabaseAdmin
+      .from('contact_leads')
+      .insert(leadData);
+
+    if (error) {
+      // Log error but still return OK to user (graceful degradation)
+      console.error('[contact-form] DB insert failed:', error);
+    }
+
+    console.info("[contact-form] New lead", {
+      ...leadData,
       timestamp: new Date().toISOString(),
     });
 
@@ -46,3 +61,4 @@ export async function POST(request: Request) {
     );
   }
 }
+

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: 'Bùng nổ Nhận diện Thương hiệu bằng Roadshow',
         description: 'Phủ sóng đường phố bằng chiến dịch Roadshow hoành tráng. Giao phó rủi ro ngoại cảnh cho Sự Kiện Toàn Quốc.',
-        images: ['https://images.unsplash.com/photo-1596708761273-7c5e26ec03db?w=1200&q=80'],
+        images: ['https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=1200&q=80'],
     }
 };
 
@@ -26,7 +26,7 @@ export default function RoadshowPage() {
             <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden border-b border-white/10">
                 <div className="absolute inset-0 z-0">
                     <Image
-                        src="https://images.unsplash.com/photo-1596708761273-7c5e26ec03db?w=1920&q=90"
+                        src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=1920&q=90"
                         alt="Đoàn xe chạy roadshow ngoài phố"
                         fill
                         className="object-cover opacity-30"
@@ -65,7 +65,7 @@ export default function RoadshowPage() {
 
                     <figure>
                         <Image 
-                            src="https://images.unsplash.com/photo-1597404284360-61fcecb63e14?w=1200&q=80" 
+                            src="https://images.unsplash.com/photo-1528127269322-539801943592?w=1200&q=80" 
                             alt="Roadshow chuyên nghiệp thu hút khách hàng"
                             width={1200}
                             height={675}

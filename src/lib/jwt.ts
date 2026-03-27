@@ -2,7 +2,10 @@ import { SignJWT, jwtVerify, type JWTPayload } from 'jose';
 
 // ==================== JWT CONFIGURATION ====================
 
-const JWT_SECRET = process.env.JWT_SECRET || 'cms-default-secret-change-me-in-production';
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+    throw new Error('JWT_SECRET environment variable is required');
+}
 const SECRET_KEY = new TextEncoder().encode(JWT_SECRET);
 const TOKEN_EXPIRY = '7d'; // 7 days
 

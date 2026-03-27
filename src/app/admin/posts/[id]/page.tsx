@@ -4,7 +4,8 @@ import { useState, useRef, useEffect, useMemo } from "react";
 import { useRouter, useParams } from "next/navigation";
 import RichTextEditor from "@/components/admin/RichTextEditor";
 import MediaLibrary from "@/components/admin/MediaLibrary";
-import { uploadImage, getPostById, updatePost, getCategories, getTags, createTag } from "@/lib/supabase";
+import { uploadImage, getPostById, getCategories, getTags } from "@/lib/supabase";
+import { updatePostAction, createTagAction } from "@/actions/admin.actions";
 import {
     ChevronLeft, Loader2, Trash2, Image as ImageIcon,
     Type, Hash, Clock, ChevronUp, ChevronDown,
@@ -148,7 +149,7 @@ export default function EditPostPage() {
             scheduled_at: form.scheduledAt ? new Date(form.scheduledAt).toISOString() : null,
         };
         try {
-            const result = await updatePost(postId, postData);
+            const result = await updatePostAction(postId, postData);
             if (result) { setUnsavedChanges(false); router.push('/admin/posts'); }
             else alert("Có lỗi xảy ra!");
         } catch (error) { console.error(error); alert("Có lỗi xảy ra!"); }
@@ -290,7 +291,7 @@ export default function EditPostPage() {
                                     <TagPicker selectedTags={form.tags} allTags={allTags} onChange={(tags) => updateForm({ tags })}
                                         onCreateTag={async (name) => {
                                             const slug = name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-                                            const result = await createTag({ name, slug, description: null });
+                                            const result = await createTagAction({ name, slug, description: null });
                                             if (result) setAllTags(prev => [...prev, name].sort());
                                         }}
                                     />

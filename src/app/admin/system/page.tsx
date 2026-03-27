@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
-import { adminDb } from "@/lib/admin-db";
+import { importBackupAction } from "@/actions/admin.actions";
 import {
     Activity, Database, HardDrive, Clock, CheckCircle2,
     XCircle, AlertTriangle, RefreshCw, Server,
@@ -94,29 +94,8 @@ export default function SystemStatusPage() {
         try {
             const text = await file.text();
             const backup = JSON.parse(text);
-            const results: string[] = [];
-
-            if (backup.categories?.length > 0) {
-                const { error } = await adminDb.upsert('categories', backup.categories, { onConflict: 'slug' });
-                results.push(error ? `❌ Categories: ${error}` : `✅ Categories: ${backup.categories.length} bản ghi`);
-            }
-            if (backup.tags?.length > 0) {
-                const { error } = await adminDb.upsert('tags', backup.tags, { onConflict: 'slug' });
-                results.push(error ? `❌ Tags: ${error}` : `✅ Tags: ${backup.tags.length} bản ghi`);
-            }
-            if (backup.posts?.length > 0) {
-                const { error } = await adminDb.upsert('posts', backup.posts, { onConflict: 'slug' });
-                results.push(error ? `❌ Posts: ${error}` : `✅ Posts: ${backup.posts.length} bản ghi`);
-            }
-            if (backup.scheduled_content?.length > 0) {
-                const { error } = await adminDb.upsert('scheduled_content', backup.scheduled_content, { onConflict: 'id' });
-                results.push(error ? `❌ Scheduled: ${error}` : `✅ Scheduled: ${backup.scheduled_content.length} bản ghi`);
-            }
-            if (backup.site_settings?.length > 0) {
-                const { error } = await adminDb.upsert('site_settings', backup.site_settings, { onConflict: 'key' });
-                results.push(error ? `❌ Settings: ${error}` : `✅ Settings: ${backup.site_settings.length} bản ghi`);
-            }
-            setImportResult(results.join('\n'));
+            const result = await importBackupAction(backup);
+            setImportResult(result.results);
             runChecks();
         } catch (err) {
             setImportResult('❌ Lỗi đọc file: ' + String(err));

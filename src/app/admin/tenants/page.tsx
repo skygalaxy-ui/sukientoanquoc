@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { adminDb } from "@/lib/admin-db";
+import { createTenantAction, updateTenantAction, deleteTenantAction, createUserAction, updateUserAction, deleteUserAction } from "@/actions/admin.actions";
 import { useAuth } from "@/lib/auth-context";
 import {
     Plus, Trash2, Edit3, Users, Globe, Shield,
@@ -65,11 +65,11 @@ export default function TenantsPage() {
     async function saveTenant() {
         setSaving(true);
         if (form.id) {
-            await adminDb.update('tenants', {
+            await updateTenantAction(form.id, {
                 name: form.name, slug: form.slug, domain: form.domain, plan: form.plan, is_active: form.is_active,
-            }, { column: 'id', value: form.id });
+            });
         } else {
-            await adminDb.insert('tenants', {
+            await createTenantAction({
                 name: form.name, slug: form.slug, domain: form.domain || null, plan: form.plan || 'free',
             });
         }
@@ -82,12 +82,12 @@ export default function TenantsPage() {
     async function saveUser() {
         setSaving(true);
         if (form.id) {
-            await adminDb.update('users', {
+            await updateUserAction(form.id, {
                 name: form.name, email: form.email, role: form.role,
                 tenant_id: form.tenant_id || null, is_active: form.is_active,
-            }, { column: 'id', value: form.id });
+            });
         } else {
-            await adminDb.insert('users', {
+            await createUserAction({
                 email: form.email, name: form.name, role: form.role || 'editor',
                 tenant_id: form.tenant_id || null,
                 password_hash: 'NEEDS_RESET',
@@ -101,13 +101,13 @@ export default function TenantsPage() {
 
     async function deleteTenant(id: string) {
         if (!confirm('Xóa tenant này? Tất cả data sẽ mất!')) return;
-        await adminDb.delete('tenants', { column: 'id', value: id });
+        await deleteTenantAction(id);
         fetchData();
     }
 
     async function deleteUser(id: string) {
         if (!confirm('Xóa user này?')) return;
-        await adminDb.delete('users', { column: 'id', value: id });
+        await deleteUserAction(id);
         fetchData();
     }
 

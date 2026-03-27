@@ -50,6 +50,17 @@ function formatDate(dateStr: string) {
     });
 }
 
+function generateSlug(text: string) {
+    return text
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/đ/g, "d")
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-");
+}
+
 export default async function BlogPostPage({ params }: Props) {
     const { slug } = await params;
     const post = await getPostBySlug(slug);
@@ -62,6 +73,27 @@ export default async function BlogPostPage({ params }: Props) {
     ]);
 
     const category = categories.find((c) => c.id === post.category_id);
+
+    // TOC Generation & Image Lazy Loading
+    let contentHtml = post.content || "";
+    const toc: { level: number; title: string; id: string }[] = [];
+    const headingRegex = /<(h[23])>(.*?)<\/\1>/gi;
+    
+    contentHtml = contentHtml.replace(headingRegex, (match, tag, innerHtml) => {
+        const plainText = innerHtml.replace(/<[^>]+>/g, "").trim();
+        if (!plainText) return match;
+        
+        const id = generateSlug(plainText);
+        const level = tag.toLowerCase() === 'h2' ? 2 : 3;
+        
+        toc.push({ level, title: plainText, id });
+        
+        // Add scroll-margin-top for stickiness correctly hitting anchored IDs
+        return `<${tag} id="${id}" style="scroll-margin-top: 100px">${innerHtml}</${tag}>`;
+    });
+
+    // Prevent overriding loading if already given
+    contentHtml = contentHtml.replace(/<img(?!.*loading=)/gi, '<img loading="lazy" decoding="async" ');
 
     return (
         <>
@@ -232,10 +264,46 @@ export default async function BlogPostPage({ params }: Props) {
                             </div>
                         )}
 
+                        {/* Table of Contents */}
+                        {toc.length > 0 && (
+                            <nav
+                                style={{
+                                    background: "var(--bg-light)",
+                                    padding: "24px",
+                                    borderRadius: "16px",
+                                    marginBottom: "40px",
+                                    border: "1px solid var(--border)",
+                                }}
+                            >
+                                <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 16, color: "var(--text-heading)", fontFamily: "var(--font-display)" }}>
+                                    Nội dung chính
+                                </div>
+                                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 12 }}>
+                                    {toc.map((item, index) => (
+                                        <li key={index} style={{ paddingLeft: item.level === 3 ? "24px" : "0" }}>
+                                            <a
+                                                href={`#${item.id}`}
+                                                style={{
+                                                    color: "var(--text)",
+                                                    textDecoration: "none",
+                                                    fontSize: item.level === 2 ? 16 : 15,
+                                                    fontWeight: item.level === 2 ? 600 : 400,
+                                                    transition: "color 0.2s"
+                                                }}
+                                                className="hover:text-orange-500"
+                                            >
+                                                {item.title}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </nav>
+                        )}
+
                         {/* Article Content */}
                         <div
                             className="article-content"
-                            dangerouslySetInnerHTML={{ __html: post.content }}
+                            dangerouslySetInnerHTML={{ __html: contentHtml }}
                             style={{
                                 fontFamily: "var(--font-body)",
                                 fontSize: 16,

@@ -4,7 +4,8 @@ import { useState, useRef, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import RichTextEditor from "@/components/admin/RichTextEditor";
 import MediaLibrary from "@/components/admin/MediaLibrary";
-import { uploadImage, createPost, getCategories, getTags, createTag } from "@/lib/supabase";
+import { uploadImage, getCategories, getTags } from "@/lib/supabase";
+import { createPostAction, createTagAction } from "@/actions/admin.actions";
 import {
     ChevronLeft, Loader2, Trash2, Image as ImageIcon,
     Type, Hash, Clock, AlertCircle, ChevronUp, ChevronDown,
@@ -248,7 +249,7 @@ export default function NewPostPage() {
         };
 
         try {
-            const result = await createPost(postData);
+            const result = await createPostAction(postData);
             if (result) {
                 setUnsavedChanges(false);
                 localStorage.removeItem('cms_draft_new');
@@ -458,7 +459,7 @@ export default function NewPostPage() {
                                     <TagPicker selectedTags={form.tags} allTags={allTags} onChange={(tags) => updateForm({ tags })}
                                         onCreateTag={async (name) => {
                                             const slug = name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-                                            const result = await createTag({ name, slug, description: null });
+                                            const result = await createTagAction({ name, slug, description: null });
                                             if (result) setAllTags(prev => [...prev, name].sort());
                                         }}
                                     />

@@ -16,7 +16,7 @@ interface LicenseInfo {
     isValid: boolean;
 }
 
-const SECRET = '10xCMS2026';
+const SECRET = process.env.LICENSE_SECRET || '';
 
 /**
  * Generate license key (chạy offline để tạo key cho khách)

@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { tenantQuery, withTenantId } from "@/lib/tenant-filter";
-import { adminDb } from "@/lib/admin-db";
+import { tenantQuery } from "@/lib/tenant-filter";
+import { createTagAction, updateTagAction, deleteTagAction } from "@/actions/admin.actions";
 import { useAuth } from "@/lib/auth-context";
 import { Tag } from "@/lib/types";
 import { Plus, Trash2, Tags as TagsIcon, Loader2, Check, Edit3, Hash } from "lucide-react";
@@ -32,9 +32,9 @@ export default function TagsPage() {
         setSaving(true);
         const slug = form.slug || genSlug(form.name);
         if (editingId) {
-            await adminDb.update('tags', { name: form.name, slug, description: form.description || null }, { column: 'id', value: editingId });
+            await updateTagAction(editingId, { name: form.name, slug, description: form.description || null } as Partial<Tag>);
         } else {
-            await adminDb.insert('tags', withTenantId({ name: form.name, slug, description: form.description || null }, tenantId));
+            await createTagAction({ name: form.name, slug, description: form.description || null } as Partial<Tag>);
         }
         setForm({ name: "", slug: "", description: "" });
         setEditingId(null); setShowForm(false); setSaving(false);
@@ -43,7 +43,7 @@ export default function TagsPage() {
 
     async function handleDelete(id: string) {
         if (!confirm('Xóa tag này?')) return;
-        await adminDb.delete('tags', { column: 'id', value: id });
+        await deleteTagAction(id);
         fetchTags();
     }
 
