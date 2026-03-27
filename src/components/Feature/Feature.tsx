@@ -83,11 +83,15 @@ const services = [
 
 interface FeatureProps {
     images?: Record<string, string>;
+    content?: Record<string, string>;
 }
 
-export default function Feature({ images = {} }: FeatureProps) {
+export default function Feature({ images = {}, content = {} }: FeatureProps) {
     const { ref: headerRef, isVisible: headerVisible } = useReveal();
     const { ref: gridRef, isVisible: gridVisible } = useReveal(0.1);
+
+    const featureTitle = content.feature_title || 'Trải nghiệm đội nhóm, <span class="highlight">đầy cảm hứng</span>';
+    const featureSubtitle = content.feature_subtitle || 'Với hơn 10 năm kinh nghiệm tổ chức sự kiện trên 63 tỉnh thành, chúng tôi mang đến những giải pháp teambuilding sáng tạo, giúp đội nhóm của bạn gắn kết hơn bao giờ hết.';
 
     return (
         <section className={styles.section}>
@@ -97,16 +101,8 @@ export default function Feature({ images = {} }: FeatureProps) {
                     className={`${styles.top} reveal ${headerVisible ? "visible" : ""}`}
                 >
                     <span className={styles.label}>DỊCH VỤ NỔI BẬT</span>
-                    <h2 className={styles.title}>
-                        Trải nghiệm đội nhóm
-                        <br />
-                        <span className={styles.highlight}>đầy cảm hứng</span>
-                    </h2>
-                    <p className={styles.desc}>
-                        Với hơn 10 năm kinh nghiệm tổ chức sự kiện trên 63 tỉnh thành,
-                        chúng tôi mang đến những giải pháp teambuilding sáng tạo, giúp đội nhóm 
-                        của bạn gắn kết hơn bao giờ hết.
-                    </p>
+                    <h2 className={styles.title} dangerouslySetInnerHTML={{ __html: featureTitle.replace('<span class="highlight">', `<span class="${styles.highlight}">`) }} />
+                    <p className={styles.desc} dangerouslySetInnerHTML={{ __html: featureSubtitle }} />
                 </div>
 
                 <div

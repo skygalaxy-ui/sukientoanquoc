@@ -7,6 +7,7 @@ import styles from "./Services.module.css";
 
 interface ServicesProps {
     images?: Record<string, string>;
+    content?: Record<string, string>;
 }
 
 const serviceDefaults = [
@@ -66,9 +67,12 @@ const serviceDefaults = [
     },
 ] as const;
 
-export default function Services({ images = {} }: ServicesProps) {
+export default function Services({ images = {}, content = {} }: ServicesProps) {
     const { ref: headerRef, isVisible: headerVisible } = useReveal();
     const { ref: gridRef, isVisible: gridVisible } = useReveal(0.08);
+
+    const title = content.service_title || '<span class="titleHighlight">Dịch vụ</span> tổ chức sự kiện';
+    const subtitle = content.service_subtitle || 'Giải pháp teambuilding & event trọn gói cho mọi quy mô doanh nghiệp';
 
     return (
         <section className={styles.section} id="services">
@@ -80,12 +84,8 @@ export default function Services({ images = {} }: ServicesProps) {
                     <div className={styles.badge}>
                         DỊCH VỤ
                     </div>
-                    <h2 className={styles.title}>
-                        <span className={styles.titleHighlight}>Dịch vụ</span> tổ chức sự kiện
-                    </h2>
-                    <p className={styles.subtitle}>
-                        Giải pháp teambuilding & event trọn gói cho mọi quy mô doanh nghiệp
-                    </p>
+                    <h2 className={styles.title} dangerouslySetInnerHTML={{ __html: title.replace('<span class="titleHighlight">', `<span class="${styles.titleHighlight}">`) }} />
+                    <p className={styles.subtitle} dangerouslySetInnerHTML={{ __html: subtitle }} />
                 </div>
 
                 <div

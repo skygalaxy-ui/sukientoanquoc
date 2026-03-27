@@ -24,15 +24,15 @@ export default async function Home() {
     <>
       <Header />
       <main>
-        <Hero images={images} />
+        <Hero images={images} content={content} />
         <Marquee
           items={["Hà Nội", "TP. Hồ Chí Minh", "Đà Nẵng", "Cần Thơ", "Hải Phòng", "Quảng Ninh", "Bình Dương", "Nha Trang"]}
           variant="cities"
           speed={30}
         />
-        <Feature images={images} />
+        <Feature images={images} content={content} />
         <Stats />
-        <Services images={images} />
+        <Services images={images} content={content} />
         <Portfolio images={images} content={content} />
         <Process />
         <Marquee
@@ -44,7 +44,7 @@ export default async function Home() {
         <Sponsor images={images} />
         <ContactForm />
       </main>
-      <Footer />
+      <Footer content={content} />
       <FloatingContact />
     </>
   );

@@ -1,6 +1,16 @@
 import styles from "./Footer.module.css";
 
-export default function Footer() {
+interface FooterProps {
+    content?: Record<string, string>;
+}
+
+export default function Footer({ content = {} }: FooterProps) {
+    const companyName = content.footer_company_name || 'Sự Kiện Toàn Quốc';
+    const cDesc = content.footer_description || 'Teambuilding & Event';
+    const cAddress = content.footer_address || 'Địa chỉ: 123 Đường B, Quận 1, TPHCM';
+    const cHotline = content.footer_hotline || 'Hotline: 0854 517 868';
+    const cEmail = content.footer_email || 'sale@sukientoanquoc.com';
+
     return (
         <footer className={styles.footer}>
             <div className={styles.container}>
@@ -8,8 +18,8 @@ export default function Footer() {
                     <div className={styles.brand}>
                         <img src="/favicon.png" alt="Sự Kiện Toàn Quốc" className={styles.logoImg} />
                         <div>
-                            <span className={styles.brandName}>Sự Kiện Toàn Quốc</span>
-                            <span className={styles.brandSub}>Teambuilding & Event</span>
+                            <span className={styles.brandName}>{companyName}</span>
+                            <span className={styles.brandSub}>{cDesc}</span>
                         </div>
                     </div>
 
@@ -29,8 +39,9 @@ export default function Footer() {
                         </div>
                         <div className={styles.col}>
                             <h4 className={styles.colTitle}>Liên hệ</h4>
-                            <a href="tel:0854517868">Hotline: 0854 517 868</a>
-                            <a href="mailto:sale@sukientoanquoc.com">sale@sukientoanquoc.com</a>
+                            <p style={{marginBottom: 8, fontSize: 14, color: '#9ca3af'}}>{cAddress}</p>
+                            <a href={`tel:${cHotline.replace(/\D/g, '')}`}>{cHotline}</a>
+                            <a href={`mailto:${cEmail.replace('Email: ', '')}`}>{cEmail}</a>
                             <div className={styles.socials}>
                                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
